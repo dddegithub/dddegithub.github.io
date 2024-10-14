@@ -20,28 +20,44 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
+  <meta name="description" content="1. dll与lib简单介绍​	dll，全称Dynamic Linkable Library。动态链接库，类似于exe，是一种编译好的二进制文件。很多程序可能会用到一个功能，按我的理解举个例子（可能不恰当），很多程序需要用到3d加速功能，但每个程序自己从硬件底层实现该功能很麻烦，不利于代码复用，而且不现实（让很多应用程序越过windows直接操作硬件当然不现实，windows也不答应）。这时候，由">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:url" content="http://example.com/2024/10/15/%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%86%8D%E5%B0%81%E8%A3%85/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. dll与lib简单介绍​	dll，全称Dynamic Linkable Library。动态链接库，类似于exe，是一种编译好的二进制文件。很多程序可能会用到一个功能，按我的理解举个例子（可能不恰当），很多程序需要用到3d加速功能，但每个程序自己从硬件底层实现该功能很麻烦，不利于代码复用，而且不现实（让很多应用程序越过windows直接操作硬件当然不现实，windows也不答应）。这时候，由">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="d:\Data\SoftwareFiles\TyporaFiles\%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%86%8D%E5%B0%81%E8%A3%85\exeTodll.png">
+<meta property="og:image" content="d:\Data\SoftwareFiles\TyporaFiles\%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%86%8D%E5%B0%81%E8%A3%85\%E7%94%9F%E6%88%90dll.png">
+<meta property="og:image" content="d:\Data\SoftwareFiles\TyporaFiles\%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%86%8D%E5%B0%81%E8%A3%85\jna%E5%9C%A8%E5%93%AA.png">
+<meta property="og:image" content="d:\Data\SoftwareFiles\TyporaFiles\%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%86%8D%E5%B0%81%E8%A3%85\testjna%E9%A1%B9%E7%9B%AE.png">
+<meta property="og:image" content="d:\Data\SoftwareFiles\TyporaFiles\%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%86%8D%E5%B0%81%E8%A3%85\dll%E6%94%BE%E5%93%AA.png">
+<meta property="og:image" content="d:\Data\SoftwareFiles\TyporaFiles\%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%86%8D%E5%B0%81%E8%A3%85\jna%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png">
+<meta property="og:image" content="d:\Data\SoftwareFiles\TyporaFiles\%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%86%8D%E5%B0%81%E8%A3%85\%E9%94%99%E8%AF%AF%E8%BE%93%E5%87%BA.png">
+<meta property="og:image" content="d:\Data\SoftwareFiles\TyporaFiles\%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%86%8D%E5%B0%81%E8%A3%85\%E4%BE%9D%E8%B5%96%E6%96%87%E4%BB%B6%E5%A4%B9.png">
+<meta property="og:image" content="d:\Data\SoftwareFiles\TyporaFiles\%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%86%8D%E5%B0%81%E8%A3%85\%E5%86%8D%E5%B0%81%E8%A3%85%E5%B7%A5%E7%A8%8B.png">
+<meta property="og:image" content="d:\Data\SoftwareFiles\TyporaFiles\%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%86%8D%E5%B0%81%E8%A3%85\%E6%9C%80%E5%90%8E.png">
+<meta property="og:image" content="d:\Data\SoftwareFiles\TyporaFiles\%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%86%8D%E5%B0%81%E8%A3%85\%E6%9C%80%E5%90%8E%E5%88%9D%E5%A7%8B%E5%8C%96.png">
+<meta property="article:published_time" content="2024-10-14T17:11:14.060Z">
+<meta property="article:modified_time" content="2023-07-12T13:10:20.000Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="d:\Data\SoftwareFiles\TyporaFiles\%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%86%8D%E5%B0%81%E8%A3%85\exeTodll.png">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2024/10/15/%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%86%8D%E5%B0%81%E8%A3%85/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Hexo</title>
+  <title> | Hexo</title>
   
 
 
@@ -139,9 +155,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
@@ -157,10 +174,9 @@
       <meta itemprop="name" content="Hexo">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
+        <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2024/10/15/%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E5%86%8D%E5%B0%81%E8%A3%85/" class="post-title-link" itemprop="url">Untitled</a>
-        </h2>
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -190,7 +206,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="1-dll与lib简单介绍"><a href="#1-dll与lib简单介绍" class="headerlink" title="1. dll与lib简单介绍"></a>1. dll与lib简单介绍</h1><p>​	dll，全称Dynamic Linkable Library。动态链接库，类似于exe，是一种编译好的二进制文件。很多程序可能会用到一个功能，按我的理解举个例子（可能不恰当），很多程序需要用到3d加速功能，但每个程序自己从硬件底层实现该功能很麻烦，不利于代码复用，而且不现实（让很多应用程序越过windows直接操作硬件当然不现实，windows也不答应）。这时候，由windows实现该功能，并编译后以dll形式存放。哪个应用程序<strong>运行时</strong>（注意是运行时）需要用3d加速功可以直接调用该dll（编译好的程序模块可以直接运行），该dll的相关功能模块会被链接到相应程序，这被称为<strong>运行时链接</strong>。相当于应用程序通过dll间接操作硬件，可以节省开发程序的负担，利于代码复用，应用程序直接按照说明调用dll就可以调用硬件了。</p>
+        <h1 id="1-dll与lib简单介绍"><a href="#1-dll与lib简单介绍" class="headerlink" title="1. dll与lib简单介绍"></a>1. dll与lib简单介绍</h1><p>​	dll，全称Dynamic Linkable Library。动态链接库，类似于exe，是一种编译好的二进制文件。很多程序可能会用到一个功能，按我的理解举个例子（可能不恰当），很多程序需要用到3d加速功能，但每个程序自己从硬件底层实现该功能很麻烦，不利于代码复用，而且不现实（让很多应用程序越过windows直接操作硬件当然不现实，windows也不答应）。这时候，由windows实现该功能，并编译后以dll形式存放。哪个应用程序<strong>运行时</strong>（注意是运行时）需要用3d加速功可以直接调用该dll（编译好的程序模块可以直接运行），该dll的相关功能模块会被链接到相应程序，这被称为<strong>运行时链接</strong>。相当于应用程序通过dll间接操作硬件，可以节省开发程序的负担，利于代码复用，应用程序直接按照说明调用dll就可以调用硬件了。</p>
 <p>​	lib， 全称Library。与动态链接库对应，被称为静态链接库，同样是编译好的二进制文件，不过lib被应用程序调用实在<strong>编译时</strong>，这被称为<strong>编译时链接</strong>。</p>
 <p>​	想要查看dll中内容，可以使用软件“Dependency Walker”。</p>
 <h1 id="2-如何使用java调用dll"><a href="#2-如何使用java调用dll" class="headerlink" title="2. 如何使用java调用dll"></a>2. 如何使用java调用dll</h1><p>​	通过查阅资料，Java调用dll主要通过jna库，我们也采用了这种方式，调用形式清晰明朗，方法简单易懂。下面我们创建一个例子来演示，我使用的环境是vs2022和ij2023。</p>
@@ -293,80 +309,30 @@
 <p>[3]<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1tA411N7HB/?spm_id_from=333.999.0.0&vd_source=d6435e274bc5e263a2d1e4a695b030f3">封装自己的项目为dll给其他用户使用_哔哩哔哩_bilibili</a></p>
 <p>[4]<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43543789/article/details/111171094">(14条消息) C\C++中各类型数据所占字节数汇总小记【char<em>、float</em>等】_char*几个字节_发芽ing的小啊呜的博客-CSDN博客</a></p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/15/114514/">
+        
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/10/15/114514/" class="post-title-link" itemprop="url">Untitled</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2024-10-15 00:15:09 / Modified: 00:40:00" itemprop="dateCreated datePublished" datetime="2024-10-15T00:15:09+08:00">2024-10-15</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>114514</p>
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/10/15/114514/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
@@ -419,6 +385,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-dll%E4%B8%8Elib%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">1. dll与lib简单介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8java%E8%B0%83%E7%94%A8dll"><span class="nav-number">2.</span> <span class="nav-text">2. 如何使用java调用dll</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84dll"><span class="nav-number">2.1.</span> <span class="nav-text">2.1编写一个简单的dll</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2%E5%9C%A8java%E4%BD%BF%E7%94%A8jna%E8%B0%83%E7%94%A8dll"><span class="nav-number">2.2.</span> <span class="nav-text">2.2在java使用jna调用dll</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E9%A1%B9%E7%9B%AEdll%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">3. 项目dll的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1%E7%85%A7%E7%8C%AB%E7%94%BB%E8%99%8E%E7%9A%84%E5%B0%9D%E8%AF%95"><span class="nav-number">3.1.</span> <span class="nav-text">3.1照猫画虎的尝试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2%E5%85%B3%E4%BA%8E%E6%8A%A5%E9%94%99"><span class="nav-number">3.2.</span> <span class="nav-text">3.2关于报错</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E4%BD%BF%E7%94%A8vs%E5%86%8D%E5%B0%81%E8%A3%85"><span class="nav-number">4.</span> <span class="nav-text">4. 使用vs再封装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 项目配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99"><span class="nav-number">4.2.</span> <span class="nav-text">4.2  代码编写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 编译生成</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E5%9C%A8java%E4%B8%AD%E6%B5%8B%E8%AF%95%E5%86%8D%E5%B0%81%E8%A3%85%E7%9A%84dll"><span class="nav-number">5.</span> <span class="nav-text">5. 在java中测试再封装的dll</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 项目配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 代码编写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-%E7%BB%93%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 结果展示</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">6. 参考资料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
