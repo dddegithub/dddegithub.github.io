@@ -159,7 +159,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/10/17/Linux%E6%89%A9%E5%B1%95%E7%A9%BA%E9%97%B4/" class="post-title-link" itemprop="url">Untitled</a>
+            <a href="/2024/10/17/Linux%E6%89%A9%E5%B1%95%E7%A9%BA%E9%97%B4/" class="post-title-link" itemprop="url">如何在linux上给磁盘扩容</a>
         </h2>
 
         <div class="post-meta">
@@ -170,7 +170,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-10-17 01:05:29 / Modified: 01:06:34" itemprop="dateCreated datePublished" datetime="2024-10-17T01:05:29+08:00">2024-10-17</time>
+              <time title="Created: 2024-10-17 01:20:00 / Modified: 01:20:18" itemprop="dateCreated datePublished" datetime="2024-10-17T01:20:00+08:00">2024-10-17</time>
             </span>
 
           
@@ -184,7 +184,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="如何在linux上给磁盘扩容"><a href="#如何在linux上给磁盘扩容" class="headerlink" title="如何在linux上给磁盘扩容"></a>如何在linux上给磁盘扩容</h1><p>在搭建k8s集群时遇到了需要给磁盘扩容的情况，写一篇文章记录自己的经历</p>
+          <p>在搭建k8s集群时遇到了需要给磁盘扩容的情况，写一篇文章记录自己的经历</p>
 <p>背景知识：<br>LVM（Logical Volume Manager，逻辑卷管理器）是 Linux 操作系统中的一种灵活的磁盘管理工具，它通过将多个物理硬盘或分区组合成一个或多个逻辑卷，提供比传统分区管理更强大的存储管理功能。LVM 允许动态调整存储空间大小、跨多个物理磁盘创建逻辑卷，并支持快照、镜像等高级功能。</p>
 <h2 id="1-查看已连接系统的硬盘及其分区"><a href="#1-查看已连接系统的硬盘及其分区" class="headerlink" title="1. 查看已连接系统的硬盘及其分区"></a>1. 查看已连接系统的硬盘及其分区</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> fdisk -l</span><br></pre></td></tr></table></figure>
 <p>可以看到前面是若干回环设备（如loop0）的信息，这是linux一种虚拟设备，而&#x2F;dev&#x2F;sda是物理硬盘。&#x2F;dev&#x2F;sda1, &#x2F;dev&#x2F;sda2, &#x2F;dev&#x2F;sda3：表示该硬盘的不同分区。最后是由 LVM（逻辑卷管理器） 管理的分区&#x2F;dev&#x2F;mapper&#x2F;ubuntu–vg-ubuntu–lv<br><img src="/Linux%E6%89%A9%E5%B1%95%E7%A9%BA%E9%97%B4/fdisk.png" alt="查看已连接系统的硬盘及其分区"></p>
@@ -509,6 +509,10 @@
           <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
       </div>
   </nav>
 </div>
