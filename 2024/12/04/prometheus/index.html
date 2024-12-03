@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="prometheus监控k8s初见prometheus1nano &#x2F;opt&#x2F;prometheus&#x2F;config&#x2F;prometheus.yml    填入如下内容作为配置（监控自己） 1234scrape_configs:  - job_name: &quot;prometheus&quot;    static_configs:      - targets: [&quot;localhost:9">
+<meta property="og:type" content="article">
+<meta property="og:title" content="prometheus监控docker和linux主机">
+<meta property="og:url" content="http://example.com/2024/12/04/prometheus/index.html">
+<meta property="og:site_name" content="FlareBall&#39;s Blog">
+<meta property="og:description" content="prometheus监控k8s初见prometheus1nano &#x2F;opt&#x2F;prometheus&#x2F;config&#x2F;prometheus.yml    填入如下内容作为配置（监控自己） 1234scrape_configs:  - job_name: &quot;prometheus&quot;    static_configs:      - targets: [&quot;localhost:9">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203192821670.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203193603780.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203193536021.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202747980.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202901001.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202038317.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202125565.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202150910.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202212419.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202246323.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202321103.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202349339.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202420197.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202633848.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231340915.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231321355.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231507625.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231623784.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231703052.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203232815565.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203232842329.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203232953786.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203233413063.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203233919379.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203234214204.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241204000357533.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203234646417.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203235634961.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203235842715.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231809571.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231933298.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241204001130367.png">
+<meta property="article:published_time" content="2024-12-03T16:10:00.000Z">
+<meta property="article:modified_time" content="2024-12-03T16:17:54.205Z">
+<meta property="article:author" content="FlareBall">
+<meta property="article:tag" content="monitor">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203192821670.png">
+
+<link rel="canonical" href="http://example.com/2024/12/04/prometheus/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>prometheus监控docker和linux主机 | FlareBall's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FlareBall's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/04/prometheus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FlareBall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlareBall's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          prometheus监控docker和linux主机
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-12-04 00:10:00 / Modified: 00:17:54" itemprop="dateCreated datePublished" datetime="2024-12-04T00:10:00+08:00">2024-12-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="prometheus监控k8s"><a href="#prometheus监控k8s" class="headerlink" title="prometheus监控k8s"></a>prometheus监控k8s</h1><h2 id="初见prometheus"><a href="#初见prometheus" class="headerlink" title="初见prometheus"></a>初见prometheus</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /opt/prometheus/config/prometheus.yml</span><br></pre></td></tr></table></figure>
+
+
+
+<p>填入如下内容作为配置（监控自己）</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">scrape_configs:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">job_name:</span> <span class="string">&quot;prometheus&quot;</span></span><br><span class="line">    <span class="attr">static_configs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">targets:</span> [<span class="string">&quot;localhost:9090&quot;</span>]  <span class="comment"># Prometheus 主节点地址</span></span><br></pre></td></tr></table></figure>
+
+<p>运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name=prometheus -p 9090:9090 -v /opt/prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus</span><br></pre></td></tr></table></figure>
+
+<p>运行成功后可以浏览器访问</p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203192821670.png" alt="image-20241203192821670"></p>
+<h2 id="nginx实例"><a href="#nginx实例" class="headerlink" title="nginx实例"></a>nginx实例</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name=mynginx -p 10080:80 nginx</span><br></pre></td></tr></table></figure>
+
+<p>此时可以在浏览器访问</p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203193603780.png" alt="image-20241203193603780"></p>
+<p>使用stats查看某容器状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 docker.service.d]# docker stats mynginx</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">[root@node0 docker.service.d]# docker stats --no-stream mynginx</span><br><span class="line">CONTAINER ID        NAME                CPU %               MEM USAGE / LIMIT     MEM %               NET I/O             BLOCK I/O           PIDS</span><br><span class="line">96ee9202c1c9        mynginx             0.00%               3.598MiB / 3.297GiB   0.11%               5.77kB / 4.89kB     0B / 16.4kB         5</span><br></pre></td></tr></table></figure>
+
+<p>说明    –no-stream       Disable streaming stats and only pull the first result\</p>
+<h2 id="终端处理格式化文本"><a href="#终端处理格式化文本" class="headerlink" title="终端处理格式化文本"></a>终端处理格式化文本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stats --no-stream mynginx | awk <span class="string">&#x27;NR!=1&#123;print $3&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>解释<br>NR：表示当前处理的行号。NR !&#x3D; 1 代表跳过第一行（标题行）<br>print $3：表示输出每行的第三列（即 CPU 使用百分比）。</p>
+<h2 id="awk使用（插曲）"><a href="#awk使用（插曲）" class="headerlink" title="awk使用（插曲）"></a>awk使用（插曲）</h2><p>awk 是一种强大的文本处理工具，通常用于从文本中提取、处理和生成报告。它特别适用于处理结构化的文本数据，比如日志文件、CSV 文件、配置文件、表格数据等。它可以按行处理文本，并且可以通过分隔符（例如空格、逗号等）来处理数据。</p>
+<p>awk 基本用途和功能</p>
+<h3 id="按列处理数据"><a href="#按列处理数据" class="headerlink" title="按列处理数据"></a>按列处理数据</h3><p>awk 可以轻松处理按空格或其他分隔符（例如逗号）分隔的文本。默认情况下，awk 使用空格或制表符（Tab）作为分隔符来划分每行数据，并通过 $1, $2, $3 等来访问每一列。</p>
+<p>示例：从一个文件或命令输出中提取每行的第一列数据：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;apple 10\nbanana 20&quot;</span> | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apple</span><br><span class="line">banana</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="操作行和列"><a href="#操作行和列" class="headerlink" title="操作行和列"></a>操作行和列</h3><p>在 awk 中使用条件语句、循环、数学运算等来处理文本中的数据。</p>
+<p>示例：计算每行第一列和第二列的和：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;10 20\n30 40&quot;</span> | awk <span class="string">&#x27;&#123;print $1 + $2&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+<p>输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">30</span><br><span class="line">70</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用字段分隔符（FS）"><a href="#使用字段分隔符（FS）" class="headerlink" title="使用字段分隔符（FS）"></a>使用字段分隔符（FS）</h3><p>可以指定自定义的字段分隔符。例如，当数据是 CSV 格式时，分隔符是逗号。</p>
+<p>示例：指定逗号作为分隔符来处理 CSV 数据：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;apple,10\nbanana,20&quot;</span> | awk -F <span class="string">&#x27;,&#x27;</span> <span class="string">&#x27;&#123;print $1&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<p>输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apple</span><br><span class="line">banana</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="模式匹配和条件执行"><a href="#模式匹配和条件执行" class="headerlink" title="模式匹配和条件执行"></a>模式匹配和条件执行</h3><p>awk 允许根据条件执行特定的操作，例如打印满足条件的行。</p>
+<p>示例：打印包含“banana”这一单词的行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;apple 10\nbanana 20&quot;</span> | awk <span class="string">&#x27;$1 == &quot;banana&quot; &#123;print $0&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">banana 20</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="内置变量"><a href="#内置变量" class="headerlink" title="内置变量"></a>内置变量</h3><p>awk 提供了一些内置变量，比如：</p>
+<p>NR：当前处理的行号。<br>NF：当前行的字段数。<br>$0：整行文本。<br>$1, $2, $3：每行的第 1、2、3 列。<br>FS：字段分隔符（默认是空格或制表符）。<br>打印格式化输出<br>awk 可以自定义输出格式，比如指定列宽、对齐等。</p>
+<p>示例：输出每个字段的固定宽度：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;apple 10\nbanana 20&quot;</span> | awk <span class="string">&#x27;&#123;printf &quot;%-10s %10s\n&quot;, $1, $2&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apple           10</span><br><span class="line">banana          20</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="cadvsior"><a href="#cadvsior" class="headerlink" title="cadvsior"></a>cadvsior</h2><p>安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --volume=/:/rootfs:ro \</span><br><span class="line">  --volume=/var/run:/var/run:ro \</span><br><span class="line">  --volume=/sys:/sys:ro \</span><br><span class="line">  --volume=/var/lib/docker/:/var/lib/docker:ro \</span><br><span class="line">  --volume=/dev/disk/:/dev/disk:ro \</span><br><span class="line">  --publish=8080:8080 \</span><br><span class="line">  --detach=<span class="literal">true</span> \</span><br><span class="line">  --name=cadvisor \</span><br><span class="line">  google/cadvisor:latest</span><br></pre></td></tr></table></figure>
+
+
+
+<p>此时可以在8080访问</p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203193536021.png" alt="image-20241203193536021"></p>
+<p>在prometheus绑定的配置文件添加监控源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /opt/prometheus/config/prometheus.yml</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202747980.png" alt="image-20241203202747980"></p>
+<p>重启prometheus</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart prometheus</span><br></pre></td></tr></table></figure>
+
+<p>静待片刻即可收到返回的新数据</p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202901001.png" alt="image-20241203202901001"></p>
+<h2 id="grafana"><a href="#grafana" class="headerlink" title="grafana"></a>grafana</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name=grafana -p 3000:3000 grafana/grafana</span><br></pre></td></tr></table></figure>
+
+<p>之后可以在端口3000访问</p>
+<p>默认账号密码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">admin</span><br><span class="line">admin</span><br></pre></td></tr></table></figure>
+
+<p>第一次会提示修改密码</p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202038317.png" alt="image-20241203202038317"></p>
+<p>先添加数据源</p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202125565.png" alt="image-20241203202125565"></p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202150910.png" alt="image-20241203202150910"></p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202212419.png" alt="image-20241203202212419"></p>
+<p>再导入监控模板</p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202246323.png" alt="image-20241203202246323"></p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202321103.png" alt="image-20241203202321103"></p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202349339.png" alt="image-20241203202349339"></p>
+<p>之后即可看到监控数据</p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202420197.png" alt="image-20241203202420197"></p>
+<h2 id="node-exporter"><a href="#node-exporter" class="headerlink" title="node exporter"></a>node exporter</h2><p>先创建容器，使用 –net&#x3D;”host”&#96; 网络模式共享主机网络堆栈，不需要-p进行端口映射</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d   --name=node-exporter   --net=<span class="string">&quot;host&quot;</span>   --pid=<span class="string">&quot;host&quot;</span>   -v <span class="string">&quot;/:/host:ro,rslave&quot;</span>   quay.io/prometheus/node-exporter:latest   --path.rootfs=/host</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202633848.png" alt="image-20241203202633848"></p>
+<h2 id="再次配置到前端展示"><a href="#再次配置到前端展示" class="headerlink" title="再次配置到前端展示"></a>再次配置到前端展示</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /opt/prometheus/config/prometheus.yml</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231340915.png" alt="image-20241203231340915"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart prometheus</span><br></pre></td></tr></table></figure>
+
+<p>静待一会即可</p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231321355.png" alt="image-20241203231321355"></p>
+<p>对于Grafana，依旧是带入库模板，编号9276</p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231507625.png" alt="image-20241203231507625"></p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231623784.png" alt="image-20241203231623784"></p>
+<p>之后即可看到面板</p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231703052.png" alt="image-20241203231703052"></p>
+<p>有些显示没有图表，一般是三个原因</p>
+<ol>
+<li>没数据（取采）</li>
+<li>时间不对（采集的时间戳与实际时间不符，调节横轴时间范围）</li>
+<li>代码写错了（如下面的网卡，可以把语句的中间拿去prometheus查询看有没有数据）</li>
+</ol>
+<h2 id="调整图表"><a href="#调整图表" class="headerlink" title="调整图表"></a>调整图表</h2><h3 id="cpu使用率"><a href="#cpu使用率" class="headerlink" title="cpu使用率"></a>cpu使用率</h3><p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203232815565.png" alt="image-20241203232815565"></p>
+<p>有结果的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node_cpu_seconds_total&#123;instance=~<span class="string">&quot;<span class="variable">$node</span>&quot;</span>,mode=<span class="string">&quot;idle&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203232842329.png" alt="image-20241203232842329"></p>
+<p>加一个irate就没了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">irate(node_cpu_seconds_total&#123;instance=~<span class="string">&quot;<span class="variable">$node</span>&quot;</span>,mode=<span class="string">&quot;idle&quot;</span>&#125;[1m])</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203232953786.png" alt="image-20241203232953786"></p>
+<p>推测<code>node_cpu_seconds_total</code> 只被更新不频繁，增加时间范围，到2分钟，可以</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">irate(node_cpu_seconds_total&#123;instance=~<span class="string">&quot;<span class="variable">$node</span>&quot;</span>,mode=<span class="string">&quot;idle&quot;</span>&#125;[2m])</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203233413063.png" alt="image-20241203233413063"></p>
+<p>于是问题解决</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">100 - (avg(irate(node_cpu_seconds_total&#123;instance=~<span class="string">&quot;<span class="variable">$node</span>&quot;</span>,mode=<span class="string">&quot;idle&quot;</span>&#125;[2m])) * 100)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203233919379.png" alt="image-20241203233919379"></p>
+<h3 id="磁盘读写速率"><a href="#磁盘读写速率" class="headerlink" title="磁盘读写速率"></a>磁盘读写速率</h3><p>点进去发现具有同样的问题，时间片从1m改为2m解决，最后一个为实时io，无data，查询普罗米修斯，返回状态码0</p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203234214204.png" alt="image-20241203234214204"></p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241204000357533.png" alt="image-20241204000357533"></p>
+<h3 id="磁盘读写容量"><a href="#磁盘读写容量" class="headerlink" title="磁盘读写容量"></a>磁盘读写容量</h3><p>与上面类似处理</p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203234646417.png" alt="image-20241203234646417"></p>
+<h3 id="磁盘IO读写时间"><a href="#磁盘IO读写时间" class="headerlink" title="磁盘IO读写时间"></a>磁盘IO读写时间</h3><p>类似处理，可以显示数据（实际上四条查询，前两个指标nodata，原因尚不清楚，后两个有）</p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203235634961.png" alt="image-20241203235634961"></p>
+<h3 id="磁盘每秒IO耗时"><a href="#磁盘每秒IO耗时" class="headerlink" title="磁盘每秒IO耗时"></a>磁盘每秒IO耗时</h3><p>类似处理，解决</p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203235842715.png" alt="image-20241203235842715"></p>
+<h3 id="网络进出流量"><a href="#网络进出流量" class="headerlink" title="网络进出流量"></a>网络进出流量</h3><p>比如下面这个是默认的网卡名称不对</p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231809571.png" alt="image-20241203231809571"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">irate(node_network_receive_bytes_total&#123;instance=~<span class="string">&#x27;$node&#x27;</span>,device=~<span class="string">&#x27;$nic&#x27;</span>&#125;[5m])*8</span><br></pre></td></tr></table></figure>
+
+
+
+<p>改为实际的网卡即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">irate(node_network_receive_bytes_total&#123;instance=~<span class="string">&#x27;$node&#x27;</span>,device=~<span class="string">&#x27;ens33&#x27;</span>&#125;[5m])*8</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231933298.png" alt="image-20241203231933298"></p>
+<h3 id="分区显示"><a href="#分区显示" class="headerlink" title="分区显示"></a>分区显示</h3><p>刷新解决</p>
+<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241204001130367.png" alt="image-20241204001130367"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/monitor/" rel="tag"># monitor</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/11/27/openEuler_k8s/" rel="prev" title="openeuler+docker+k8s">
+      <i class="fa fa-chevron-left"></i> openeuler+docker+k8s
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#prometheus%E7%9B%91%E6%8E%A7k8s"><span class="nav-number">1.</span> <span class="nav-text">prometheus监控k8s</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E8%A7%81prometheus"><span class="nav-number">1.1.</span> <span class="nav-text">初见prometheus</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.2.</span> <span class="nav-text">nginx实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%88%E7%AB%AF%E5%A4%84%E7%90%86%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%96%87%E6%9C%AC"><span class="nav-number">1.3.</span> <span class="nav-text">终端处理格式化文本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#awk%E4%BD%BF%E7%94%A8%EF%BC%88%E6%8F%92%E6%9B%B2%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">awk使用（插曲）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E5%88%97%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE"><span class="nav-number">1.4.1.</span> <span class="nav-text">按列处理数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E8%A1%8C%E5%92%8C%E5%88%97"><span class="nav-number">1.4.2.</span> <span class="nav-text">操作行和列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AD%97%E6%AE%B5%E5%88%86%E9%9A%94%E7%AC%A6%EF%BC%88FS%EF%BC%89"><span class="nav-number">1.4.3.</span> <span class="nav-text">使用字段分隔符（FS）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E5%92%8C%E6%9D%A1%E4%BB%B6%E6%89%A7%E8%A1%8C"><span class="nav-number">1.4.4.</span> <span class="nav-text">模式匹配和条件执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E5%8F%98%E9%87%8F"><span class="nav-number">1.4.5.</span> <span class="nav-text">内置变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cadvsior"><span class="nav-number">1.5.</span> <span class="nav-text">cadvsior</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grafana"><span class="nav-number">1.6.</span> <span class="nav-text">grafana</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#node-exporter"><span class="nav-number">1.7.</span> <span class="nav-text">node exporter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%8D%E6%AC%A1%E9%85%8D%E7%BD%AE%E5%88%B0%E5%89%8D%E7%AB%AF%E5%B1%95%E7%A4%BA"><span class="nav-number">1.8.</span> <span class="nav-text">再次配置到前端展示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E6%95%B4%E5%9B%BE%E8%A1%A8"><span class="nav-number">1.9.</span> <span class="nav-text">调整图表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cpu%E4%BD%BF%E7%94%A8%E7%8E%87"><span class="nav-number">1.9.1.</span> <span class="nav-text">cpu使用率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E8%AF%BB%E5%86%99%E9%80%9F%E7%8E%87"><span class="nav-number">1.9.2.</span> <span class="nav-text">磁盘读写速率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E8%AF%BB%E5%86%99%E5%AE%B9%E9%87%8F"><span class="nav-number">1.9.3.</span> <span class="nav-text">磁盘读写容量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98IO%E8%AF%BB%E5%86%99%E6%97%B6%E9%97%B4"><span class="nav-number">1.9.4.</span> <span class="nav-text">磁盘IO读写时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E6%AF%8F%E7%A7%92IO%E8%80%97%E6%97%B6"><span class="nav-number">1.9.5.</span> <span class="nav-text">磁盘每秒IO耗时</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E8%BF%9B%E5%87%BA%E6%B5%81%E9%87%8F"><span class="nav-number">1.9.6.</span> <span class="nav-text">网络进出流量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E6%98%BE%E7%A4%BA"><span class="nav-number">1.9.7.</span> <span class="nav-text">分区显示</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FlareBall</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FlareBall</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
