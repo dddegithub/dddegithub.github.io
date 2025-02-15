@@ -145,6 +145,181 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/15/app%E9%83%A8%E7%BD%B2%EF%BC%88nfs%E4%B8%8Epvc%E4%BD%BF%E7%94%A8%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FlareBall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlareBall's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/02/15/app%E9%83%A8%E7%BD%B2%EF%BC%88nfs%E4%B8%8Epvc%E4%BD%BF%E7%94%A8%EF%BC%89/" class="post-title-link" itemprop="url">nfs与pvc使用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-02-15 13:10:00 / Modified: 13:42:01" itemprop="dateCreated datePublished" datetime="2025-02-15T13:10:00+08:00">2025-02-15</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在k8s集群上利用nfs实现跨节点目录共享，部署ollama和nginx作为练习。</p>
+<p>环境为openeuler22.03 sp3，k8s1.23.6，docker为容器引擎，flannel提供通信支持</p>
+<p>一主（node0-192.168.195.40）二从(node1-192.168.195.41、node2-192.168.195.42)</p>
+<p>所有数据利用nfs实现共享（所有节点均需安装nfs服务），数据存储在主节点&#x2F;opt&#x2F;k8s_store&#x2F;目录。分别为&#x2F;opt&#x2F;k8s_store&#x2F;ollama和&#x2F;opt&#x2F;k8s_store&#x2F;nginx</p>
+<h1 id="nfs共享设置"><a href="#nfs共享设置" class="headerlink" title="nfs共享设置"></a>nfs共享设置</h1><h1 id="ollama部署"><a href="#ollama部署" class="headerlink" title="ollama部署"></a>ollama部署</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# <span class="built_in">ls</span></span><br><span class="line">deployment.yaml  pvc.yaml  pv.yaml  service.yaml</span><br></pre></td></tr></table></figure>
+
+<p>配置文件pv.yaml</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# <span class="built_in">cat</span> pv.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: PersistentVolume</span><br><span class="line">metadata:</span><br><span class="line">  name: ollama-pv</span><br><span class="line">spec:</span><br><span class="line">  capacity:</span><br><span class="line">    storage: 8Gi</span><br><span class="line">  volumeMode: Filesystem</span><br><span class="line">  accessModes:</span><br><span class="line">    - ReadWriteMany  <span class="comment"># 使用ReadWriteMany，支持多个节点挂载</span></span><br><span class="line">  persistentVolumeReclaimPolicy: Retain</span><br><span class="line">  nfs:</span><br><span class="line">    path: /opt/k8s_store/ollama  <span class="comment"># 共享目录</span></span><br><span class="line">    server: node0  <span class="comment"># NFS服务器地址</span></span><br></pre></td></tr></table></figure>
+
+<p>配置文件pvc.yaml</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# <span class="built_in">cat</span> pvc.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: PersistentVolumeClaim</span><br><span class="line">metadata:</span><br><span class="line">  name: ollama-pvc</span><br><span class="line">spec:</span><br><span class="line">  accessModes:</span><br><span class="line">    - ReadWriteMany  <span class="comment"># 对应修改后的PV配置</span></span><br><span class="line">  resources:</span><br><span class="line">    requests:</span><br><span class="line">      storage: 8Gi</span><br></pre></td></tr></table></figure>
+
+<p>配置文件deployment.yaml</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# <span class="built_in">cat</span> deployment.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: ollama-deployment  <span class="comment"># Deployment 名称</span></span><br><span class="line">spec:</span><br><span class="line">  replicas: 1  <span class="comment"># 副本数（可以根据需求调整副本数）</span></span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: ollama  <span class="comment"># 匹配标签，Pod 会以此标签进行选择</span></span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: ollama  <span class="comment"># Pod 标签</span></span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">        - name: ollama  <span class="comment"># 容器名称</span></span><br><span class="line">          image: ollama/ollama:latest  <span class="comment"># 使用的镜像</span></span><br><span class="line">          ports:</span><br><span class="line">            - containerPort: 11434  <span class="comment"># 容器端口映射</span></span><br><span class="line">          volumeMounts:</span><br><span class="line">            - name: ollama-storage  <span class="comment"># 使用 PVC 挂载卷</span></span><br><span class="line">              mountPath: /root/.ollama  <span class="comment"># 挂载路径，容器内的路径</span></span><br><span class="line">      restartPolicy: Always  <span class="comment"># 确保容器失败时重启</span></span><br><span class="line">      volumes:</span><br><span class="line">        - name: ollama-storage</span><br><span class="line">          persistentVolumeClaim:</span><br><span class="line">            claimName: ollama-pvc  <span class="comment"># 绑定的 PVC 名称</span></span><br></pre></td></tr></table></figure>
+
+<p>配置文件service.yaml</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# <span class="built_in">cat</span> service.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: ollama-service  <span class="comment"># Service 名称</span></span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    app: ollama  <span class="comment"># 匹配的标签，确保请求被转发到 Deployment 对应的 Pod</span></span><br><span class="line">  ports:</span><br><span class="line">    - protocol: TCP</span><br><span class="line">      port: 11434  <span class="comment"># Service 端口</span></span><br><span class="line">      targetPort: 11434  <span class="comment"># 容器内部端口</span></span><br><span class="line">  <span class="built_in">type</span>: NodePort  <span class="comment"># 让外部能够通过 NodePort 访问该服务</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>(实际上在本示例中并未进一步使用此处开放的端口)，这里可以进一步与dify等工具联动，实现外部api访问服务。可以查阅</p>
+<p><a target="_blank" rel="noopener" href="https://docs.dify.ai/learn-more/use-cases/private-ai-ollama-deepseek-dify">Private Deployment of Ollama + DeepSeek + Dify: Build Your Own AI Assistant | Dify</a></p>
+<p>利如下命令进行部署</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f pv.yaml</span><br><span class="line">kubectl apply -f pvc.yaml</span><br><span class="line">kubectl apply -f deployment.yaml</span><br></pre></td></tr></table></figure>
+
+
+
+<p>最终结果为</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# kubectl get pods</span><br><span class="line">NAME                                 READY   STATUS        RESTARTS      AGE</span><br><span class="line">k8s-nginx-6d779d947c-mvj99           1/1     Running       2 (76m ago)   46d</span><br><span class="line">k8s-nginx-6d779d947c-qdkvh           1/1     Running       2 (76m ago)   46d</span><br><span class="line">k8s-nginx-6d779d947c-zh8zs           1/1     Running       2 (76m ago)   46d</span><br><span class="line">ollama-deployment-777b9bccb7-sj7wd   1/1     Running       0             3m18s</span><br><span class="line">[root@node0 ollama]#</span><br></pre></td></tr></table></figure>
+
+<h1 id="ollama试用"><a href="#ollama试用" class="headerlink" title="ollama试用"></a>ollama试用</h1><p>此处进入pod内部，下载deepseekr1:1.5b完整部署结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# kubectl <span class="built_in">exec</span> -it ollama-deployment-777b9bccb7-sj7wd -- /bin/bash</span><br><span class="line">root@ollama-deployment-777b9bccb7-sj7wd:/# ollama run deepseek-r1:1.5b</span><br><span class="line">pulling manifest</span><br><span class="line">pulling aabd4debf0c8... 100% ▕█████████████████████████████████████████████████████████▏ 1.1 GB</span><br><span class="line">pulling 369ca498f347... 100% ▕█████████████████████████████████████████████████████████▏  387 B</span><br><span class="line">pulling 6e4c38e1172f... 100% ▕█████████████████████████████████████████████████████████▏ 1.1 KB</span><br><span class="line">pulling f4d24e9138dd... 100% ▕█████████████████████████████████████████████████████████▏  148 B</span><br><span class="line">pulling a85fe2a2e58e... 100% ▕█████████████████████████████████████████████████████████▏  487 B</span><br><span class="line">verifying sha256 digest</span><br><span class="line">writing manifest</span><br><span class="line">success</span><br><span class="line">&gt;&gt;&gt; hi</span><br><span class="line">&lt;think&gt;</span><br><span class="line"></span><br><span class="line">&lt;/think&gt;</span><br><span class="line"></span><br><span class="line">Hello! How can I assist you today? 😊</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; wo are you</span><br><span class="line">&lt;think&gt;</span><br><span class="line"></span><br><span class="line">&lt;/think&gt;</span><br><span class="line"></span><br><span class="line">Hello! It seems like your message is a bit unclear. Could you please provide more context or clarify what you<span class="string">&#x27;re asking? I&#x27;</span>m here to <span class="built_in">help</span>! 😊</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; /bye</span><br><span class="line">root@ollama-deployment-777b9bccb7-sj7wd:/# <span class="built_in">exit</span></span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line">[root@node0 ollama]# </span><br></pre></td></tr></table></figure>
+
+
+
+<p>可以顺利使用，部署成功。</p>
+<h1 id="nginx搭建html服务器"><a href="#nginx搭建html服务器" class="headerlink" title="nginx搭建html服务器"></a>nginx搭建html服务器</h1><p>此处准备了wireshark的本地用户手册作为服务内容。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WiresharkUser<span class="string">&#x27;sGuide.zip # 内含n多html文档</span></span><br></pre></td></tr></table></figure>
+
+<p>解压到&#x2F;opt&#x2F;k8s_store&#x2F;nginx&#x2F;index里面。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip <span class="string">&quot;WiresharkUser&#x27;sGuide.zip&quot;</span> -d /opt/k8s_store/nginx/index</span><br></pre></td></tr></table></figure>
+
+<p>在共享目录写一个index.html放在&#x2F;opt&#x2F;k8s_store&#x2F;nginx</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 nginx]# nano index.html</span><br><span class="line">[root@node0 nginx]# <span class="built_in">pwd</span></span><br><span class="line">/opt/k8s_store/nginx</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">&lt;<span class="built_in">head</span>&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Index of Files&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        body &#123;</span><br><span class="line">            font-family: Arial, sans-serif;</span><br><span class="line">            margin: 20px;</span><br><span class="line">        &#125;</span><br><span class="line">        h1 &#123;</span><br><span class="line">            color: <span class="comment">#333;</span></span><br><span class="line">        &#125;</span><br><span class="line">        ul &#123;</span><br><span class="line">            list-style-type: none;</span><br><span class="line">            padding: 0;</span><br><span class="line">        &#125;</span><br><span class="line">        li &#123;</span><br><span class="line">            margin: 8px 0;</span><br><span class="line">        &#125;</span><br><span class="line">        a &#123;</span><br><span class="line">            text-decoration: none;</span><br><span class="line">            color: <span class="comment">#007bff;</span></span><br><span class="line">        &#125;</span><br><span class="line">        a:hover &#123;</span><br><span class="line">            text-decoration: underline;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h1&gt;Index of Files&lt;/h1&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">        &lt;li&gt;&lt;a href=<span class="string">&quot;index/index.html&quot;</span>&gt;Click Here to <span class="string">&#x27;Wireshark User’s Guide&#x27;</span>&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">        &lt;!-- Add more links here as needed --&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>用到的配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 nginx]# <span class="built_in">ls</span></span><br><span class="line">nginx-deployment.yaml  nginx-service.yaml  pvc.yaml  pv.yaml</span><br></pre></td></tr></table></figure>
+
+<p>pv.yaml</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 nginx]# <span class="built_in">cat</span> pv.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: PersistentVolume</span><br><span class="line">metadata:</span><br><span class="line">  name: nginx-pv</span><br><span class="line">spec:</span><br><span class="line">  capacity:</span><br><span class="line">    storage: 1Gi</span><br><span class="line">  volumeMode: Filesystem</span><br><span class="line">  accessModes:</span><br><span class="line">    - ReadWriteMany  <span class="comment"># 使用ReadWriteMany，支持多个节点挂载</span></span><br><span class="line">  persistentVolumeReclaimPolicy: Retain</span><br><span class="line">  nfs:</span><br><span class="line">    path: /opt/k8s_store/nginx  <span class="comment"># 共享目录</span></span><br><span class="line">    server: node0  <span class="comment"># NFS服务器地址</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>pvc.yaml</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 nginx]# <span class="built_in">cat</span> pvc.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: PersistentVolumeClaim</span><br><span class="line">metadata:</span><br><span class="line">  name: nginx-pvc</span><br><span class="line">spec:</span><br><span class="line">  accessModes:</span><br><span class="line">    - ReadWriteMany  <span class="comment"># 对应修改后的PV配置</span></span><br><span class="line">  resources:</span><br><span class="line">    requests:</span><br><span class="line">      storage: 1Gi</span><br></pre></td></tr></table></figure>
+
+
+
+<p>nginx-deployment.yaml </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 nginx]# <span class="built_in">cat</span> nginx-deployment.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: k8s-nginx</span><br><span class="line">spec:</span><br><span class="line">  replicas: 1</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: k8s-nginx</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: k8s-nginx</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">        - name: nginx</span><br><span class="line">          image: nginx:latest</span><br><span class="line">          ports:</span><br><span class="line">            - containerPort: 80</span><br><span class="line">          volumeMounts:</span><br><span class="line">            - name: nginx-storage</span><br><span class="line">              mountPath: /usr/share/nginx/html  <span class="comment"># NFS 共享目录挂载到 Nginx 的默认网页目录</span></span><br><span class="line">      volumes:</span><br><span class="line">        - name: nginx-storage</span><br><span class="line">          persistentVolumeClaim:</span><br><span class="line">            claimName: nginx-pvc  <span class="comment"># 绑定的 PVC 名称</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>nginx-service.yaml</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 nginx]# <span class="built_in">cat</span> nginx-service.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: nginx-service  <span class="comment"># 服务名称</span></span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    app: k8s-nginx  <span class="comment"># 选择标签，确保将流量转发到对应的 Pod</span></span><br><span class="line">  ports:</span><br><span class="line">    - protocol: TCP</span><br><span class="line">      port: 80  <span class="comment"># 服务端口</span></span><br><span class="line">      targetPort: 80  <span class="comment"># 容器内部端口</span></span><br><span class="line">  <span class="built_in">type</span>: NodePort  <span class="comment"># 使用 NodePort 类型来暴露服务</span></span><br><span class="line"></span><br><span class="line">[root@node0 nginx]#</span><br></pre></td></tr></table></figure>
+
+<p>应用即可</p>
+<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h2 id="更改共享目录权限"><a href="#更改共享目录权限" class="headerlink" title="更改共享目录权限"></a>更改共享目录权限</h2><p>所有人可以访问</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 nginx]# <span class="built_in">sudo</span> <span class="built_in">chmod</span> -R 777 /opt/k8s_store</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="pvc-pv更新"><a href="#pvc-pv更新" class="headerlink" title="pvc&#x2F;pv更新"></a>pvc&#x2F;pv更新</h2><p>如果之前部署文件有误要重新部署，可以使用删除原配置重新部署</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除旧的pvc和pv创建新的</span></span><br><span class="line">[root@node0 ollama]# vi pv.yaml</span><br><span class="line">[root@node0 ollama]# vi pvc.yaml</span><br><span class="line">[root@node0 ollama]# kubectl delete pvc ollama-pvc</span><br><span class="line">persistentvolumeclaim <span class="string">&quot;ollama-pvc&quot;</span> deleted</span><br><span class="line">[root@node0 ollama]# kubectl delete pv ollama-pv</span><br><span class="line">persistentvolume <span class="string">&quot;ollama-pv&quot;</span> deleted</span><br><span class="line">[root@node0 ollama]# kubectl apply -f pv.yaml</span><br><span class="line">persistentvolume/ollama-pv created</span><br><span class="line">[root@node0 ollama]# kubectl apply -f pvc.yaml</span><br><span class="line">persistentvolumeclaim/ollama-pvc created</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="pvc删除卡住"><a href="#pvc删除卡住" class="headerlink" title="pvc删除卡住"></a>pvc删除卡住</h2><p>显示</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ~]# kubectl get pvc ollama-pvc</span><br><span class="line">NAME         STATUS        VOLUME      CAPACITY   ACCESS MODES   STORAGECLASS   AGE</span><br><span class="line">ollama-pvc   Terminating   ollama-pv   8Gi        RWO                           27m</span><br><span class="line">[root@node0 ~]# </span><br></pre></td></tr></table></figure>
+
+<p>当PVC显示为Terminating时，通常意味着Kubernetes正在执行删除操作，但未能完全完成。这通常是由于某些资源清理不完整或在删除过程中发生阻塞。</p>
+<p>查看该PVC详细信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe pvc ollama-pvc</span><br></pre></td></tr></table></figure>
+
+<p>此处显示</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ~]# kubectl describe pvc ollama-pvc</span><br><span class="line">Name:          ollama-pvc</span><br><span class="line">Namespace:     default</span><br><span class="line">StorageClass:  </span><br><span class="line">Status:        Terminating (lasts 2m16s)</span><br><span class="line">Volume:        ollama-pv</span><br><span class="line">Labels:        &lt;none&gt;</span><br><span class="line">Annotations:   pv.kubernetes.io/bind-completed: <span class="built_in">yes</span>     </span><br><span class="line">               pv.kubernetes.io/bound-by-controller: <span class="built_in">yes</span></span><br><span class="line">Finalizers:    [kubernetes.io/pvc-protection]</span><br><span class="line">Capacity:      8Gi</span><br><span class="line">Access Modes:  RWO</span><br><span class="line">VolumeMode:    Filesystem</span><br><span class="line">Used By:       ollama-deployment-777b9bccb7-wq6lh</span><br><span class="line">Events:        &lt;none&gt;</span><br><span class="line">[root@node0 ~]#</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，它正处于Finalizers保护机制下。Finalizers: [kubernetes.io&#x2F;pvc-protection]表示Kubernetes正在确保该PVC不会在被使用时被删除。</p>
+<p>由于ollama-deployment-777b9bccb7-wq6lh这个Pod仍在使用该PVC，删除操作没有完成。</p>
+<p>解决方案为删除Pod</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete pod ollama-deployment-777b9bccb7-wq6lh</span><br></pre></td></tr></table></figure>
+
+<p>这时候pvc即可删除</p>
+<p>除此之外，可以选择强制删除pvc，不过不做推荐（此处未使用）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete pvc ollama-pvc --force --grace-period=0</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="pod自动重启"><a href="#pod自动重启" class="headerlink" title="pod自动重启"></a>pod自动重启</h2><p>刚才执行了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete pod ollama-deployment-777b9bccb7-wq6lh</span><br></pre></td></tr></table></figure>
+
+<p>但由于之前部署由Deployment管理，Deployment会自动创建一个新的Pod来替代被删除的Pod。</p>
+<p>如下所示</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ~]# kubectl get po</span><br><span class="line">NAME                                 READY   STATUS    RESTARTS      AGE</span><br><span class="line">k8s-nginx-6d779d947c-mvj99           1/1     Running   2 (59m ago)   46d</span><br><span class="line">k8s-nginx-6d779d947c-qdkvh           1/1     Running   2 (59m ago)   46d</span><br><span class="line">k8s-nginx-6d779d947c-zh8zs           1/1     Running   2 (59m ago)   46d</span><br><span class="line">ollama-deployment-777b9bccb7-nb9ct   0/1     Pending   0             10s</span><br><span class="line">[root@node0 ~]#</span><br></pre></td></tr></table></figure>
+
+<p>阻止pod自动重启可以删除deployment</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete deployment ollama-deployment</span><br></pre></td></tr></table></figure>
+
+<p>重新查看，发现删除成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# kubectl get pods</span><br><span class="line">NAME                                 READY   STATUS        RESTARTS      AGE</span><br><span class="line">k8s-nginx-6d779d947c-mvj99           1/1     Running       2 (76m ago)   46d</span><br><span class="line">k8s-nginx-6d779d947c-qdkvh           1/1     Running       2 (76m ago)   46d</span><br><span class="line">k8s-nginx-6d779d947c-zh8zs           1/1     Running       2 (76m ago)   46d</span><br><span class="line">ollama-deployment-777b9bccb7-sj7wd   1/1     Running       0             3m18s</span><br><span class="line">[root@node0 ollama]</span><br></pre></td></tr></table></figure>
+
+<h2 id="更改副本数"><a href="#更改副本数" class="headerlink" title="更改副本数"></a>更改副本数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl scale deployment k8s-nginx --replicas=1</span><br></pre></td></tr></table></figure>
+
+<h2 id="scp传输"><a href="#scp传输" class="headerlink" title="scp传输"></a>scp传输</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\<span class="built_in">dd</span>\Desktop&gt; scp <span class="string">&#x27;.\WiresharkUser&#x27;</span><span class="string">&#x27;sGuide.zip&#x27;</span> root@192.168.195.40:/opt/k8s_store/nginx</span><br><span class="line"></span><br><span class="line">Authorized <span class="built_in">users</span> only. All activities may be monitored and reported.</span><br><span class="line">root@192.168.195.40<span class="string">&#x27;s password:</span></span><br><span class="line"><span class="string">WiresharkUser&#x27;</span>sGuide.zip                                                              100%   10MB 129.3MB/s   00:00</span><br><span class="line">PS C:\Users\<span class="built_in">dd</span>\Desktop&gt;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/04/prometheus/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1094,7 +1269,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1126,7 +1301,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
