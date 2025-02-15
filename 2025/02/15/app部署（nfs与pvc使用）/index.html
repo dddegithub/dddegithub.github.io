@@ -28,7 +28,7 @@
 <meta property="og:description" content="在k8s集群上利用nfs实现跨节点目录共享，部署ollama和nginx作为练习。 环境为openeuler22.03 sp3，k8s1.23.6，docker为容器引擎，flannel提供通信支持 一主（node0-192.168.195.40）二从(node1-192.168.195.41、node2-192.168.195.42) 所有数据利用nfs实现共享（所有节点均需安装nfs服务），数">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2025-02-15T05:10:00.000Z">
-<meta property="article:modified_time" content="2025-02-15T05:42:01.098Z">
+<meta property="article:modified_time" content="2025-02-15T05:50:05.370Z">
 <meta property="article:author" content="FlareBall">
 <meta property="article:tag" content="k8s">
 <meta name="twitter:card" content="summary">
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2025-02-15 13:10:00 / Modified: 13:42:01" itemprop="dateCreated datePublished" datetime="2025-02-15T13:10:00+08:00">2025-02-15</time>
+              <time title="Created: 2025-02-15 13:10:00 / Modified: 13:50:05" itemprop="dateCreated datePublished" datetime="2025-02-15T13:10:00+08:00">2025-02-15</time>
             </span>
 
           
@@ -193,7 +193,19 @@
 <p>环境为openeuler22.03 sp3，k8s1.23.6，docker为容器引擎，flannel提供通信支持</p>
 <p>一主（node0-192.168.195.40）二从(node1-192.168.195.41、node2-192.168.195.42)</p>
 <p>所有数据利用nfs实现共享（所有节点均需安装nfs服务），数据存储在主节点&#x2F;opt&#x2F;k8s_store&#x2F;目录。分别为&#x2F;opt&#x2F;k8s_store&#x2F;ollama和&#x2F;opt&#x2F;k8s_store&#x2F;nginx</p>
-<h1 id="nfs共享设置"><a href="#nfs共享设置" class="headerlink" title="nfs共享设置"></a>nfs共享设置</h1><h1 id="ollama部署"><a href="#ollama部署" class="headerlink" title="ollama部署"></a>ollama部署</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# <span class="built_in">ls</span></span><br><span class="line">deployment.yaml  pvc.yaml  pv.yaml  service.yaml</span><br></pre></td></tr></table></figure>
+<h2 id="nfs共享"><a href="#nfs共享" class="headerlink" title="nfs共享"></a>nfs共享</h2><p>安装NFS服务（所有节点）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> dnf install nfs-utils</span><br></pre></td></tr></table></figure>
+
+<p>编辑&#x2F;etc&#x2F;exports文件，添加共享目录配置（存储节点）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/k8s_store  *(rw,<span class="built_in">sync</span>,no_root_squash,no_subtree_check)</span><br></pre></td></tr></table></figure>
+
+<p>这会使&#x2F;opt&#x2F;k8s_store目录对所有节点（*表示所有）可读写。</p>
+<p>重启NFS服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart nfs-server</span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> nfs-server</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="ollama部署"><a href="#ollama部署" class="headerlink" title="ollama部署"></a>ollama部署</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# <span class="built_in">ls</span></span><br><span class="line">deployment.yaml  pvc.yaml  pv.yaml  service.yaml</span><br></pre></td></tr></table></figure>
 
 <p>配置文件pv.yaml</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# <span class="built_in">cat</span> pv.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: PersistentVolume</span><br><span class="line">metadata:</span><br><span class="line">  name: ollama-pv</span><br><span class="line">spec:</span><br><span class="line">  capacity:</span><br><span class="line">    storage: 8Gi</span><br><span class="line">  volumeMode: Filesystem</span><br><span class="line">  accessModes:</span><br><span class="line">    - ReadWriteMany  <span class="comment"># 使用ReadWriteMany，支持多个节点挂载</span></span><br><span class="line">  persistentVolumeReclaimPolicy: Retain</span><br><span class="line">  nfs:</span><br><span class="line">    path: /opt/k8s_store/ollama  <span class="comment"># 共享目录</span></span><br><span class="line">    server: node0  <span class="comment"># NFS服务器地址</span></span><br></pre></td></tr></table></figure>
@@ -386,7 +398,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#nfs%E5%85%B1%E4%BA%AB%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">nfs共享设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ollama%E9%83%A8%E7%BD%B2"><span class="nav-number">2.</span> <span class="nav-text">ollama部署</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ollama%E8%AF%95%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">ollama试用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx%E6%90%AD%E5%BB%BAhtml%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">nginx搭建html服务器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E5%85%B1%E4%BA%AB%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90"><span class="nav-number">5.1.</span> <span class="nav-text">更改共享目录权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pvc-pv%E6%9B%B4%E6%96%B0"><span class="nav-number">5.2.</span> <span class="nav-text">pvc&#x2F;pv更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pvc%E5%88%A0%E9%99%A4%E5%8D%A1%E4%BD%8F"><span class="nav-number">5.3.</span> <span class="nav-text">pvc删除卡住</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pod%E8%87%AA%E5%8A%A8%E9%87%8D%E5%90%AF"><span class="nav-number">5.4.</span> <span class="nav-text">pod自动重启</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E5%89%AF%E6%9C%AC%E6%95%B0"><span class="nav-number">5.5.</span> <span class="nav-text">更改副本数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scp%E4%BC%A0%E8%BE%93"><span class="nav-number">5.6.</span> <span class="nav-text">scp传输</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#nfs%E5%85%B1%E4%BA%AB"><span class="nav-number">1.</span> <span class="nav-text">nfs共享</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ollama%E9%83%A8%E7%BD%B2"><span class="nav-number"></span> <span class="nav-text">ollama部署</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ollama%E8%AF%95%E7%94%A8"><span class="nav-number"></span> <span class="nav-text">ollama试用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx%E6%90%AD%E5%BB%BAhtml%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number"></span> <span class="nav-text">nginx搭建html服务器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="nav-number"></span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E5%85%B1%E4%BA%AB%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90"><span class="nav-number">1.</span> <span class="nav-text">更改共享目录权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pvc-pv%E6%9B%B4%E6%96%B0"><span class="nav-number">2.</span> <span class="nav-text">pvc&#x2F;pv更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pvc%E5%88%A0%E9%99%A4%E5%8D%A1%E4%BD%8F"><span class="nav-number">3.</span> <span class="nav-text">pvc删除卡住</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pod%E8%87%AA%E5%8A%A8%E9%87%8D%E5%90%AF"><span class="nav-number">4.</span> <span class="nav-text">pod自动重启</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E5%89%AF%E6%9C%AC%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">更改副本数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scp%E4%BC%A0%E8%BE%93"><span class="nav-number">6.</span> <span class="nav-text">scp传输</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
