@@ -145,6 +145,381 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/11/07/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-122-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%E2%85%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FlareBall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlareBall's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/11/07/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-122-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%E2%85%A1/" class="post-title-link" itemprop="url">122.买卖股票的最佳时机Ⅱ</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-11-07 14:00:00 / Modified: 23:39:50" itemprop="dateCreated datePublished" datetime="2025-11-07T14:00:00+08:00">2025-11-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="贪心"><a href="#贪心" class="headerlink" title="贪心"></a>贪心</h1><p>时间复杂度$O(n)$</p>
+<p>空间复杂度$O(1)$</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">maxProfit</span><span class="params">(<span class="type">int</span>[] prices)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>, pre = prices[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; prices.length; ++i) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">cur</span> <span class="operator">=</span> prices[i];</span><br><span class="line">            <span class="keyword">if</span>(cur &gt; pre)&#123;</span><br><span class="line">                ans += cur - pre;</span><br><span class="line">            &#125;</span><br><span class="line">            pre = cur;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/11/07/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-121-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FlareBall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlareBall's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/11/07/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-121-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA/" class="post-title-link" itemprop="url">121.买卖股票的最佳时机</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-11-07 13:40:00 / Modified: 23:37:27" itemprop="dateCreated datePublished" datetime="2025-11-07T13:40:00+08:00">2025-11-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="贪心"><a href="#贪心" class="headerlink" title="贪心"></a>贪心</h1><p>时间复杂度$O(n)$</p>
+<p>空间复杂度$O(1)$</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">maxProfit</span><span class="params">(<span class="type">int</span>[] prices)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>, preMin = prices[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; prices.length; ++i)&#123;</span><br><span class="line">            ans = Math.max(ans, prices[i] - preMin);</span><br><span class="line">            preMin = Math.min(preMin, prices[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/11/07/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-189-%E8%BD%AE%E8%BD%AC%E6%95%B0%E7%BB%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FlareBall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlareBall's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/11/07/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-189-%E8%BD%AE%E8%BD%AC%E6%95%B0%E7%BB%84/" class="post-title-link" itemprop="url">189.轮转数组</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-11-07 13:30:00 / Modified: 23:39:01" itemprop="dateCreated datePublished" datetime="2025-11-07T13:30:00+08:00">2025-11-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h1><p>时间复杂度$O(n)$</p>
+<p>空间复杂度$O(1)$</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">rotate</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        k %= nums.length;</span><br><span class="line">        reverse(nums, <span class="number">0</span>, nums.length - <span class="number">1</span>);</span><br><span class="line">        reverse(nums, <span class="number">0</span>, k - <span class="number">1</span>);</span><br><span class="line">        reverse(nums, k, nums.length - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">reverse</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">        <span class="keyword">while</span>(start &lt; end) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">tmp</span> <span class="operator">=</span> nums[start];</span><br><span class="line">            nums[start] = nums[end];</span><br><span class="line">            nums[end] = tmp;</span><br><span class="line">            start++;</span><br><span class="line">            end--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/11/07/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-169-%E5%A4%9A%E6%95%B0%E5%85%83%E7%B4%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FlareBall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlareBall's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/11/07/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-169-%E5%A4%9A%E6%95%B0%E5%85%83%E7%B4%A0/" class="post-title-link" itemprop="url">169.多数元素</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-11-07 13:20:00 / Modified: 23:34:17" itemprop="dateCreated datePublished" datetime="2025-11-07T13:20:00+08:00">2025-11-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="摩尔投票"><a href="#摩尔投票" class="headerlink" title="摩尔投票"></a>摩尔投票</h1><p>时间复杂度$O(n)$</p>
+<p>空间复杂度$O(1)$</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">majorityElement</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">cnt</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; nums.length; ++i)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i] == ans)&#123;</span><br><span class="line">                cnt++;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(--cnt == <span class="number">0</span>)&#123;</span><br><span class="line">                ans = nums[i];</span><br><span class="line">                cnt = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/11/07/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-26-%E5%88%A0%E9%99%A4%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E9%A1%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FlareBall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlareBall's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/11/07/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-26-%E5%88%A0%E9%99%A4%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%87%8D%E5%A4%8D%E9%A1%B9/" class="post-title-link" itemprop="url">26.删除有序数组中的重复项</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-11-07 13:10:00 / Modified: 23:31:13" itemprop="dateCreated datePublished" datetime="2025-11-07T13:10:00+08:00">2025-11-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h1><p>时间复杂度$O(n)$</p>
+<p>空间复杂度$O(1)$</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">removeDuplicates</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>, right = <span class="number">1</span>, n = nums.length;</span><br><span class="line">        <span class="keyword">while</span>(right &lt; n)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[right] != nums[left])&#123;</span><br><span class="line">                left++;</span><br><span class="line">                nums[left] = nums[right];</span><br><span class="line">            &#125;</span><br><span class="line">            right++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> left + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/11/03/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-88-%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -786,663 +1161,11 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/27/openEuler-k8s/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlareBall's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/11/27/openEuler-k8s/" class="post-title-link" itemprop="url">openeuler+docker+k8s</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-11-27 00:12:00" itemprop="dateCreated datePublished" datetime="2024-11-27T00:12:00+08:00">2024-11-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-03 19:09:04" itemprop="dateModified" datetime="2024-12-03T19:09:04+08:00">2024-12-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>记录学习部署k8s过程中踩过的坑，下次部署有个参考</p>
-<h1 id="节点规划"><a href="#节点规划" class="headerlink" title="节点规划"></a>节点规划</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">k8s 1.20.2 + docker + flannel 0.20.2</span><br><span class="line"></span><br><span class="line">node0 192.168.126.139 master 4GB 40GB</span><br><span class="line">node1 192.168.126.140 slave 4GB 40GB</span><br><span class="line">node2 192.168.126.141 slave 4GB 40GB</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="前置工作（所有节点）"><a href="#前置工作（所有节点）" class="headerlink" title="前置工作（所有节点）"></a>前置工作（所有节点）</h1><ol>
-<li><p>修自定义主机名，即刻应用，以一个为例</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># hostnamectl set-hostname node1</span></span><br><span class="line"><span class="comment"># sudo -i</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124234104685.png" alt="image-20241124234104685"></p>
-</li>
-<li><p>整个顺手的文本编辑器，笔者这里选了nano</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yum install nano</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125000040548.png" alt="image-20241125000040548"></p>
-</li>
-<li><p>配置主机名解析</p>
-<p><code>/etc/hosts</code>是一个本地的静态文件，用于将主机名映射到 IP 地址。当系统需要解析主机名时，首先查找该文件。如果找到匹配项，则使用该 IP 地址，而不通过 DNS 服务器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nano /etc/hosts</span></span><br></pre></td></tr></table></figure>
-
-<p>添加如下内容</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125000357924.png" alt="image-20241125000357924"></p>
-</li>
-<li><p>关闭swap，selinux，禁用防火墙</p>
-<p>k8s运行需要禁用swap（交换空间）更好的进行容器内存管理。<code>swapoff -a</code>关闭swap。<code>/etc/fstab</code> 用于定义系统启动时自动挂载的文件系统、分区、交换空间（swap）等信息，<code>sed -ri &#39;s/.*swap.*/#&amp;/&#39; /etc/fstab</code>注释掉其中关于swap的信息。<code>setenforce 0</code>禁用 SELinux 的强制安全策略避免k8s遇到权限问题。<code>systemctl stop firewalld &amp;&amp; systemctl disable firewalld</code>关闭并禁用防火墙</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># swapoff -a</span></span><br><span class="line"><span class="comment"># sed -ri &#x27;s/.*swap.*/#&amp;/&#x27; /etc/fstab</span></span><br><span class="line"><span class="comment"># setenforce 0</span></span><br><span class="line"><span class="comment"># systemctl stop firewalld &amp;&amp; systemctl disable firewalld</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125001106539.png" alt="image-20241125001106539"></p>
-</li>
-<li><p>启用内核模块</p>
-<ol>
-<li><p>**<code>modprobe overlay</code>**：加载 Overlay 文件系统（用于容器运行时）内核模块，支持容器文件系统。</p>
-</li>
-<li><p>**<code>modprobe br_netfilter</code>**： 加载网络桥接过滤模块，用于容器和主机之间的流量控制。</p>
-</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># modprobe overlay</span></span><br><span class="line"><span class="comment"># modprobe br_netfilter</span></span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>网络转发常用配置</p>
-<ol>
-<li><strong><code>net.bridge.bridge-nf-call-iptables = 1</code></strong><br>部署容器时，容器网络通常会与宿主机的网络进行桥接。在处理跨越网络桥接的数据包时，调用 <code>iptables</code> 进行包过滤。避免容器间的流量被误拦截。</li>
-<li><strong><code>net.ipv4.ip_forward = 1</code></strong><br>启用 IP 转发，使主机能够转发网络流量，保证不同节点间的 Pod 可以相互通信。</li>
-<li><strong><code>net.bridge.bridge-nf-call-ip6tables = 1</code></strong><br>与第一个参数类似，关于ipv6的。</li>
-<li><strong><code>vm.swappiness=0</code></strong><br>设置虚拟内存的交换行为，<code>swappiness</code> 控制内核决定什么时候将内存页面交换到硬盘上。<code>swappiness=0</code> 表示内核尽量避免交换，优先使用物理内存，避免频繁的内存交换。</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/sysctl.d/kubernetes.conf &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">net.bridge.bridge-nf-call-iptables = 1</span></span><br><span class="line"><span class="string">net.ipv4.ip_forward = 1</span></span><br><span class="line"><span class="string">net.bridge.bridge-nf-call-ip6tables = 1</span></span><br><span class="line"><span class="string">vm.swappiness=0</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
-
-<p>生效规则</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sysctl -p /etc/sysctl.d/kubernetes.conf</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h1 id="docker安装（所有节点）"><a href="#docker安装（所有节点）" class="headerlink" title="docker安装（所有节点）"></a>docker安装（所有节点）</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># dnf install -y docker</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125001725376.png" alt="image-20241125001725376"></p>
-<p>开机自启</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl enable docker &amp;&amp; systemctl start docker</span></span><br></pre></td></tr></table></figure>
-
-<p>查看版本，确定安装成功</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker --version</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125002237232.png" alt="image-20241125002237232"></p>
-<h1 id="网络组件配置准备（所有节点）"><a href="#网络组件配置准备（所有节点）" class="headerlink" title="网络组件配置准备（所有节点）"></a>网络组件配置准备（所有节点）</h1><p>Flannel 是 Kubernetes 的网络插件，用于为集群中的容器提供跨节点的网络通信，常用的还有calico，flannel简单易用，calico功能更强大</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mkdir /opt/yaml/</span></span><br><span class="line"><span class="comment"># nano /opt/yaml/kube-flannel.yaml</span></span><br></pre></td></tr></table></figure>
-
-<p>内容如下，注意这里的镜像是国外的，可以换成国内的，也可以给docker配置代理</p>
-<p>另外，如果使用其他版本的flannel，可以直接去其github仓库下载对应yml文件</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Namespace</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">kube-flannel</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">pod-security.kubernetes.io/enforce:</span> <span class="string">privileged</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ClusterRole</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">rbac.authorization.k8s.io/v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">flannel</span></span><br><span class="line"><span class="attr">rules:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">apiGroups:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;&quot;</span></span><br><span class="line">  <span class="attr">resources:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">pods</span></span><br><span class="line">  <span class="attr">verbs:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">get</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">apiGroups:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;&quot;</span></span><br><span class="line">  <span class="attr">resources:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">nodes</span></span><br><span class="line">  <span class="attr">verbs:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">get</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">list</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">watch</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">apiGroups:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;&quot;</span></span><br><span class="line">  <span class="attr">resources:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">nodes/status</span></span><br><span class="line">  <span class="attr">verbs:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">patch</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">apiGroups:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">&quot;networking.k8s.io&quot;</span></span><br><span class="line">  <span class="attr">resources:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">clustercidrs</span></span><br><span class="line">  <span class="attr">verbs:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">list</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">watch</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ClusterRoleBinding</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">rbac.authorization.k8s.io/v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">flannel</span></span><br><span class="line"><span class="attr">roleRef:</span></span><br><span class="line">  <span class="attr">apiGroup:</span> <span class="string">rbac.authorization.k8s.io</span></span><br><span class="line">  <span class="attr">kind:</span> <span class="string">ClusterRole</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">flannel</span></span><br><span class="line"><span class="attr">subjects:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">kind:</span> <span class="string">ServiceAccount</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">flannel</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kube-flannel</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ServiceAccount</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">flannel</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kube-flannel</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ConfigMap</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">kube-flannel-cfg</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kube-flannel</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">tier:</span> <span class="string">node</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">flannel</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="attr">cni-conf.json:</span> <span class="string">|</span></span><br><span class="line"><span class="string">    &#123;</span></span><br><span class="line"><span class="string">      &quot;name&quot;: &quot;cbr0&quot;,</span></span><br><span class="line"><span class="string">      &quot;cniVersion&quot;: &quot;0.3.1&quot;,</span></span><br><span class="line"><span class="string">      &quot;plugins&quot;: [</span></span><br><span class="line"><span class="string">        &#123;</span></span><br><span class="line"><span class="string">          &quot;type&quot;: &quot;flannel&quot;,</span></span><br><span class="line"><span class="string">          &quot;delegate&quot;: &#123;</span></span><br><span class="line"><span class="string">            &quot;hairpinMode&quot;: true,</span></span><br><span class="line"><span class="string">            &quot;isDefaultGateway&quot;: true</span></span><br><span class="line"><span class="string">          &#125;</span></span><br><span class="line"><span class="string">        &#125;,</span></span><br><span class="line"><span class="string">        &#123;</span></span><br><span class="line"><span class="string">          &quot;type&quot;: &quot;portmap&quot;,</span></span><br><span class="line"><span class="string">          &quot;capabilities&quot;: &#123;</span></span><br><span class="line"><span class="string">            &quot;portMappings&quot;: true</span></span><br><span class="line"><span class="string">          &#125;</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">      ]</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span>  <span class="attr">net-conf.json:</span> <span class="string">|</span></span><br><span class="line"><span class="string">    &#123;</span></span><br><span class="line"><span class="string">      &quot;Network&quot;: &quot;10.244.0.0/16&quot;,</span></span><br><span class="line"><span class="string">      &quot;Backend&quot;: &#123;</span></span><br><span class="line"><span class="string">        &quot;Type&quot;: &quot;vxlan&quot;</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string"></span><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">DaemonSet</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">kube-flannel-ds</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kube-flannel</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">tier:</span> <span class="string">node</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">flannel</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">flannel</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">tier:</span> <span class="string">node</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">flannel</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">affinity:</span></span><br><span class="line">        <span class="attr">nodeAffinity:</span></span><br><span class="line">          <span class="attr">requiredDuringSchedulingIgnoredDuringExecution:</span></span><br><span class="line">            <span class="attr">nodeSelectorTerms:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">matchExpressions:</span></span><br><span class="line">              <span class="bullet">-</span> <span class="attr">key:</span> <span class="string">kubernetes.io/os</span></span><br><span class="line">                <span class="attr">operator:</span> <span class="string">In</span></span><br><span class="line">                <span class="attr">values:</span></span><br><span class="line">                <span class="bullet">-</span> <span class="string">linux</span></span><br><span class="line">      <span class="attr">hostNetwork:</span> <span class="literal">true</span></span><br><span class="line">      <span class="attr">priorityClassName:</span> <span class="string">system-node-critical</span></span><br><span class="line">      <span class="attr">tolerations:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">operator:</span> <span class="string">Exists</span></span><br><span class="line">        <span class="attr">effect:</span> <span class="string">NoSchedule</span></span><br><span class="line">      <span class="attr">serviceAccountName:</span> <span class="string">flannel</span></span><br><span class="line">      <span class="attr">initContainers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">install-cni-plugin</span></span><br><span class="line">        <span class="comment">#image: flannelcni/flannel-cni-plugin:v1.1.2 #for ppc64le and mips64le (dockerhub limitations may apply)</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">docker.io/rancher/mirrored-flannelcni-flannel-cni-plugin:v1.1.2</span></span><br><span class="line">        <span class="attr">command:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">cp</span></span><br><span class="line">        <span class="attr">args:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">-f</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">/flannel</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">/opt/cni/bin/flannel</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">cni-plugin</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">/opt/cni/bin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">install-cni</span></span><br><span class="line">       <span class="comment">#image: flannelcni/flannel:v0.20.2 #for ppc64le and mips64le (dockerhub limitations may apply)</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">docker.io/rancher/mirrored-flannelcni-flannel:v0.20.2</span></span><br><span class="line">        <span class="attr">command:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">cp</span></span><br><span class="line">        <span class="attr">args:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">-f</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">/etc/kube-flannel/cni-conf.json</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">/etc/cni/net.d/10-flannel.conflist</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">cni</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">/etc/cni/net.d</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">flannel-cfg</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">/etc/kube-flannel/</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">kube-flannel</span></span><br><span class="line">       <span class="comment">#image: flannelcni/flannel:v0.20.2 #for ppc64le and mips64le (dockerhub limitations may apply)</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">docker.io/rancher/mirrored-flannelcni-flannel:v0.20.2</span></span><br><span class="line">        <span class="attr">command:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">/opt/bin/flanneld</span></span><br><span class="line">        <span class="attr">args:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">--ip-masq</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">--kube-subnet-mgr</span></span><br><span class="line">        <span class="attr">resources:</span></span><br><span class="line">          <span class="attr">requests:</span></span><br><span class="line">            <span class="attr">cpu:</span> <span class="string">&quot;100m&quot;</span></span><br><span class="line">            <span class="attr">memory:</span> <span class="string">&quot;50Mi&quot;</span></span><br><span class="line">        <span class="attr">securityContext:</span></span><br><span class="line">          <span class="attr">privileged:</span> <span class="literal">false</span></span><br><span class="line">          <span class="attr">capabilities:</span></span><br><span class="line">            <span class="attr">add:</span> [<span class="string">&quot;NET_ADMIN&quot;</span>, <span class="string">&quot;NET_RAW&quot;</span>]</span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">POD_NAME</span></span><br><span class="line">          <span class="attr">valueFrom:</span></span><br><span class="line">            <span class="attr">fieldRef:</span></span><br><span class="line">              <span class="attr">fieldPath:</span> <span class="string">metadata.name</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">POD_NAMESPACE</span></span><br><span class="line">          <span class="attr">valueFrom:</span></span><br><span class="line">            <span class="attr">fieldRef:</span></span><br><span class="line">              <span class="attr">fieldPath:</span> <span class="string">metadata.namespace</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">EVENT_QUEUE_DEPTH</span></span><br><span class="line">          <span class="attr">value:</span> <span class="string">&quot;5000&quot;</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">run</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">/run/flannel</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">flannel-cfg</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">/etc/kube-flannel/</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">xtables-lock</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">/run/xtables.lock</span></span><br><span class="line">      <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">run</span></span><br><span class="line">        <span class="attr">hostPath:</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">/run/flannel</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">cni-plugin</span></span><br><span class="line">        <span class="attr">hostPath:</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">/opt/cni/bin</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">cni</span></span><br><span class="line">        <span class="attr">hostPath:</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">/etc/cni/net.d</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">flannel-cfg</span></span><br><span class="line">        <span class="attr">configMap:</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">kube-flannel-cfg</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">xtables-lock</span></span><br><span class="line">        <span class="attr">hostPath:</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">/run/xtables.lock</span></span><br><span class="line">          <span class="attr">type:</span> <span class="string">FileOrCreate</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>安装cni并配置到flannel的默认路径</p>
-<p>CNI（Container Network Interface）是容器网络接口的缩写，为容器提供网络配置和管理功能，包括为容器分配 IP 地址、设置网络策略、路由流量等</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># dnf install -y containernetworking-plugins</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125004635626.png" alt="image-20241125004635626"></p>
-<p>copy cni配置到flannel默认读取的目录</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mkdir -p /opt/cni/bin</span></span><br><span class="line"><span class="comment"># cp /usr/libexec/cni/* /opt/cni/bin/</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125005121394.png" alt="image-20241125005121394"></p>
-<p>依赖组件conntrack</p>
-<p><code>conntrack</code>是一种用户空间工具，用于操作和管理 <code>netfilter</code>跟踪连接的状态，此处用于处理容器间的网络连接</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># dnf install -y conntrack</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125013731754.png" alt="image-20241125013731754"></p>
-<p>kubelet开启自启</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl enable kubelet.service &amp;&amp; systemctl start kubelet.service</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125013919560.png" alt="image-20241125013919560"></p>
-<h1 id="K8s主节点"><a href="#K8s主节点" class="headerlink" title="K8s主节点"></a>K8s主节点</h1><ol>
-<li>安装组件</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># dnf install -y kubernetes-kubeadm kubernetes-kubelet kubernetes-master</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241127000337927.png" alt="image-20241127000337927"></p>
-<ol start="2">
-<li>初始化控制平面</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --apiserver-advertise-address=192.168.126.139 \</span><br><span class="line">  --image-repository registry.aliyuncs.com/google_containers \</span><br><span class="line">  --kubernetes-version v1.20.2 \</span><br><span class="line">  --service-cidr=10.1.0.0/16 --pod-network-cidr=10.244.0.0/16</span><br></pre></td></tr></table></figure>
-
-<p>这里笔者配置了附录的docker代理，如果没有，可以考虑在这里直接指定国内源，比如下面这种方式</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --kubernetes-version=1.20.2 --apiserver-advertise-address=192.168.126.139 --cri-socket=/var/run/isulad.sock --image-repository=registry.aliyuncs.com/google_containers --service-cidr=10.96.0.0/12 --pod-network-cidr=10.244.0.0/16 --v=5</span><br></pre></td></tr></table></figure>
-
-<p>输出以下信息初始化成功</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125121721414.png" alt="image-20241125121721414"></p>
-<ol start="3">
-<li>保存join命令在从节点运行</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubeadm <span class="built_in">join</span> 192.168.126.139:6443 --token dokaoz.sfrch50yf43iubsz \</span><br><span class="line">    --discovery-token-ca-cert-hash sha256:44507460bd82478c7447280af83889673149a76a3a24f75b7e828e9b56a69dc4</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>配置kubectl</li>
-</ol>
-<p><strong><code>/etc/profile</code></strong> 是一个系统级的 shell 配置文件，通常用于设置所有用户的环境变量和启动时执行的系统命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nano /etc/profile</span></span><br></pre></td></tr></table></figure>
-
-<p>最后面添加</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">export</span> <span class="string">KUBECONFIG=/etc/kubernetes/admin.conf</span></span><br></pre></td></tr></table></figure>
-
-<p>应用改变</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># source /etc/profile</span></span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>查看节点状态</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get nodes</span><br></pre></td></tr></table></figure>
-
-<p>此时提示NotReady，是因为网络插件未配置（这里笔者已经在从节点执行了1. 2步骤加入了集群）</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125122642008.png" alt="image-20241125122642008"></p>
-<ol start="6">
-<li>配置flannel，之前导入的配置直接应用即可（实际上部署完发现从节点不需要使用kubectl apply -f &#x2F;opt&#x2F;yaml&#x2F;kube-flannel.yaml配置flannel，也可以正常使用网络，原因还没搞明白，坑++）</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f /opt/yaml/kube-flannel.yaml</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125123047278.png" alt="image-20241125123047278"></p>
-<ol start="7">
-<li>可以使用如下命令查看flannel部署进度和集群状态</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl get nodes</span><br><span class="line">kubectl get pods -n kube-flannel</span><br></pre></td></tr></table></figure>
-
-<p>安装完成后状态如下所示</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125123259156.png" alt="image-20241125123259156"></p>
-<h1 id="K8s从节点"><a href="#K8s从节点" class="headerlink" title="K8s从节点"></a>K8s从节点</h1><ol>
-<li>安装组件</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ~]# dnf install -y kubernetes-kubeadm kubernetes-kubelet kubernetes-node</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125010758059.png" alt="image-20241125010758059"></p>
-<ol start="2">
-<li>加入集群</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubeadm <span class="built_in">join</span> 192.168.126.139:6443 --token dokaoz.sfrch50yf43iubsz \</span><br><span class="line">    --discovery-token-ca-cert-hash sha256:44507460bd82478c7447280af83889673149a76a3a24f75b7e828e9b56a69dc4</span><br></pre></td></tr></table></figure>
-
-<p>显示如下信息加入成功</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125121943414.png" alt="image-20241125121943414"></p>
-<h1 id="集群测试"><a href="#集群测试" class="headerlink" title="集群测试"></a>集群测试</h1><p>此处选择nginx进行测试创建并暴露端口</p>
-<p>【来自GPT】</p>
-<ol>
-<li><code>kubectl create deployment nginx --image=nginx</code></li>
-</ol>
-<p>**<code>kubectl create deployment</code>**：创建一个新的部署（Deployment）。Deployment 是 Kubernetes 中管理应用生命周期的资源对象，它定义了应用的期望状态（例如 Pod 数量、副本、容器镜像等）。</p>
-<p>**<code>nginx</code>**：指定部署的名称。这个名字会被用作创建的 Deployment 资源的标识。</p>
-<p>**<code>--image=nginx</code>**：指定容器使用的镜像。这里指定的是 <code>nginx</code> 镜像，意味着创建的 Pod 中将运行 Nginx Web 服务器。这个镜像是从 Docker Hub 中拉取的官方 Nginx 镜像。</p>
-<ol start="2">
-<li><code>kubectl expose deployment nginx --port=80 --type=NodePort</code></li>
-</ol>
-<p>**<code>kubectl expose</code>**：该命令用于暴露一个服务，使其可以通过网络访问。通常，Kubernetes 使用 <code>Service</code> 资源来暴露应用，使其在集群内或集群外可访问。</p>
-<p>**<code>deployment nginx</code>**：暴露的对象是之前创建的 <code>nginx</code> Deployment。意味着这个命令会创建一个 Service，将 <code>nginx</code> 部署暴露出去。</p>
-<p>**<code>--port=80</code>**：指定暴露服务的端口号，<code>80</code> 是 Nginx 的默认 HTTP 服务端口。这个端口将用于访问 Nginx Web 服务器。</p>
-<p>**<code>--type=NodePort</code>**：指定服务暴露的类型为 <code>NodePort</code>。<code>NodePort</code> 类型的服务会在每个节点上打开一个端口，使集群外部的用户可以通过节点的 IP 地址和指定的端口号来访问服务。Kubernetes 会自动为该服务分配一个端口，默认范围是 30000 到 32767。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl create deployment nginx --image=nginx</span><br><span class="line">kubectl expose deployment nginx --port=80 --<span class="built_in">type</span>=NodePort</span><br></pre></td></tr></table></figure>
-
-<p>查询当前集群中 <strong>Pod</strong> 和 <strong>Service</strong> 状态,查看是否运行成功</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pod,svc</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125123555734.png" alt="image-20241125123555734"></p>
-<p>查看pod运行的节点可以用</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods -o wide</span><br></pre></td></tr></table></figure>
-
-
-
-<p>在从节点查看，可以发现这里自动部署在在192.168.126.141节点上</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125123926938.png" alt="image-20241125123926938"></p>
-<p>所有节点均可访问nginx服务器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.126.140:32641</span><br><span class="line">192.168.126.141:32641</span><br><span class="line">192.168.126.142:32641</span><br></pre></td></tr></table></figure>
-
-<p>比如主节点</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125124035333.png" alt="image-20241125124035333"></p>
-<p>扩展副本</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl scale deployment nginx --replicas=3</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h1 id="附录-常见问题"><a href="#附录-常见问题" class="headerlink" title="附录-常见问题"></a>附录-常见问题</h1><h2 id="静态ip配置"><a href="#静态ip配置" class="headerlink" title="静态ip配置"></a>静态ip配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cd /etc/sysconfig/network-scripts</span></span><br><span class="line"><span class="comment"># nano ifcfg-ens33</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>笔者文件如下</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241127201159694.png" alt="image-20241127201159694"></p>
-<p>对于要设置的静态ip所属子网，可以在宿主机使用ipconfig命令查询，笔者使用NAT链接虚拟机和宿主机，这里是VMnet 8网络，网关一般默认为<code>xxx.xxx.xxx.2</code>，DNS照搬即可。</p>
-<p>更改如下选项即可，黄色由<code>dhcp</code>改为<code>static</code>，红色为新加的。</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241127201010320.png" alt="image-20241127200905390"></p>
-<p>之后重启网卡即可生效设置</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># systemctl reload NetworkManager</span></span><br></pre></td></tr></table></figure>
-
-<p>重启后已经可以访问网络</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203190224671.png" alt="image-20241127202015718"></p>
-<p>实际上有时候管用，有时候不管用，原因笔者还没弄明白，坑++，这里选择粗暴的重启节点</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># reboot</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<h2 id="dnf太慢，挂个终端代理"><a href="#dnf太慢，挂个终端代理" class="headerlink" title="dnf太慢，挂个终端代理"></a>dnf太慢，挂个终端代理</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ~]# <span class="built_in">export</span> http_proxy=<span class="string">&quot;http://192.168.1.104:7890&quot;</span></span><br><span class="line">[root@node0 ~]# <span class="built_in">export</span> https_proxy=<span class="string">&quot;http://192.168.1.104:7890&quot;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="docker配置代理以访问国外镜像源"><a href="#docker配置代理以访问国外镜像源" class="headerlink" title="docker配置代理以访问国外镜像源"></a>docker配置代理以访问国外镜像源</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ~]# <span class="built_in">sudo</span> <span class="built_in">mkdir</span> /etc/systemd/system/docker.service.d</span><br><span class="line">[root@node0 ~]# <span class="built_in">cd</span> /etc/systemd/system/docker.service.d</span><br><span class="line">[root@node0 docker.service.d]# nano proxy.conf</span><br><span class="line">[root@node0 docker.service.d]# <span class="built_in">sudo</span> systemctl daemon-reload</span><br><span class="line">[root@node0 docker.service.d]# <span class="built_in">sudo</span> systemctl restart docker</span><br><span class="line">[root@node0 docker.service.d]# docker info</span><br></pre></td></tr></table></figure>
-
-<p>proxy.conf内容为</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">Service</span>] </span><br><span class="line"><span class="string">Environment=&quot;HTTP_PROXY=http://192.168.1.104:7890&quot;</span></span><br><span class="line"><span class="string">Environment=&quot;HTTPS_PROXY=http://192.168.1.104:7890&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241125013251266.png" alt="image-20241125013251266"></p>
-<p>初始化时警告，主节点socat缺失</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[WARNING FileExisting-socat]: socat not found <span class="keyword">in</span> system path</span><br></pre></td></tr></table></figure>
-
-<p>补一个即可</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y socat</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="cgroups不一致"><a href="#cgroups不一致" class="headerlink" title="cgroups不一致"></a>cgroups不一致</h2><p>初始化时警告docker cgroups与推荐不一致，在</p>
-<p>“&#x2F;etc&#x2F;docker&#x2F;daemon.json”添加</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;exec-opts&quot;:</span> [<span class="string">&quot;native.cgroupdriver=systemd&quot;</span>]</span><br></pre></td></tr></table></figure>
-
-<p>之后重启docker和守护进程即可，查看docker info可以看到当前的cgroups</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@lab2 docker]# nano /etc/docker/daemon.json</span><br><span class="line">[root@lab2 docker]# <span class="built_in">sudo</span> systemctl daemon-reload</span><br><span class="line">[root@lab2 docker]# <span class="built_in">sudo</span> systemctl restart docker</span><br><span class="line">[root@lab2 docker]# docker info</span><br></pre></td></tr></table></figure>
-
-<p>完整文件示例</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">“</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;exec-opts&quot;:</span> [<span class="string">&quot;native.cgroupdriver=systemd&quot;</span>],</span><br><span class="line">    <span class="attr">&quot;log-driver&quot;:</span> <span class="string">&quot;json-file&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;log-opts&quot;:</span> &#123;</span><br><span class="line">        <span class="attr">&quot;max-size&quot;:</span> <span class="string">&quot;100m&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">&quot;storage-driver&quot;:</span> <span class="string">&quot;overlay2&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;registry-mirrors&quot;:</span> [</span><br><span class="line">        <span class="string">&quot;https://registry.docker-cn.com&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://docker.mirrors.ustc.edu.cn&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://hub-mirror.c.163.com&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://mirror.baidubce.com&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://ccr.ccs.tencentyun.com&quot;</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"><span class="string">”</span></span><br></pre></td></tr></table></figure>
-
-<p>如果想查看k8s的cgroups</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /var/lib/kubelet/config.yaml</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="删除配置以重新初始化"><a href="#删除配置以重新初始化" class="headerlink" title="删除配置以重新初始化"></a>删除配置以重新初始化</h2><p>下面的命令可以在所有节点删除现有配置</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> kubeadm reset -f</span><br></pre></td></tr></table></figure>
-
-<p>此命令不会删除docker，k8s组件等镜像，只会删除初始化的影响</p>
-<p>主节点需要额外执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> -rf /etc/kubernetes</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="从节点加入提示节点已出现"><a href="#从节点加入提示节点已出现" class="headerlink" title="从节点加入提示节点已出现"></a>从节点加入提示节点已出现</h2><p>问题：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[preflight] FYI: You can look at this config file with <span class="string">&#x27;kubectl -n kube-system get cm kubeadm-config -o yaml&#x27;</span></span><br><span class="line">error execution phase kubelet-start: a Node with name <span class="string">&quot;lab2&quot;</span> and status <span class="string">&quot;Ready&quot;</span> already exists <span class="keyword">in</span> the cluster. You must delete the existing Node or change the name of this new joining Node</span><br><span class="line">To see the stack trace of this error execute with --v=5 or higher</span><br></pre></td></tr></table></figure>
-
-
-
-<p>方法（主节点）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete node lab2</span><br></pre></td></tr></table></figure>
-
-<p>然后从节点重新加入</p>
-<h2 id="flannel部署出错删除配置"><a href="#flannel部署出错删除配置" class="headerlink" title="flannel部署出错删除配置"></a>flannel部署出错删除配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@lab2 ~]# kubectl delete -f /opt/yaml/kube-flannel.yaml</span><br><span class="line">namespace <span class="string">&quot;kube-flannel&quot;</span> deleted</span><br><span class="line">clusterrole.rbac.authorization.k8s.io <span class="string">&quot;flannel&quot;</span> deleted</span><br><span class="line">clusterrolebinding.rbac.authorization.k8s.io <span class="string">&quot;flannel&quot;</span> deleted</span><br><span class="line">serviceaccount <span class="string">&quot;flannel&quot;</span> deleted</span><br><span class="line">configmap <span class="string">&quot;kube-flannel-cfg&quot;</span> deleted</span><br><span class="line">daemonset.apps <span class="string">&quot;kube-flannel-ds&quot;</span> deleted</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="删除测试时创建的nginx服务"><a href="#删除测试时创建的nginx服务" class="headerlink" title="删除测试时创建的nginx服务"></a>删除测试时创建的nginx服务</h2><p>删除 Deployment 和 Pod</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete deployment nginx</span><br></pre></td></tr></table></figure>
-
-<p>删除对应的 Service</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete svc nginx</span><br></pre></td></tr></table></figure>
-
-<p>确认资源已被删除</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pod,svc</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="过程中的k8s命令-从节点配置kubectl"><a href="#过程中的k8s命令-从节点配置kubectl" class="headerlink" title="过程中的k8s命令&amp;&amp;从节点配置kubectl"></a>过程中的k8s命令&amp;&amp;从节点配置kubectl</h2><p><code>kubelet</code>：在 <strong>每个节点</strong> 上运行，负责管理节点上的容器和 Pod。</p>
-<p><code>kubeadm</code>：在 <strong>主节点</strong> 上用于初始化集群，在 <strong>从节点</strong> 上用于加入集群。</p>
-<p><code>kubectl</code>：在 <strong>任意节点</strong> 上运行，用于操作和管理集群。</p>
-<p>上述过程中<code>kubectl</code>只部署在了主节点上，从节点调用相关指令有如下错误</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@lab2 ~]# kubectl apply -f /opt/yaml/kube-flannel.yaml</span><br><span class="line">The connection to the server localhost:8080 was refused - did you specify the right host or port?</span><br></pre></td></tr></table></figure>
-
-<p>如果想在从节点执行这些指令时，用不了，可以复制主节点的配置即可</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f /opt/yaml/kube-flannel.yaml</span><br><span class="line">kubectl get nodes</span><br><span class="line">kubectl get pods -n kube-flannel</span><br></pre></td></tr></table></figure>
-
-<p>具体操作</p>
-<p>查看从节点配置：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@lab2 ~]# <span class="built_in">ls</span> ~/.kube/config</span><br><span class="line"><span class="built_in">ls</span>: 无法访问 <span class="string">&#x27;/root/.kube/config&#x27;</span>: No such file or directory</span><br></pre></td></tr></table></figure>
-
-
-
-<p>没有找到 ~&#x2F;.kube&#x2F;config 文件，说明 kubectl 配置文件还没有正确设置。</p>
-<p>解决步骤：<br>在主节点上获取 kubeconfig 文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">cat</span> /etc/kubernetes/admin.conf</span><br></pre></td></tr></table></figure>
-
-<p>复制配置文件到工作节点</p>
-<p>将输出的配置文件内容复制到工作节点上的 ~&#x2F;.kube&#x2F;config 文件</p>
-<p>没有则新建</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@lab2 ~]# <span class="built_in">mkdir</span> -p ~/.kube</span><br><span class="line">[root@lab2 ~]# nano ~/.kube/config</span><br></pre></td></tr></table></figure>
-
-<p>然后就好了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@lab2 ~]# kubectl get nodes</span><br><span class="line">NAME   STATUS   ROLES                  AGE   VERSION</span><br><span class="line">lab0   Ready    control-plane,master   32h   v1.20.2</span><br><span class="line">lab2   Ready    &lt;none&gt;                 18m   v1.20.2</span><br><span class="line">lab3   Ready    &lt;none&gt;                 27m   v1.20.2</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a target="_blank" rel="noopener" href="https://docs.openeuler.org/zh/docs/22.03_LTS_SP3/docs/ClusterDeployment/K8s+iSulad%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2.html">K8s+iSulad环境部署 | openEuler文档 | openEuler社区 | v22.03_LTS_SP3</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/BY_imba/article/details/128490582">openEuler 部署Kubernetes（K8s）集群_《openeuler kubernetes 集群部署指南》-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://docs.openeuler.org/zh/docs/22.03_LTS_SP3/docs/ClusterDeployment/K8s+iSulad%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2.html">K8s+iSulad环境部署 | openEuler文档 | openEuler社区 | v22.03_LTS_SP3</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Lichen0196/article/details/137355517">docker国内镜像源配置及走代理设置_docker镜像代理-CSDN博客</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33326449/article/details/119699126">It seems like the kubelet isn‘t running or healthy_it seems like the kubelet isn’t running or healthy-CSDN博客</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/27/openEuler-%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlareBall's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/11/27/openEuler-%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">虚拟机安装openEuler22.03 SP3</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2024-11-27 00:10:00 / Modified: 00:11:58" itemprop="dateCreated datePublished" datetime="2024-11-27T00:10:00+08:00">2024-11-27</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="虚拟机安装openEuler22-03-SP3"><a href="#虚拟机安装openEuler22-03-SP3" class="headerlink" title="虚拟机安装openEuler22.03 SP3"></a>虚拟机安装openEuler22.03 SP3</h1><p>环境：Win11 VMware Workstation 16.02</p>
-<h2 id="步骤-VMware-Workstation-16-02"><a href="#步骤-VMware-Workstation-16-02" class="headerlink" title="步骤(VMware Workstation 16.02)"></a>步骤(VMware Workstation 16.02)</h2><ol>
-<li><p>选择自定义</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124222149059.png" alt="image-20241124222149059"></p>
-</li>
-<li><p>保持不变</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124222233414.png" alt="image-20241124222233414"></p>
-</li>
-<li><p>稍后安装操作系统</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124222305170.png" alt="image-20241124222305170"></p>
-</li>
-<li><p>这里笔者选择的Linux Centos 7 64位</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124222910568.png" alt="image-20241124222910568"></p>
-</li>
-<li><p>自定义名称和路径</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124223034266.png" alt="image-20241124223034266"></p>
-</li>
-<li><p>自定义处理器信息。笔者指定了2个处理器，每个处理器2个内核</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124223147374.png" alt="image-20241124223147374"></p>
-</li>
-<li><p>自定义内存，笔者指定4GB</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124223258483.png" alt="image-20241124223258483"></p>
-</li>
-<li><p>自定义网络连接方式。笔者使用了NAT方式，可以理解为在宿主机新建一张虚拟网卡，然后把虚拟机分配到其子网中</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124223543570.png" alt="image-20241124223543570"></p>
-</li>
-<li><p>保持不变</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124223615058.png" alt="image-20241124223615058"></p>
-</li>
-<li><p>保持不变</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124223657315.png" alt="image-20241124223657315"></p>
-</li>
-<li><p>保持不变</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124223716195.png" alt="image-20241124223716195"></p>
-</li>
-<li><p>自定义磁盘大小，笔者分配了40GB，存储为单个文件</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124223810234.png" alt="image-20241124223810234"></p>
-</li>
-<li><p>自定义虚拟磁盘路径</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124223847768.png" alt="image-20241124223847768"></p>
-</li>
-<li><p>指定虚拟DVD</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124223930262.png" alt="image-20241124223930262"></p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124224102970.png" alt="image-20241124224102970"></p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124224121061.png" alt="image-20241124224121061"></p>
-</li>
-</ol>
-<h2 id="步骤-虚拟机初始化"><a href="#步骤-虚拟机初始化" class="headerlink" title="步骤(虚拟机初始化)"></a>步骤(虚拟机初始化)</h2><p>Enter&#x2F;等待60s 开始安装，磁盘检查大概要几分钟，进入安装界面</p>
-<ol>
-<li><p>安装过程使用中文</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124230017053.png" alt="image-20241124230017053"></p>
-</li>
-<li><p>安装目的地选择，点进去退出来就可以</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124230120638.png" alt="image-20241124230120638"></p>
-</li>
-<li><p>语言支持添加英语</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124230218313.png" alt="image-20241124230218313"></p>
-</li>
-<li><p>网络链接，设置主机名</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124230305786.png" alt="image-20241124230305786"></p>
-</li>
-<li><p>设置root用户</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124230447725.png" alt="image-20241124230447725"></p>
-</li>
-<li><p>开始安装&amp;重启系统，出现如下界面安装完成</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241124232613735.png" alt="image-20241124232613735"></p>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/17/Linux%E6%89%A9%E5%B1%95%E7%A9%BA%E9%97%B4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlareBall's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/10/17/Linux%E6%89%A9%E5%B1%95%E7%A9%BA%E9%97%B4/" class="post-title-link" itemprop="url">如何在linux上给磁盘扩容</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-10-17 01:20:00" itemprop="dateCreated datePublished" datetime="2024-10-17T01:20:00+08:00">2024-10-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-11-27 00:10:29" itemprop="dateModified" datetime="2024-11-27T00:10:29+08:00">2024-11-27</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在搭建k8s集群时遇到了需要给磁盘扩容的情况，写一篇文章记录自己的经历</p>
-<p>背景知识：<br>LVM（Logical Volume Manager，逻辑卷管理器）是 Linux 操作系统中的一种灵活的磁盘管理工具，它通过将多个物理硬盘或分区组合成一个或多个逻辑卷，提供比传统分区管理更强大的存储管理功能。LVM 允许动态调整存储空间大小、跨多个物理磁盘创建逻辑卷，并支持快照、镜像等高级功能。</p>
-<h2 id="1-查看已连接系统的硬盘及其分区"><a href="#1-查看已连接系统的硬盘及其分区" class="headerlink" title="1. 查看已连接系统的硬盘及其分区"></a>1. 查看已连接系统的硬盘及其分区</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> fdisk -l</span><br></pre></td></tr></table></figure>
-<p>可以看到前面是若干回环设备（如loop0）的信息，这是linux一种虚拟设备，而&#x2F;dev&#x2F;sda是物理硬盘。&#x2F;dev&#x2F;sda1, &#x2F;dev&#x2F;sda2, &#x2F;dev&#x2F;sda3：表示该硬盘的不同分区。最后是由 LVM（逻辑卷管理器） 管理的分区&#x2F;dev&#x2F;mapper&#x2F;ubuntu–vg-ubuntu–lv<br><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/fdisk.png" alt="查看已连接系统的硬盘及其分区"></p>
-<h2 id="2-查看磁盘的使用情况"><a href="#2-查看磁盘的使用情况" class="headerlink" title="2. 查看磁盘的使用情况"></a>2. 查看磁盘的使用情况</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> -h</span><br></pre></td></tr></table></figure>
-<p>运行 df -h 查看文件系统的当前使用情况，udev 是 Linux 内核提供的设备管理器，tmpfs 是基于内存的文件系统，通常用于存储临时文件。可以看到系统的根分区&#x2F;目前为 98GB，使用了 6.8GB，剩余 87GB。根目录挂在&#x2F;dev&#x2F;mapper&#x2F;ubuntu–vg-ubuntu–lv<br><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/df-h.png" alt="查看磁盘的使用情况"></p>
-<h2 id="3-查看块设备信息"><a href="#3-查看块设备信息" class="headerlink" title="3. 查看块设备信息"></a>3. 查看块设备信息</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsblk</span><br></pre></td></tr></table></figure>
-<p>运行 lsblk 可以查看块设备的挂载点及分区。可以看到 &#x2F;dev&#x2F;sda3 被分配到了 ubuntu–vg-ubuntu–lv 逻辑卷，大小为 100GB<br><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/lsblk.png" alt="看块设备信息"></p>
-<h2 id="4-查看LVM中卷组信息"><a href="#4-查看LVM中卷组信息" class="headerlink" title="4. 查看LVM中卷组信息"></a>4. 查看LVM中卷组信息</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> vgdisplay</span><br></pre></td></tr></table></figure>
-<p>运行 vgdisplay 查看当前卷组的详细信息。可以看到 ubuntu-vg 卷组的总大小为 1.82TB，其中 100GB 已被分配给现有的逻辑卷，还剩 1.72TB 可用于扩展<br><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/vgdisplay.png" alt="看LVM中卷组信息"></p>
-<h2 id="5-扩展逻辑卷"><a href="#5-扩展逻辑卷" class="headerlink" title="5. 扩展逻辑卷"></a>5. 扩展逻辑卷</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> lvextend -l +200G /dev/mapper/ubuntu--vg-ubuntu--lv</span><br></pre></td></tr></table></figure>
-<p>将逻辑卷 ubuntu-lv 的大小增加 200 GB，-l：表示根据扩展单位 “PE（Physical Extents）” 来扩展空间。+200G：表示将逻辑卷增加 200 GB 的容量，&#x2F;dev&#x2F;mapper&#x2F;ubuntu–vg-ubuntu–lv：是目标逻辑卷的路径，表示要扩展的逻辑卷在 ubuntu-vg 卷组中的 ubuntu-lv<br><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/lvextend.png" alt="扩展逻辑卷"></p>
-<h2 id="6-调整文件系统大小"><a href="#6-调整文件系统大小" class="headerlink" title="6. 调整文件系统大小"></a>6. 调整文件系统大小</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv</span><br></pre></td></tr></table></figure>
-<p>扩展逻辑卷后，需要调整文件系统的大小以使用新分配的空间。使用 LVM 扩展逻辑卷时，文件系统不会自动扩展，文件系统扩展是必需的<br><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/resize2fs.png" alt="调整文件系统大小"></p>
-<h2 id="7-查看扩容结果"><a href="#7-查看扩容结果" class="headerlink" title="7. 查看扩容结果"></a>7. 查看扩容结果</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> -h</span><br></pre></td></tr></table></figure>
-<p>可以看到 &#x2F;dev&#x2F;mapper&#x2F;ubuntu–vg-ubuntu–lv 的总大小已成功扩展<br><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/df-h-2.png" alt="查看扩容结果"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/15/114514/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlareBall's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/10/15/114514/" class="post-title-link" itemprop="url">Untitled</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2024-10-15 00:15:09 / Modified: 00:40:00" itemprop="dateCreated datePublished" datetime="2024-10-15T00:15:09+08:00">2024-10-15</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>114514</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
 
 
 
@@ -1507,7 +1230,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1516,7 +1239,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
