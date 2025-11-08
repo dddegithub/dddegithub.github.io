@@ -145,6 +145,156 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://flareball.top/2025/11/08/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-45-%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F%E2%85%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FlareBall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlareBall's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/11/08/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-45-%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F%E2%85%A1/" class="post-title-link" itemprop="url">45.跳跃游戏Ⅱ</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-11-08 11:37:00 / Modified: 11:37:39" itemprop="dateCreated datePublished" datetime="2025-11-08T11:37:00+08:00">2025-11-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="贪心"><a href="#贪心" class="headerlink" title="贪心"></a>贪心</h1><p>时间复杂度$O(n)$</p>
+<p>空间复杂度$O(1)$</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">jump</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>, n = nums.length, right = <span class="number">0</span>, newRight = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; ++i)&#123;</span><br><span class="line">            <span class="keyword">if</span>(right &gt;= n - <span class="number">1</span>)&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            newRight = Math.max(newRight, i + nums[i]);</span><br><span class="line">            <span class="keyword">if</span>(i == right)&#123;</span><br><span class="line">                right = newRight;</span><br><span class="line">                ans++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://flareball.top/2025/11/08/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-55-%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FlareBall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlareBall's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/11/08/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-55-%E8%B7%B3%E8%B7%83%E6%B8%B8%E6%88%8F/" class="post-title-link" itemprop="url">55.跳跃游戏</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2025-11-08 11:32:00 / Modified: 11:36:58" itemprop="dateCreated datePublished" datetime="2025-11-08T11:32:00+08:00">2025-11-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="贪心"><a href="#贪心" class="headerlink" title="贪心"></a>贪心</h1><p>时间复杂度$O(n)$</p>
+<p>空间复杂度$O(1)$</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">canJump</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">right</span> <span class="operator">=</span> <span class="number">0</span>, n = nums.length;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n &amp;&amp; i &lt;= right; ++i)&#123;</span><br><span class="line">            right = Math.max(right, i + nums[i]);</span><br><span class="line">            <span class="keyword">if</span>(right &gt;= n - <span class="number">1</span>)&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> right &gt;= n - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://flareball.top/2025/11/07/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-122-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%E2%85%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -742,425 +892,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flareball.top/2025/02/15/app%E9%83%A8%E7%BD%B2%EF%BC%88nfs%E4%B8%8Epvc%E4%BD%BF%E7%94%A8%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlareBall's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/02/15/app%E9%83%A8%E7%BD%B2%EF%BC%88nfs%E4%B8%8Epvc%E4%BD%BF%E7%94%A8%EF%BC%89/" class="post-title-link" itemprop="url">nfs与pvc使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2025-02-15 13:10:00 / Modified: 13:50:05" itemprop="dateCreated datePublished" datetime="2025-02-15T13:10:00+08:00">2025-02-15</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在k8s集群上利用nfs实现跨节点目录共享，部署ollama和nginx作为练习。</p>
-<p>环境为openeuler22.03 sp3，k8s1.23.6，docker为容器引擎，flannel提供通信支持</p>
-<p>一主（node0-192.168.195.40）二从(node1-192.168.195.41、node2-192.168.195.42)</p>
-<p>所有数据利用nfs实现共享（所有节点均需安装nfs服务），数据存储在主节点&#x2F;opt&#x2F;k8s_store&#x2F;目录。分别为&#x2F;opt&#x2F;k8s_store&#x2F;ollama和&#x2F;opt&#x2F;k8s_store&#x2F;nginx</p>
-<h2 id="nfs共享"><a href="#nfs共享" class="headerlink" title="nfs共享"></a>nfs共享</h2><p>安装NFS服务（所有节点）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> dnf install nfs-utils</span><br></pre></td></tr></table></figure>
-
-<p>编辑&#x2F;etc&#x2F;exports文件，添加共享目录配置（存储节点）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/k8s_store  *(rw,<span class="built_in">sync</span>,no_root_squash,no_subtree_check)</span><br></pre></td></tr></table></figure>
-
-<p>这会使&#x2F;opt&#x2F;k8s_store目录对所有节点（*表示所有）可读写。</p>
-<p>重启NFS服务：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl restart nfs-server</span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> nfs-server</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="ollama部署"><a href="#ollama部署" class="headerlink" title="ollama部署"></a>ollama部署</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# <span class="built_in">ls</span></span><br><span class="line">deployment.yaml  pvc.yaml  pv.yaml  service.yaml</span><br></pre></td></tr></table></figure>
-
-<p>配置文件pv.yaml</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# <span class="built_in">cat</span> pv.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: PersistentVolume</span><br><span class="line">metadata:</span><br><span class="line">  name: ollama-pv</span><br><span class="line">spec:</span><br><span class="line">  capacity:</span><br><span class="line">    storage: 8Gi</span><br><span class="line">  volumeMode: Filesystem</span><br><span class="line">  accessModes:</span><br><span class="line">    - ReadWriteMany  <span class="comment"># 使用ReadWriteMany，支持多个节点挂载</span></span><br><span class="line">  persistentVolumeReclaimPolicy: Retain</span><br><span class="line">  nfs:</span><br><span class="line">    path: /opt/k8s_store/ollama  <span class="comment"># 共享目录</span></span><br><span class="line">    server: node0  <span class="comment"># NFS服务器地址</span></span><br></pre></td></tr></table></figure>
-
-<p>配置文件pvc.yaml</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# <span class="built_in">cat</span> pvc.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: PersistentVolumeClaim</span><br><span class="line">metadata:</span><br><span class="line">  name: ollama-pvc</span><br><span class="line">spec:</span><br><span class="line">  accessModes:</span><br><span class="line">    - ReadWriteMany  <span class="comment"># 对应修改后的PV配置</span></span><br><span class="line">  resources:</span><br><span class="line">    requests:</span><br><span class="line">      storage: 8Gi</span><br></pre></td></tr></table></figure>
-
-<p>配置文件deployment.yaml</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# <span class="built_in">cat</span> deployment.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: ollama-deployment  <span class="comment"># Deployment 名称</span></span><br><span class="line">spec:</span><br><span class="line">  replicas: 1  <span class="comment"># 副本数（可以根据需求调整副本数）</span></span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: ollama  <span class="comment"># 匹配标签，Pod 会以此标签进行选择</span></span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: ollama  <span class="comment"># Pod 标签</span></span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">        - name: ollama  <span class="comment"># 容器名称</span></span><br><span class="line">          image: ollama/ollama:latest  <span class="comment"># 使用的镜像</span></span><br><span class="line">          ports:</span><br><span class="line">            - containerPort: 11434  <span class="comment"># 容器端口映射</span></span><br><span class="line">          volumeMounts:</span><br><span class="line">            - name: ollama-storage  <span class="comment"># 使用 PVC 挂载卷</span></span><br><span class="line">              mountPath: /root/.ollama  <span class="comment"># 挂载路径，容器内的路径</span></span><br><span class="line">      restartPolicy: Always  <span class="comment"># 确保容器失败时重启</span></span><br><span class="line">      volumes:</span><br><span class="line">        - name: ollama-storage</span><br><span class="line">          persistentVolumeClaim:</span><br><span class="line">            claimName: ollama-pvc  <span class="comment"># 绑定的 PVC 名称</span></span><br></pre></td></tr></table></figure>
-
-<p>配置文件service.yaml</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# <span class="built_in">cat</span> service.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: ollama-service  <span class="comment"># Service 名称</span></span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    app: ollama  <span class="comment"># 匹配的标签，确保请求被转发到 Deployment 对应的 Pod</span></span><br><span class="line">  ports:</span><br><span class="line">    - protocol: TCP</span><br><span class="line">      port: 11434  <span class="comment"># Service 端口</span></span><br><span class="line">      targetPort: 11434  <span class="comment"># 容器内部端口</span></span><br><span class="line">  <span class="built_in">type</span>: NodePort  <span class="comment"># 让外部能够通过 NodePort 访问该服务</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>(实际上在本示例中并未进一步使用此处开放的端口)，这里可以进一步与dify等工具联动，实现外部api访问服务。可以查阅</p>
-<p><a target="_blank" rel="noopener" href="https://docs.dify.ai/learn-more/use-cases/private-ai-ollama-deepseek-dify">Private Deployment of Ollama + DeepSeek + Dify: Build Your Own AI Assistant | Dify</a></p>
-<p>利如下命令进行部署</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f pv.yaml</span><br><span class="line">kubectl apply -f pvc.yaml</span><br><span class="line">kubectl apply -f deployment.yaml</span><br></pre></td></tr></table></figure>
-
-
-
-<p>最终结果为</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# kubectl get pods</span><br><span class="line">NAME                                 READY   STATUS        RESTARTS      AGE</span><br><span class="line">k8s-nginx-6d779d947c-mvj99           1/1     Running       2 (76m ago)   46d</span><br><span class="line">k8s-nginx-6d779d947c-qdkvh           1/1     Running       2 (76m ago)   46d</span><br><span class="line">k8s-nginx-6d779d947c-zh8zs           1/1     Running       2 (76m ago)   46d</span><br><span class="line">ollama-deployment-777b9bccb7-sj7wd   1/1     Running       0             3m18s</span><br><span class="line">[root@node0 ollama]#</span><br></pre></td></tr></table></figure>
-
-<h1 id="ollama试用"><a href="#ollama试用" class="headerlink" title="ollama试用"></a>ollama试用</h1><p>此处进入pod内部，下载deepseekr1:1.5b完整部署结果</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# kubectl <span class="built_in">exec</span> -it ollama-deployment-777b9bccb7-sj7wd -- /bin/bash</span><br><span class="line">root@ollama-deployment-777b9bccb7-sj7wd:/# ollama run deepseek-r1:1.5b</span><br><span class="line">pulling manifest</span><br><span class="line">pulling aabd4debf0c8... 100% ▕█████████████████████████████████████████████████████████▏ 1.1 GB</span><br><span class="line">pulling 369ca498f347... 100% ▕█████████████████████████████████████████████████████████▏  387 B</span><br><span class="line">pulling 6e4c38e1172f... 100% ▕█████████████████████████████████████████████████████████▏ 1.1 KB</span><br><span class="line">pulling f4d24e9138dd... 100% ▕█████████████████████████████████████████████████████████▏  148 B</span><br><span class="line">pulling a85fe2a2e58e... 100% ▕█████████████████████████████████████████████████████████▏  487 B</span><br><span class="line">verifying sha256 digest</span><br><span class="line">writing manifest</span><br><span class="line">success</span><br><span class="line">&gt;&gt;&gt; hi</span><br><span class="line">&lt;think&gt;</span><br><span class="line"></span><br><span class="line">&lt;/think&gt;</span><br><span class="line"></span><br><span class="line">Hello! How can I assist you today? 😊</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; wo are you</span><br><span class="line">&lt;think&gt;</span><br><span class="line"></span><br><span class="line">&lt;/think&gt;</span><br><span class="line"></span><br><span class="line">Hello! It seems like your message is a bit unclear. Could you please provide more context or clarify what you<span class="string">&#x27;re asking? I&#x27;</span>m here to <span class="built_in">help</span>! 😊</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; /bye</span><br><span class="line">root@ollama-deployment-777b9bccb7-sj7wd:/# <span class="built_in">exit</span></span><br><span class="line"><span class="built_in">exit</span></span><br><span class="line">[root@node0 ollama]# </span><br></pre></td></tr></table></figure>
-
-
-
-<p>可以顺利使用，部署成功。</p>
-<h1 id="nginx搭建html服务器"><a href="#nginx搭建html服务器" class="headerlink" title="nginx搭建html服务器"></a>nginx搭建html服务器</h1><p>此处准备了wireshark的本地用户手册作为服务内容。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WiresharkUser<span class="string">&#x27;sGuide.zip # 内含n多html文档</span></span><br></pre></td></tr></table></figure>
-
-<p>解压到&#x2F;opt&#x2F;k8s_store&#x2F;nginx&#x2F;index里面。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip <span class="string">&quot;WiresharkUser&#x27;sGuide.zip&quot;</span> -d /opt/k8s_store/nginx/index</span><br></pre></td></tr></table></figure>
-
-<p>在共享目录写一个index.html放在&#x2F;opt&#x2F;k8s_store&#x2F;nginx</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 nginx]# nano index.html</span><br><span class="line">[root@node0 nginx]# <span class="built_in">pwd</span></span><br><span class="line">/opt/k8s_store/nginx</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">&lt;<span class="built_in">head</span>&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Index of Files&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        body &#123;</span><br><span class="line">            font-family: Arial, sans-serif;</span><br><span class="line">            margin: 20px;</span><br><span class="line">        &#125;</span><br><span class="line">        h1 &#123;</span><br><span class="line">            color: <span class="comment">#333;</span></span><br><span class="line">        &#125;</span><br><span class="line">        ul &#123;</span><br><span class="line">            list-style-type: none;</span><br><span class="line">            padding: 0;</span><br><span class="line">        &#125;</span><br><span class="line">        li &#123;</span><br><span class="line">            margin: 8px 0;</span><br><span class="line">        &#125;</span><br><span class="line">        a &#123;</span><br><span class="line">            text-decoration: none;</span><br><span class="line">            color: <span class="comment">#007bff;</span></span><br><span class="line">        &#125;</span><br><span class="line">        a:hover &#123;</span><br><span class="line">            text-decoration: underline;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h1&gt;Index of Files&lt;/h1&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">        &lt;li&gt;&lt;a href=<span class="string">&quot;index/index.html&quot;</span>&gt;Click Here to <span class="string">&#x27;Wireshark User’s Guide&#x27;</span>&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">        &lt;!-- Add more links here as needed --&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>用到的配置文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 nginx]# <span class="built_in">ls</span></span><br><span class="line">nginx-deployment.yaml  nginx-service.yaml  pvc.yaml  pv.yaml</span><br></pre></td></tr></table></figure>
-
-<p>pv.yaml</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 nginx]# <span class="built_in">cat</span> pv.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: PersistentVolume</span><br><span class="line">metadata:</span><br><span class="line">  name: nginx-pv</span><br><span class="line">spec:</span><br><span class="line">  capacity:</span><br><span class="line">    storage: 1Gi</span><br><span class="line">  volumeMode: Filesystem</span><br><span class="line">  accessModes:</span><br><span class="line">    - ReadWriteMany  <span class="comment"># 使用ReadWriteMany，支持多个节点挂载</span></span><br><span class="line">  persistentVolumeReclaimPolicy: Retain</span><br><span class="line">  nfs:</span><br><span class="line">    path: /opt/k8s_store/nginx  <span class="comment"># 共享目录</span></span><br><span class="line">    server: node0  <span class="comment"># NFS服务器地址</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>pvc.yaml</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 nginx]# <span class="built_in">cat</span> pvc.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: PersistentVolumeClaim</span><br><span class="line">metadata:</span><br><span class="line">  name: nginx-pvc</span><br><span class="line">spec:</span><br><span class="line">  accessModes:</span><br><span class="line">    - ReadWriteMany  <span class="comment"># 对应修改后的PV配置</span></span><br><span class="line">  resources:</span><br><span class="line">    requests:</span><br><span class="line">      storage: 1Gi</span><br></pre></td></tr></table></figure>
-
-
-
-<p>nginx-deployment.yaml </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 nginx]# <span class="built_in">cat</span> nginx-deployment.yaml </span><br><span class="line">apiVersion: apps/v1</span><br><span class="line">kind: Deployment</span><br><span class="line">metadata:</span><br><span class="line">  name: k8s-nginx</span><br><span class="line">spec:</span><br><span class="line">  replicas: 1</span><br><span class="line">  selector:</span><br><span class="line">    matchLabels:</span><br><span class="line">      app: k8s-nginx</span><br><span class="line">  template:</span><br><span class="line">    metadata:</span><br><span class="line">      labels:</span><br><span class="line">        app: k8s-nginx</span><br><span class="line">    spec:</span><br><span class="line">      containers:</span><br><span class="line">        - name: nginx</span><br><span class="line">          image: nginx:latest</span><br><span class="line">          ports:</span><br><span class="line">            - containerPort: 80</span><br><span class="line">          volumeMounts:</span><br><span class="line">            - name: nginx-storage</span><br><span class="line">              mountPath: /usr/share/nginx/html  <span class="comment"># NFS 共享目录挂载到 Nginx 的默认网页目录</span></span><br><span class="line">      volumes:</span><br><span class="line">        - name: nginx-storage</span><br><span class="line">          persistentVolumeClaim:</span><br><span class="line">            claimName: nginx-pvc  <span class="comment"># 绑定的 PVC 名称</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>nginx-service.yaml</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 nginx]# <span class="built_in">cat</span> nginx-service.yaml </span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: nginx-service  <span class="comment"># 服务名称</span></span><br><span class="line">spec:</span><br><span class="line">  selector:</span><br><span class="line">    app: k8s-nginx  <span class="comment"># 选择标签，确保将流量转发到对应的 Pod</span></span><br><span class="line">  ports:</span><br><span class="line">    - protocol: TCP</span><br><span class="line">      port: 80  <span class="comment"># 服务端口</span></span><br><span class="line">      targetPort: 80  <span class="comment"># 容器内部端口</span></span><br><span class="line">  <span class="built_in">type</span>: NodePort  <span class="comment"># 使用 NodePort 类型来暴露服务</span></span><br><span class="line"></span><br><span class="line">[root@node0 nginx]#</span><br></pre></td></tr></table></figure>
-
-<p>应用即可</p>
-<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h2 id="更改共享目录权限"><a href="#更改共享目录权限" class="headerlink" title="更改共享目录权限"></a>更改共享目录权限</h2><p>所有人可以访问</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 nginx]# <span class="built_in">sudo</span> <span class="built_in">chmod</span> -R 777 /opt/k8s_store</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="pvc-pv更新"><a href="#pvc-pv更新" class="headerlink" title="pvc&#x2F;pv更新"></a>pvc&#x2F;pv更新</h2><p>如果之前部署文件有误要重新部署，可以使用删除原配置重新部署</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除旧的pvc和pv创建新的</span></span><br><span class="line">[root@node0 ollama]# vi pv.yaml</span><br><span class="line">[root@node0 ollama]# vi pvc.yaml</span><br><span class="line">[root@node0 ollama]# kubectl delete pvc ollama-pvc</span><br><span class="line">persistentvolumeclaim <span class="string">&quot;ollama-pvc&quot;</span> deleted</span><br><span class="line">[root@node0 ollama]# kubectl delete pv ollama-pv</span><br><span class="line">persistentvolume <span class="string">&quot;ollama-pv&quot;</span> deleted</span><br><span class="line">[root@node0 ollama]# kubectl apply -f pv.yaml</span><br><span class="line">persistentvolume/ollama-pv created</span><br><span class="line">[root@node0 ollama]# kubectl apply -f pvc.yaml</span><br><span class="line">persistentvolumeclaim/ollama-pvc created</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="pvc删除卡住"><a href="#pvc删除卡住" class="headerlink" title="pvc删除卡住"></a>pvc删除卡住</h2><p>显示</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ~]# kubectl get pvc ollama-pvc</span><br><span class="line">NAME         STATUS        VOLUME      CAPACITY   ACCESS MODES   STORAGECLASS   AGE</span><br><span class="line">ollama-pvc   Terminating   ollama-pv   8Gi        RWO                           27m</span><br><span class="line">[root@node0 ~]# </span><br></pre></td></tr></table></figure>
-
-<p>当PVC显示为Terminating时，通常意味着Kubernetes正在执行删除操作，但未能完全完成。这通常是由于某些资源清理不完整或在删除过程中发生阻塞。</p>
-<p>查看该PVC详细信息</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe pvc ollama-pvc</span><br></pre></td></tr></table></figure>
-
-<p>此处显示</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ~]# kubectl describe pvc ollama-pvc</span><br><span class="line">Name:          ollama-pvc</span><br><span class="line">Namespace:     default</span><br><span class="line">StorageClass:  </span><br><span class="line">Status:        Terminating (lasts 2m16s)</span><br><span class="line">Volume:        ollama-pv</span><br><span class="line">Labels:        &lt;none&gt;</span><br><span class="line">Annotations:   pv.kubernetes.io/bind-completed: <span class="built_in">yes</span>     </span><br><span class="line">               pv.kubernetes.io/bound-by-controller: <span class="built_in">yes</span></span><br><span class="line">Finalizers:    [kubernetes.io/pvc-protection]</span><br><span class="line">Capacity:      8Gi</span><br><span class="line">Access Modes:  RWO</span><br><span class="line">VolumeMode:    Filesystem</span><br><span class="line">Used By:       ollama-deployment-777b9bccb7-wq6lh</span><br><span class="line">Events:        &lt;none&gt;</span><br><span class="line">[root@node0 ~]#</span><br></pre></td></tr></table></figure>
-
-<p>可以看到，它正处于Finalizers保护机制下。Finalizers: [kubernetes.io&#x2F;pvc-protection]表示Kubernetes正在确保该PVC不会在被使用时被删除。</p>
-<p>由于ollama-deployment-777b9bccb7-wq6lh这个Pod仍在使用该PVC，删除操作没有完成。</p>
-<p>解决方案为删除Pod</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete pod ollama-deployment-777b9bccb7-wq6lh</span><br></pre></td></tr></table></figure>
-
-<p>这时候pvc即可删除</p>
-<p>除此之外，可以选择强制删除pvc，不过不做推荐（此处未使用）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete pvc ollama-pvc --force --grace-period=0</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="pod自动重启"><a href="#pod自动重启" class="headerlink" title="pod自动重启"></a>pod自动重启</h2><p>刚才执行了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete pod ollama-deployment-777b9bccb7-wq6lh</span><br></pre></td></tr></table></figure>
-
-<p>但由于之前部署由Deployment管理，Deployment会自动创建一个新的Pod来替代被删除的Pod。</p>
-<p>如下所示</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ~]# kubectl get po</span><br><span class="line">NAME                                 READY   STATUS    RESTARTS      AGE</span><br><span class="line">k8s-nginx-6d779d947c-mvj99           1/1     Running   2 (59m ago)   46d</span><br><span class="line">k8s-nginx-6d779d947c-qdkvh           1/1     Running   2 (59m ago)   46d</span><br><span class="line">k8s-nginx-6d779d947c-zh8zs           1/1     Running   2 (59m ago)   46d</span><br><span class="line">ollama-deployment-777b9bccb7-nb9ct   0/1     Pending   0             10s</span><br><span class="line">[root@node0 ~]#</span><br></pre></td></tr></table></figure>
-
-<p>阻止pod自动重启可以删除deployment</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl delete deployment ollama-deployment</span><br></pre></td></tr></table></figure>
-
-<p>重新查看，发现删除成功</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 ollama]# kubectl get pods</span><br><span class="line">NAME                                 READY   STATUS        RESTARTS      AGE</span><br><span class="line">k8s-nginx-6d779d947c-mvj99           1/1     Running       2 (76m ago)   46d</span><br><span class="line">k8s-nginx-6d779d947c-qdkvh           1/1     Running       2 (76m ago)   46d</span><br><span class="line">k8s-nginx-6d779d947c-zh8zs           1/1     Running       2 (76m ago)   46d</span><br><span class="line">ollama-deployment-777b9bccb7-sj7wd   1/1     Running       0             3m18s</span><br><span class="line">[root@node0 ollama]</span><br></pre></td></tr></table></figure>
-
-<h2 id="更改副本数"><a href="#更改副本数" class="headerlink" title="更改副本数"></a>更改副本数</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl scale deployment k8s-nginx --replicas=1</span><br></pre></td></tr></table></figure>
-
-<h2 id="scp传输"><a href="#scp传输" class="headerlink" title="scp传输"></a>scp传输</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PS C:\Users\<span class="built_in">dd</span>\Desktop&gt; scp <span class="string">&#x27;.\WiresharkUser&#x27;</span><span class="string">&#x27;sGuide.zip&#x27;</span> root@192.168.195.40:/opt/k8s_store/nginx</span><br><span class="line"></span><br><span class="line">Authorized <span class="built_in">users</span> only. All activities may be monitored and reported.</span><br><span class="line">root@192.168.195.40<span class="string">&#x27;s password:</span></span><br><span class="line"><span class="string">WiresharkUser&#x27;</span>sGuide.zip                                                              100%   10MB 129.3MB/s   00:00</span><br><span class="line">PS C:\Users\<span class="built_in">dd</span>\Desktop&gt;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flareball.top/2024/12/04/prometheus/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlareBall's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/12/04/prometheus/" class="post-title-link" itemprop="url">prometheus监控docker和linux主机</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2024-12-04 00:10:00 / Modified: 00:17:54" itemprop="dateCreated datePublished" datetime="2024-12-04T00:10:00+08:00">2024-12-04</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="prometheus监控k8s"><a href="#prometheus监控k8s" class="headerlink" title="prometheus监控k8s"></a>prometheus监控k8s</h1><h2 id="初见prometheus"><a href="#初见prometheus" class="headerlink" title="初见prometheus"></a>初见prometheus</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /opt/prometheus/config/prometheus.yml</span><br></pre></td></tr></table></figure>
-
-
-
-<p>填入如下内容作为配置（监控自己）</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">scrape_configs:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">job_name:</span> <span class="string">&quot;prometheus&quot;</span></span><br><span class="line">    <span class="attr">static_configs:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">targets:</span> [<span class="string">&quot;localhost:9090&quot;</span>]  <span class="comment"># Prometheus 主节点地址</span></span><br></pre></td></tr></table></figure>
-
-<p>运行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name=prometheus -p 9090:9090 -v /opt/prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus</span><br></pre></td></tr></table></figure>
-
-<p>运行成功后可以浏览器访问</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203192821670.png" alt="image-20241203192821670"></p>
-<h2 id="nginx实例"><a href="#nginx实例" class="headerlink" title="nginx实例"></a>nginx实例</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name=mynginx -p 10080:80 nginx</span><br></pre></td></tr></table></figure>
-
-<p>此时可以在浏览器访问</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203193603780.png" alt="image-20241203193603780"></p>
-<p>使用stats查看某容器状态</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@node0 docker.service.d]# docker stats mynginx</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">[root@node0 docker.service.d]# docker stats --no-stream mynginx</span><br><span class="line">CONTAINER ID        NAME                CPU %               MEM USAGE / LIMIT     MEM %               NET I/O             BLOCK I/O           PIDS</span><br><span class="line">96ee9202c1c9        mynginx             0.00%               3.598MiB / 3.297GiB   0.11%               5.77kB / 4.89kB     0B / 16.4kB         5</span><br></pre></td></tr></table></figure>
-
-<p>说明    –no-stream       Disable streaming stats and only pull the first result\</p>
-<h2 id="终端处理格式化文本"><a href="#终端处理格式化文本" class="headerlink" title="终端处理格式化文本"></a>终端处理格式化文本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stats --no-stream mynginx | awk <span class="string">&#x27;NR!=1&#123;print $3&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-
-
-<p>解释<br>NR：表示当前处理的行号。NR !&#x3D; 1 代表跳过第一行（标题行）<br>print $3：表示输出每行的第三列（即 CPU 使用百分比）。</p>
-<h2 id="awk使用（插曲）"><a href="#awk使用（插曲）" class="headerlink" title="awk使用（插曲）"></a>awk使用（插曲）</h2><p>awk 是一种强大的文本处理工具，通常用于从文本中提取、处理和生成报告。它特别适用于处理结构化的文本数据，比如日志文件、CSV 文件、配置文件、表格数据等。它可以按行处理文本，并且可以通过分隔符（例如空格、逗号等）来处理数据。</p>
-<p>awk 基本用途和功能</p>
-<h3 id="按列处理数据"><a href="#按列处理数据" class="headerlink" title="按列处理数据"></a>按列处理数据</h3><p>awk 可以轻松处理按空格或其他分隔符（例如逗号）分隔的文本。默认情况下，awk 使用空格或制表符（Tab）作为分隔符来划分每行数据，并通过 $1, $2, $3 等来访问每一列。</p>
-<p>示例：从一个文件或命令输出中提取每行的第一列数据：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;apple 10\nbanana 20&quot;</span> | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>输出：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apple</span><br><span class="line">banana</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="操作行和列"><a href="#操作行和列" class="headerlink" title="操作行和列"></a>操作行和列</h3><p>在 awk 中使用条件语句、循环、数学运算等来处理文本中的数据。</p>
-<p>示例：计算每行第一列和第二列的和：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;10 20\n30 40&quot;</span> | awk <span class="string">&#x27;&#123;print $1 + $2&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-
-
-<p>输出：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">30</span><br><span class="line">70</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用字段分隔符（FS）"><a href="#使用字段分隔符（FS）" class="headerlink" title="使用字段分隔符（FS）"></a>使用字段分隔符（FS）</h3><p>可以指定自定义的字段分隔符。例如，当数据是 CSV 格式时，分隔符是逗号。</p>
-<p>示例：指定逗号作为分隔符来处理 CSV 数据：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;apple,10\nbanana,20&quot;</span> | awk -F <span class="string">&#x27;,&#x27;</span> <span class="string">&#x27;&#123;print $1&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>输出：</p>
-<p>输出：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apple</span><br><span class="line">banana</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="模式匹配和条件执行"><a href="#模式匹配和条件执行" class="headerlink" title="模式匹配和条件执行"></a>模式匹配和条件执行</h3><p>awk 允许根据条件执行特定的操作，例如打印满足条件的行。</p>
-<p>示例：打印包含“banana”这一单词的行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;apple 10\nbanana 20&quot;</span> | awk <span class="string">&#x27;$1 == &quot;banana&quot; &#123;print $0&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>输出：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">banana 20</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="内置变量"><a href="#内置变量" class="headerlink" title="内置变量"></a>内置变量</h3><p>awk 提供了一些内置变量，比如：</p>
-<p>NR：当前处理的行号。<br>NF：当前行的字段数。<br>$0：整行文本。<br>$1, $2, $3：每行的第 1、2、3 列。<br>FS：字段分隔符（默认是空格或制表符）。<br>打印格式化输出<br>awk 可以自定义输出格式，比如指定列宽、对齐等。</p>
-<p>示例：输出每个字段的固定宽度：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> -e <span class="string">&quot;apple 10\nbanana 20&quot;</span> | awk <span class="string">&#x27;&#123;printf &quot;%-10s %10s\n&quot;, $1, $2&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>输出：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apple           10</span><br><span class="line">banana          20</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="cadvsior"><a href="#cadvsior" class="headerlink" title="cadvsior"></a>cadvsior</h2><p>安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --volume=/:/rootfs:ro \</span><br><span class="line">  --volume=/var/run:/var/run:ro \</span><br><span class="line">  --volume=/sys:/sys:ro \</span><br><span class="line">  --volume=/var/lib/docker/:/var/lib/docker:ro \</span><br><span class="line">  --volume=/dev/disk/:/dev/disk:ro \</span><br><span class="line">  --publish=8080:8080 \</span><br><span class="line">  --detach=<span class="literal">true</span> \</span><br><span class="line">  --name=cadvisor \</span><br><span class="line">  google/cadvisor:latest</span><br></pre></td></tr></table></figure>
-
-
-
-<p>此时可以在8080访问</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203193536021.png" alt="image-20241203193536021"></p>
-<p>在prometheus绑定的配置文件添加监控源</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /opt/prometheus/config/prometheus.yml</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202747980.png" alt="image-20241203202747980"></p>
-<p>重启prometheus</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart prometheus</span><br></pre></td></tr></table></figure>
-
-<p>静待片刻即可收到返回的新数据</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202901001.png" alt="image-20241203202901001"></p>
-<h2 id="grafana"><a href="#grafana" class="headerlink" title="grafana"></a>grafana</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name=grafana -p 3000:3000 grafana/grafana</span><br></pre></td></tr></table></figure>
-
-<p>之后可以在端口3000访问</p>
-<p>默认账号密码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">admin</span><br><span class="line">admin</span><br></pre></td></tr></table></figure>
-
-<p>第一次会提示修改密码</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202038317.png" alt="image-20241203202038317"></p>
-<p>先添加数据源</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202125565.png" alt="image-20241203202125565"></p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202150910.png" alt="image-20241203202150910"></p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202212419.png" alt="image-20241203202212419"></p>
-<p>再导入监控模板</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202246323.png" alt="image-20241203202246323"></p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202321103.png" alt="image-20241203202321103"></p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202349339.png" alt="image-20241203202349339"></p>
-<p>之后即可看到监控数据</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202420197.png" alt="image-20241203202420197"></p>
-<h2 id="node-exporter"><a href="#node-exporter" class="headerlink" title="node exporter"></a>node exporter</h2><p>先创建容器，使用 –net&#x3D;”host”&#96; 网络模式共享主机网络堆栈，不需要-p进行端口映射</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d   --name=node-exporter   --net=<span class="string">&quot;host&quot;</span>   --pid=<span class="string">&quot;host&quot;</span>   -v <span class="string">&quot;/:/host:ro,rslave&quot;</span>   quay.io/prometheus/node-exporter:latest   --path.rootfs=/host</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203202633848.png" alt="image-20241203202633848"></p>
-<h2 id="再次配置到前端展示"><a href="#再次配置到前端展示" class="headerlink" title="再次配置到前端展示"></a>再次配置到前端展示</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /opt/prometheus/config/prometheus.yml</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231340915.png" alt="image-20241203231340915"></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker restart prometheus</span><br></pre></td></tr></table></figure>
-
-<p>静待一会即可</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231321355.png" alt="image-20241203231321355"></p>
-<p>对于Grafana，依旧是带入库模板，编号9276</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231507625.png" alt="image-20241203231507625"></p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231623784.png" alt="image-20241203231623784"></p>
-<p>之后即可看到面板</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231703052.png" alt="image-20241203231703052"></p>
-<p>有些显示没有图表，一般是三个原因</p>
-<ol>
-<li>没数据（取采）</li>
-<li>时间不对（采集的时间戳与实际时间不符，调节横轴时间范围）</li>
-<li>代码写错了（如下面的网卡，可以把语句的中间拿去prometheus查询看有没有数据）</li>
-</ol>
-<h2 id="调整图表"><a href="#调整图表" class="headerlink" title="调整图表"></a>调整图表</h2><h3 id="cpu使用率"><a href="#cpu使用率" class="headerlink" title="cpu使用率"></a>cpu使用率</h3><p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203232815565.png" alt="image-20241203232815565"></p>
-<p>有结果的</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node_cpu_seconds_total&#123;instance=~<span class="string">&quot;<span class="variable">$node</span>&quot;</span>,mode=<span class="string">&quot;idle&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203232842329.png" alt="image-20241203232842329"></p>
-<p>加一个irate就没了</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">irate(node_cpu_seconds_total&#123;instance=~<span class="string">&quot;<span class="variable">$node</span>&quot;</span>,mode=<span class="string">&quot;idle&quot;</span>&#125;[1m])</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203232953786.png" alt="image-20241203232953786"></p>
-<p>推测<code>node_cpu_seconds_total</code> 只被更新不频繁，增加时间范围，到2分钟，可以</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">irate(node_cpu_seconds_total&#123;instance=~<span class="string">&quot;<span class="variable">$node</span>&quot;</span>,mode=<span class="string">&quot;idle&quot;</span>&#125;[2m])</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203233413063.png" alt="image-20241203233413063"></p>
-<p>于是问题解决</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">100 - (avg(irate(node_cpu_seconds_total&#123;instance=~<span class="string">&quot;<span class="variable">$node</span>&quot;</span>,mode=<span class="string">&quot;idle&quot;</span>&#125;[2m])) * 100)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203233919379.png" alt="image-20241203233919379"></p>
-<h3 id="磁盘读写速率"><a href="#磁盘读写速率" class="headerlink" title="磁盘读写速率"></a>磁盘读写速率</h3><p>点进去发现具有同样的问题，时间片从1m改为2m解决，最后一个为实时io，无data，查询普罗米修斯，返回状态码0</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203234214204.png" alt="image-20241203234214204"></p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241204000357533.png" alt="image-20241204000357533"></p>
-<h3 id="磁盘读写容量"><a href="#磁盘读写容量" class="headerlink" title="磁盘读写容量"></a>磁盘读写容量</h3><p>与上面类似处理</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203234646417.png" alt="image-20241203234646417"></p>
-<h3 id="磁盘IO读写时间"><a href="#磁盘IO读写时间" class="headerlink" title="磁盘IO读写时间"></a>磁盘IO读写时间</h3><p>类似处理，可以显示数据（实际上四条查询，前两个指标nodata，原因尚不清楚，后两个有）</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203235634961.png" alt="image-20241203235634961"></p>
-<h3 id="磁盘每秒IO耗时"><a href="#磁盘每秒IO耗时" class="headerlink" title="磁盘每秒IO耗时"></a>磁盘每秒IO耗时</h3><p>类似处理，解决</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203235842715.png" alt="image-20241203235842715"></p>
-<h3 id="网络进出流量"><a href="#网络进出流量" class="headerlink" title="网络进出流量"></a>网络进出流量</h3><p>比如下面这个是默认的网卡名称不对</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231809571.png" alt="image-20241203231809571"></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">irate(node_network_receive_bytes_total&#123;instance=~<span class="string">&#x27;$node&#x27;</span>,device=~<span class="string">&#x27;$nic&#x27;</span>&#125;[5m])*8</span><br></pre></td></tr></table></figure>
-
-
-
-<p>改为实际的网卡即可</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">irate(node_network_receive_bytes_total&#123;instance=~<span class="string">&#x27;$node&#x27;</span>,device=~<span class="string">&#x27;ens33&#x27;</span>&#125;[5m])*8</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241203231933298.png" alt="image-20241203231933298"></p>
-<h3 id="分区显示"><a href="#分区显示" class="headerlink" title="分区显示"></a>分区显示</h3><p>刷新解决</p>
-<p><img src="https://raw.githubusercontent.com/dddegithub/PicGo/main/image-20241204001130367.png" alt="image-20241204001130367"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1230,7 +961,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
