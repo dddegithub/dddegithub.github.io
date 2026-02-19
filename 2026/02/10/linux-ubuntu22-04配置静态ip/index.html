@@ -28,7 +28,7 @@
 <meta property="og:description" content="Ubuntu 22.04 配置静态 IP本文记录一次在 Ubuntu 22.04 系统中配置静态 IP 的过程。作为初学者，整理操作步骤与关键点，便于后续复现和排查问题。  一、环境说明 系统版本：Ubuntu 22.04   主机名：node0   网卡名称：ens33   配置目标：将 DHCP 修改为静态 IP   二、修改 Netplan 配置文件Ubuntu 18.04 及以后版本默认使">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-02-09T16:12:00.000Z">
-<meta property="article:modified_time" content="2026-02-19T02:14:26.225Z">
+<meta property="article:modified_time" content="2026-02-19T02:19:11.602Z">
 <meta property="article:author" content="FlareBall">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
@@ -181,7 +181,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-02-19 10:14:26" itemprop="dateModified" datetime="2026-02-19T10:14:26+08:00">2026-02-19</time>
+                <time title="Modified: 2026-02-19 10:19:11" itemprop="dateModified" datetime="2026-02-19T10:19:11+08:00">2026-02-19</time>
               </span>
 
           
@@ -226,8 +226,8 @@
 
 <p>若无报错信息，说明配置语法正确。</p>
 <ul>
-<li>**<code>netplan generate</code>**：根据 <code>/etc/netplan/</code> 目录下的 YAML 配置文件生成后端（NetworkManager）可用的实际配置文件，相当于“编译”配置但尚未应用。</li>
-<li>**<code>netplan apply</code>**：将生成的配置立即应用到系统中，包括重启网络服务、重新配置网络接口，使静态 IP 等设置生效。</li>
+<li><code>netplan generate</code>：根据 <code>/etc/netplan/</code> 目录下的 YAML 配置文件生成后端（NetworkManager）可用的实际配置文件，相当于“编译”配置但尚未应用。</li>
+<li><code>netplan apply</code>：将生成的配置立即应用到系统中，包括重启网络服务、重新配置网络接口，使静态 IP 等设置生效。</li>
 </ul>
 <hr>
 <h2 id="四、启动并检查网卡状态"><a href="#四、启动并检查网卡状态" class="headerlink" title="四、启动并检查网卡状态"></a>四、启动并检查网卡状态</h2><h3 id="1-启动网卡"><a href="#1-启动网卡" class="headerlink" title="1. 启动网卡"></a>1. 启动网卡</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@node0:/etc/netplan# ip <span class="built_in">link</span> <span class="built_in">set</span> ens33 up</span><br></pre></td></tr></table></figure>
