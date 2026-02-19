@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"flareball.top","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Ubuntu 22.04 配置静态 IP本文记录一次在 Ubuntu 22.04 系统中配置静态 IP 的过程。作为初学者，整理操作步骤与关键点，便于后续复现和排查问题。  一、环境说明 系统版本：Ubuntu 22.04   主机名：node0   网卡名称：ens33   配置目标：将 DHCP 修改为静态 IP   二、修改 Netplan 配置文件Ubuntu 18.04 及以后版本默认使">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu22.04配置静态ip">
+<meta property="og:url" content="http://flareball.top/2026/02/10/linux-ubuntu22-04%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81ip/index.html">
+<meta property="og:site_name" content="FlareBall&#39;s Blog">
+<meta property="og:description" content="Ubuntu 22.04 配置静态 IP本文记录一次在 Ubuntu 22.04 系统中配置静态 IP 的过程。作为初学者，整理操作步骤与关键点，便于后续复现和排查问题。  一、环境说明 系统版本：Ubuntu 22.04   主机名：node0   网卡名称：ens33   配置目标：将 DHCP 修改为静态 IP   二、修改 Netplan 配置文件Ubuntu 18.04 及以后版本默认使">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-02-09T16:12:00.000Z">
+<meta property="article:modified_time" content="2026-02-19T02:14:26.225Z">
+<meta property="article:author" content="FlareBall">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://flareball.top/2026/02/10/linux-ubuntu22-04%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81ip/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>ubuntu22.04配置静态ip | FlareBall's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FlareBall's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://flareball.top/2026/02/10/linux-ubuntu22-04%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81ip/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FlareBall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlareBall's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ubuntu22.04配置静态ip
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2026-02-10 00:12:00" itemprop="dateCreated datePublished" datetime="2026-02-10T00:12:00+08:00">2026-02-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-02-19 10:14:26" itemprop="dateModified" datetime="2026-02-19T10:14:26+08:00">2026-02-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Ubuntu-22-04-配置静态-IP"><a href="#Ubuntu-22-04-配置静态-IP" class="headerlink" title="Ubuntu 22.04 配置静态 IP"></a>Ubuntu 22.04 配置静态 IP</h1><p>本文记录一次在 Ubuntu 22.04 系统中配置静态 IP 的过程。作为初学者，整理操作步骤与关键点，便于后续复现和排查问题。</p>
+<hr>
+<h2 id="一、环境说明"><a href="#一、环境说明" class="headerlink" title="一、环境说明"></a>一、环境说明</h2><ul>
+<li>系统版本：Ubuntu 22.04  </li>
+<li>主机名：node0  </li>
+<li>网卡名称：ens33  </li>
+<li>配置目标：将 DHCP 修改为静态 IP</li>
+</ul>
+<hr>
+<h2 id="二、修改-Netplan-配置文件"><a href="#二、修改-Netplan-配置文件" class="headerlink" title="二、修改 Netplan 配置文件"></a>二、修改 Netplan 配置文件</h2><p>Ubuntu 18.04 及以后版本默认使用 Netplan 管理网络配置，相关文件位于：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/netplan/</span><br></pre></td></tr></table></figure>
+
+<p>编辑之前，可选使用cp指令备份原文件。</p>
+<h3 id="1-编辑配置文件"><a href="#1-编辑配置文件" class="headerlink" title="1. 编辑配置文件"></a>1. 编辑配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@node0:/etc/netplan# vim 01-network-manager-all.yaml</span><br></pre></td></tr></table></figure>
+
+<p>配置内容如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">network:</span></span><br><span class="line">    <span class="attr">ethernets:</span></span><br><span class="line">        <span class="attr">ens33:</span>                    <span class="comment"># 网卡名称</span></span><br><span class="line">            <span class="attr">dhcp4:</span> <span class="literal">false</span></span><br><span class="line">            <span class="attr">addresses:</span></span><br><span class="line">              <span class="bullet">-</span> <span class="number">192.168</span><span class="number">.126</span><span class="number">.160</span><span class="string">/24</span>   <span class="comment"># 静态IP</span></span><br><span class="line"></span><br><span class="line">            <span class="attr">routes:</span></span><br><span class="line">              <span class="bullet">-</span> <span class="attr">to:</span> <span class="string">default</span></span><br><span class="line">                <span class="attr">via:</span> <span class="number">192.168</span><span class="number">.126</span><span class="number">.2</span>   <span class="comment"># 网关</span></span><br><span class="line"></span><br><span class="line">            <span class="attr">nameservers:</span></span><br><span class="line">              <span class="attr">addresses:</span> [<span class="number">8.8</span><span class="number">.8</span><span class="number">.8</span>,<span class="number">114.114</span><span class="number">.114</span><span class="number">.114</span>,<span class="number">192.168</span><span class="number">.126</span><span class="number">.2</span>]</span><br><span class="line">    <span class="attr">version:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">renderer:</span> <span class="string">NetworkManager</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-参数说明"><a href="#2-参数说明" class="headerlink" title="2. 参数说明"></a>2. 参数说明</h3><ul>
+<li><code>dhcp4: false</code>：关闭 IPv4 DHCP  </li>
+<li><code>addresses</code>：设置静态 IP 地址及子网掩码  </li>
+<li><code>routes</code>：配置默认网关  </li>
+<li><code>nameservers</code>：设置 DNS 服务器  </li>
+<li><code>renderer</code>：指定网络管理方式</li>
+</ul>
+<p>需要注意，YAML 文件对缩进要求严格，只能使用空格，不能使用 Tab。</p>
+<hr>
+<h2 id="三、生成并应用配置"><a href="#三、生成并应用配置" class="headerlink" title="三、生成并应用配置"></a>三、生成并应用配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@node0:/etc/netplan# netplan generate</span><br><span class="line">root@node0:/etc/netplan# netplan apply</span><br></pre></td></tr></table></figure>
+
+<p>若无报错信息，说明配置语法正确。</p>
+<ul>
+<li>**<code>netplan generate</code>**：根据 <code>/etc/netplan/</code> 目录下的 YAML 配置文件生成后端（NetworkManager）可用的实际配置文件，相当于“编译”配置但尚未应用。</li>
+<li>**<code>netplan apply</code>**：将生成的配置立即应用到系统中，包括重启网络服务、重新配置网络接口，使静态 IP 等设置生效。</li>
+</ul>
+<hr>
+<h2 id="四、启动并检查网卡状态"><a href="#四、启动并检查网卡状态" class="headerlink" title="四、启动并检查网卡状态"></a>四、启动并检查网卡状态</h2><h3 id="1-启动网卡"><a href="#1-启动网卡" class="headerlink" title="1. 启动网卡"></a>1. 启动网卡</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@node0:/etc/netplan# ip <span class="built_in">link</span> <span class="built_in">set</span> ens33 up</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-查看网卡状态"><a href="#2-查看网卡状态" class="headerlink" title="2. 查看网卡状态"></a>2. 查看网卡状态</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@node0:/etc/netplan# ip <span class="built_in">link</span> show ens33</span><br></pre></td></tr></table></figure>
+
+<p>输出信息中若包含 <code>UP</code>，表示网卡已正常启用。</p>
+<hr>
+<h2 id="五、验证-IP-配置结果"><a href="#五、验证-IP-配置结果" class="headerlink" title="五、验证 IP 配置结果"></a>五、验证 IP 配置结果</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@node0:/etc/netplan# ip a</span><br></pre></td></tr></table></figure>
+
+<p>可以看到如下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inet 192.168.126.160/24 brd 192.168.126.255 scope global noprefixroute ens33</span><br></pre></td></tr></table></figure>
+
+<p>说明静态 IP 已成功生效。</p>
+<hr>
+<h2 id="六、测试网络连通性"><a href="#六、测试网络连通性" class="headerlink" title="六、测试网络连通性"></a>六、测试网络连通性</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@node0:/etc/netplan# ping baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>结果显示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3 packets transmitted, 3 received, 0% packet loss</span><br></pre></td></tr></table></figure>
+
+<p>说明 DNS 解析正常，网关配置正确，网络可以正常访问外部地址。</p>
+<hr>
+<h2 id="七、问题记录"><a href="#七、问题记录" class="headerlink" title="七、问题记录"></a>七、问题记录</h2><ol>
+<li>YAML 缩进错误会导致 <code>netplan apply</code> 执行失败。  </li>
+<li>配置前应先通过 <code>ip a</code> 确认实际网卡名称。</li>
+</ol>
+<hr>
+<h2 id="八、小结"><a href="#八、小结" class="headerlink" title="八、小结"></a>八、小结</h2><p>通过本次实践，了解了 Ubuntu 22.04 使用 Netplan 进行网络管理的基本方法。静态 IP 配置主要涉及 IP 地址、网关和 DNS 三部分内容。实际操作中需特别注意配置文件格式与缩进问题。</p>
+<p>本文作为个人操作记录，供后续参考。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux/" rel="tag"># linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/11/14/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-135-%E5%88%86%E5%8F%91%E7%B3%96%E6%9E%9C/" rel="prev" title="135.分发糖果">
+      <i class="fa fa-chevron-left"></i> 135.分发糖果
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu-22-04-%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81-IP"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu 22.04 配置静态 IP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%8E%AF%E5%A2%83%E8%AF%B4%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">一、环境说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BF%AE%E6%94%B9-Netplan-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">二、修改 Netplan 配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%BC%96%E8%BE%91%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 编辑配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 参数说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%94%9F%E6%88%90%E5%B9%B6%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text">三、生成并应用配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%90%AF%E5%8A%A8%E5%B9%B6%E6%A3%80%E6%9F%A5%E7%BD%91%E5%8D%A1%E7%8A%B6%E6%80%81"><span class="nav-number">1.4.</span> <span class="nav-text">四、启动并检查网卡状态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%90%AF%E5%8A%A8%E7%BD%91%E5%8D%A1"><span class="nav-number">1.4.1.</span> <span class="nav-text">1. 启动网卡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%9F%A5%E7%9C%8B%E7%BD%91%E5%8D%A1%E7%8A%B6%E6%80%81"><span class="nav-number">1.4.2.</span> <span class="nav-text">2. 查看网卡状态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E9%AA%8C%E8%AF%81-IP-%E9%85%8D%E7%BD%AE%E7%BB%93%E6%9E%9C"><span class="nav-number">1.5.</span> <span class="nav-text">五、验证 IP 配置结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E6%B5%8B%E8%AF%95%E7%BD%91%E7%BB%9C%E8%BF%9E%E9%80%9A%E6%80%A7"><span class="nav-number">1.6.</span> <span class="nav-text">六、测试网络连通性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95"><span class="nav-number">1.7.</span> <span class="nav-text">七、问题记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E5%B0%8F%E7%BB%93"><span class="nav-number">1.8.</span> <span class="nav-text">八、小结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FlareBall</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FlareBall</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

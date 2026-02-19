@@ -145,6 +145,132 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://flareball.top/2026/02/10/linux-ubuntu22-04%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81ip/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FlareBall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlareBall's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2026/02/10/linux-ubuntu22-04%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81ip/" class="post-title-link" itemprop="url">ubuntu22.04配置静态ip</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2026-02-10 00:12:00" itemprop="dateCreated datePublished" datetime="2026-02-10T00:12:00+08:00">2026-02-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-02-19 10:14:26" itemprop="dateModified" datetime="2026-02-19T10:14:26+08:00">2026-02-19</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Ubuntu-22-04-配置静态-IP"><a href="#Ubuntu-22-04-配置静态-IP" class="headerlink" title="Ubuntu 22.04 配置静态 IP"></a>Ubuntu 22.04 配置静态 IP</h1><p>本文记录一次在 Ubuntu 22.04 系统中配置静态 IP 的过程。作为初学者，整理操作步骤与关键点，便于后续复现和排查问题。</p>
+<hr>
+<h2 id="一、环境说明"><a href="#一、环境说明" class="headerlink" title="一、环境说明"></a>一、环境说明</h2><ul>
+<li>系统版本：Ubuntu 22.04  </li>
+<li>主机名：node0  </li>
+<li>网卡名称：ens33  </li>
+<li>配置目标：将 DHCP 修改为静态 IP</li>
+</ul>
+<hr>
+<h2 id="二、修改-Netplan-配置文件"><a href="#二、修改-Netplan-配置文件" class="headerlink" title="二、修改 Netplan 配置文件"></a>二、修改 Netplan 配置文件</h2><p>Ubuntu 18.04 及以后版本默认使用 Netplan 管理网络配置，相关文件位于：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/netplan/</span><br></pre></td></tr></table></figure>
+
+<p>编辑之前，可选使用cp指令备份原文件。</p>
+<h3 id="1-编辑配置文件"><a href="#1-编辑配置文件" class="headerlink" title="1. 编辑配置文件"></a>1. 编辑配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@node0:/etc/netplan# vim 01-network-manager-all.yaml</span><br></pre></td></tr></table></figure>
+
+<p>配置内容如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">network:</span></span><br><span class="line">    <span class="attr">ethernets:</span></span><br><span class="line">        <span class="attr">ens33:</span>                    <span class="comment"># 网卡名称</span></span><br><span class="line">            <span class="attr">dhcp4:</span> <span class="literal">false</span></span><br><span class="line">            <span class="attr">addresses:</span></span><br><span class="line">              <span class="bullet">-</span> <span class="number">192.168</span><span class="number">.126</span><span class="number">.160</span><span class="string">/24</span>   <span class="comment"># 静态IP</span></span><br><span class="line"></span><br><span class="line">            <span class="attr">routes:</span></span><br><span class="line">              <span class="bullet">-</span> <span class="attr">to:</span> <span class="string">default</span></span><br><span class="line">                <span class="attr">via:</span> <span class="number">192.168</span><span class="number">.126</span><span class="number">.2</span>   <span class="comment"># 网关</span></span><br><span class="line"></span><br><span class="line">            <span class="attr">nameservers:</span></span><br><span class="line">              <span class="attr">addresses:</span> [<span class="number">8.8</span><span class="number">.8</span><span class="number">.8</span>,<span class="number">114.114</span><span class="number">.114</span><span class="number">.114</span>,<span class="number">192.168</span><span class="number">.126</span><span class="number">.2</span>]</span><br><span class="line">    <span class="attr">version:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">renderer:</span> <span class="string">NetworkManager</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-参数说明"><a href="#2-参数说明" class="headerlink" title="2. 参数说明"></a>2. 参数说明</h3><ul>
+<li><code>dhcp4: false</code>：关闭 IPv4 DHCP  </li>
+<li><code>addresses</code>：设置静态 IP 地址及子网掩码  </li>
+<li><code>routes</code>：配置默认网关  </li>
+<li><code>nameservers</code>：设置 DNS 服务器  </li>
+<li><code>renderer</code>：指定网络管理方式</li>
+</ul>
+<p>需要注意，YAML 文件对缩进要求严格，只能使用空格，不能使用 Tab。</p>
+<hr>
+<h2 id="三、生成并应用配置"><a href="#三、生成并应用配置" class="headerlink" title="三、生成并应用配置"></a>三、生成并应用配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@node0:/etc/netplan# netplan generate</span><br><span class="line">root@node0:/etc/netplan# netplan apply</span><br></pre></td></tr></table></figure>
+
+<p>若无报错信息，说明配置语法正确。</p>
+<ul>
+<li>**<code>netplan generate</code>**：根据 <code>/etc/netplan/</code> 目录下的 YAML 配置文件生成后端（NetworkManager）可用的实际配置文件，相当于“编译”配置但尚未应用。</li>
+<li>**<code>netplan apply</code>**：将生成的配置立即应用到系统中，包括重启网络服务、重新配置网络接口，使静态 IP 等设置生效。</li>
+</ul>
+<hr>
+<h2 id="四、启动并检查网卡状态"><a href="#四、启动并检查网卡状态" class="headerlink" title="四、启动并检查网卡状态"></a>四、启动并检查网卡状态</h2><h3 id="1-启动网卡"><a href="#1-启动网卡" class="headerlink" title="1. 启动网卡"></a>1. 启动网卡</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@node0:/etc/netplan# ip <span class="built_in">link</span> <span class="built_in">set</span> ens33 up</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-查看网卡状态"><a href="#2-查看网卡状态" class="headerlink" title="2. 查看网卡状态"></a>2. 查看网卡状态</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@node0:/etc/netplan# ip <span class="built_in">link</span> show ens33</span><br></pre></td></tr></table></figure>
+
+<p>输出信息中若包含 <code>UP</code>，表示网卡已正常启用。</p>
+<hr>
+<h2 id="五、验证-IP-配置结果"><a href="#五、验证-IP-配置结果" class="headerlink" title="五、验证 IP 配置结果"></a>五、验证 IP 配置结果</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@node0:/etc/netplan# ip a</span><br></pre></td></tr></table></figure>
+
+<p>可以看到如下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inet 192.168.126.160/24 brd 192.168.126.255 scope global noprefixroute ens33</span><br></pre></td></tr></table></figure>
+
+<p>说明静态 IP 已成功生效。</p>
+<hr>
+<h2 id="六、测试网络连通性"><a href="#六、测试网络连通性" class="headerlink" title="六、测试网络连通性"></a>六、测试网络连通性</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@node0:/etc/netplan# ping baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>结果显示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3 packets transmitted, 3 received, 0% packet loss</span><br></pre></td></tr></table></figure>
+
+<p>说明 DNS 解析正常，网关配置正确，网络可以正常访问外部地址。</p>
+<hr>
+<h2 id="七、问题记录"><a href="#七、问题记录" class="headerlink" title="七、问题记录"></a>七、问题记录</h2><ol>
+<li>YAML 缩进错误会导致 <code>netplan apply</code> 执行失败。  </li>
+<li>配置前应先通过 <code>ip a</code> 确认实际网卡名称。</li>
+</ol>
+<hr>
+<h2 id="八、小结"><a href="#八、小结" class="headerlink" title="八、小结"></a>八、小结</h2><p>通过本次实践，了解了 Ubuntu 22.04 使用 Netplan 进行网络管理的基本方法。静态 IP 配置主要涉及 IP 地址、网关和 DNS 三部分内容。实际操作中需特别注意配置文件格式与缩进问题。</p>
+<p>本文作为个人操作记录，供后续参考。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://flareball.top/2025/11/14/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-135-%E5%88%86%E5%8F%91%E7%B3%96%E6%9E%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -913,87 +1039,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flareball.top/2025/11/07/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-189-%E8%BD%AE%E8%BD%AC%E6%95%B0%E7%BB%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlareBall's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/11/07/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-189-%E8%BD%AE%E8%BD%AC%E6%95%B0%E7%BB%84/" class="post-title-link" itemprop="url">189.轮转数组</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2025-11-07 13:30:00" itemprop="dateCreated datePublished" datetime="2025-11-07T13:30:00+08:00">2025-11-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-11-09 11:39:50" itemprop="dateModified" datetime="2025-11-09T11:39:50+08:00">2025-11-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h1><p>时间复杂度$O(n)$</p>
-<p>空间复杂度$O(1)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">rotate</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> k)</span> &#123;</span><br><span class="line">        k %= nums.length;</span><br><span class="line">        reverse(nums, <span class="number">0</span>, nums.length - <span class="number">1</span>);</span><br><span class="line">        reverse(nums, <span class="number">0</span>, k - <span class="number">1</span>);</span><br><span class="line">        reverse(nums, k, nums.length - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">reverse</span><span class="params">(<span class="type">int</span>[] nums, <span class="type">int</span> start, <span class="type">int</span> end)</span> &#123;</span><br><span class="line">        <span class="keyword">while</span> (start &lt; end) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">tmp</span> <span class="operator">=</span> nums[start];</span><br><span class="line">            nums[start] = nums[end];</span><br><span class="line">            nums[end] = tmp;</span><br><span class="line">            start++;</span><br><span class="line">            end--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1063,7 +1108,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1072,7 +1117,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -1099,7 +1144,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
