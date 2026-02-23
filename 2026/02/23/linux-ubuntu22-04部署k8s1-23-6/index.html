@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"flareball.top","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="ubuntu22.04部署k8s1.23.6Kubernetes 集群部署学习笔记（一）：基础环境准备 记录时间：2026-02-19系统环境：Ubuntu 22.04本节内容：系统初始化与内核参数配置   一、切换 root 用户1sudo -i  后续操作大多涉及系统级修改，直接使用 root 用户进行。  二、关闭 Swap（必须）Kubernetes 要求关闭 swap，否则 kubele">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu22.04部署k8s1.23.6">
+<meta property="og:url" content="http://flareball.top/2026/02/23/linux-ubuntu22-04%E9%83%A8%E7%BD%B2k8s1-23-6/index.html">
+<meta property="og:site_name" content="FlareBall&#39;s Blog">
+<meta property="og:description" content="ubuntu22.04部署k8s1.23.6Kubernetes 集群部署学习笔记（一）：基础环境准备 记录时间：2026-02-19系统环境：Ubuntu 22.04本节内容：系统初始化与内核参数配置   一、切换 root 用户1sudo -i  后续操作大多涉及系统级修改，直接使用 root 用户进行。  二、关闭 Swap（必须）Kubernetes 要求关闭 swap，否则 kubele">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-02-23T03:03:00.000Z">
+<meta property="article:modified_time" content="2026-02-23T03:25:24.877Z">
+<meta property="article:author" content="FlareBall">
+<meta property="article:tag" content="linux, k8s">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://flareball.top/2026/02/23/linux-ubuntu22-04%E9%83%A8%E7%BD%B2k8s1-23-6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>ubuntu22.04部署k8s1.23.6 | FlareBall's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FlareBall's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://flareball.top/2026/02/23/linux-ubuntu22-04%E9%83%A8%E7%BD%B2k8s1-23-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FlareBall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlareBall's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ubuntu22.04部署k8s1.23.6
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2026-02-23 11:03:00 / Modified: 11:25:24" itemprop="dateCreated datePublished" datetime="2026-02-23T11:03:00+08:00">2026-02-23</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="ubuntu22-04部署k8s1-23-6"><a href="#ubuntu22-04部署k8s1-23-6" class="headerlink" title="ubuntu22.04部署k8s1.23.6"></a>ubuntu22.04部署k8s1.23.6</h1><h1 id="Kubernetes-集群部署学习笔记（一）：基础环境准备"><a href="#Kubernetes-集群部署学习笔记（一）：基础环境准备" class="headerlink" title="Kubernetes 集群部署学习笔记（一）：基础环境准备"></a>Kubernetes 集群部署学习笔记（一）：基础环境准备</h1><blockquote>
+<p>记录时间：2026-02-19<br>系统环境：Ubuntu 22.04<br>本节内容：系统初始化与内核参数配置</p>
+</blockquote>
+<hr>
+<h2 id="一、切换-root-用户"><a href="#一、切换-root-用户" class="headerlink" title="一、切换 root 用户"></a>一、切换 root 用户</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> -i</span><br></pre></td></tr></table></figure>
+
+<p>后续操作大多涉及系统级修改，直接使用 root 用户进行。</p>
+<hr>
+<h2 id="二、关闭-Swap（必须）"><a href="#二、关闭-Swap（必须）" class="headerlink" title="二、关闭 Swap（必须）"></a>二、关闭 Swap（必须）</h2><p>Kubernetes 要求关闭 swap，否则 kubelet 无法正常启动。</p>
+<h3 id="1-临时关闭"><a href="#1-临时关闭" class="headerlink" title="1. 临时关闭"></a>1. 临时关闭</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swapoff -a</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-永久关闭"><a href="#2-永久关闭" class="headerlink" title="2. 永久关闭"></a>2. 永久关闭</h3><p>编辑 <code>/etc/fstab</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/fstab</span><br></pre></td></tr></table></figure>
+
+<p>原内容中 swap 行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /swapfile                                 none            swap    sw              0       0</span></span><br></pre></td></tr></table></figure>
+
+<p>确保 swap 行被注释（前面加 <code>#</code>）。</p>
+<p>查看确认：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /etc/fstab</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、加载内核模块"><a href="#三、加载内核模块" class="headerlink" title="三、加载内核模块"></a>三、加载内核模块</h2><p>Kubernetes 网络依赖以下两个模块：</p>
+<ul>
+<li>overlay</li>
+<li>br_netfilter</li>
+</ul>
+<p>创建配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &lt;&lt;<span class="string">EOF | tee /etc/modules-load.d/k8s.conf</span></span><br><span class="line"><span class="string">overlay</span></span><br><span class="line"><span class="string">br_netfilter</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<p>手动加载模块：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">modprobe overlay</span><br><span class="line">modprobe br_netfilter</span><br></pre></td></tr></table></figure>
+
+<p>查看是否加载成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lsmod | grep overlay</span><br><span class="line">lsmod | grep br_netfilter</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、关闭防火墙（实验环境）"><a href="#四、关闭防火墙（实验环境）" class="headerlink" title="四、关闭防火墙（实验环境）"></a>四、关闭防火墙（实验环境）</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ufw <span class="built_in">disable</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：生产环境不建议直接关闭防火墙，应配置规则放行端口。</p>
+</blockquote>
+<hr>
+<h2 id="五、设置时区与时间同步"><a href="#五、设置时区与时间同步" class="headerlink" title="五、设置时区与时间同步"></a>五、设置时区与时间同步</h2><p>统一所有节点时间非常重要，否则证书和集群通信可能出问题。</p>
+<p>设置时区：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timedatectl set-timezone Asia/Shanghai</span><br></pre></td></tr></table></figure>
+
+<p>重启时间同步服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart systemd-timesyncd.service</span><br></pre></td></tr></table></figure>
+
+<p>查看当前时间：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">date</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、修改主机名"><a href="#六、修改主机名" class="headerlink" title="六、修改主机名"></a>六、修改主机名</h2><p>为不同节点设置独立主机名：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl set-hostname k8s-node2</span><br><span class="line"><span class="built_in">exec</span> bash</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="七、配置-etc-hosts"><a href="#七、配置-etc-hosts" class="headerlink" title="七、配置 &#x2F;etc&#x2F;hosts"></a>七、配置 &#x2F;etc&#x2F;hosts</h2><p>为了方便节点之间解析主机名，编辑：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
+
+<p>内容示例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1   localhost</span><br><span class="line">127.0.1.1   k8s-node2</span><br><span class="line"></span><br><span class="line">192.168.126.160   k8s-master</span><br><span class="line">192.168.126.161   k8s-node1</span><br><span class="line">192.168.126.162   k8s-node2</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>建议所有节点 hosts 内容保持一致。</p>
+</blockquote>
+<hr>
+<h2 id="八、配置内核转发参数"><a href="#八、配置内核转发参数" class="headerlink" title="八、配置内核转发参数"></a>八、配置内核转发参数</h2><p>Kubernetes 网络需要开启 IP 转发。</p>
+<p>创建配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &lt;&lt;<span class="string">EOF | sudo tee /etc/sysctl.d/k8s.conf</span></span><br><span class="line"><span class="string">net.ipv4.ip_forward = 1</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<p>如果有需要，可以同时加入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br></pre></td></tr></table></figure>
+
+
+
+<p>使配置生效：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl --system</span><br></pre></td></tr></table></figure>
+
+<p>验证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.ip_forward</span><br></pre></td></tr></table></figure>
+
+<p>输出应为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.ip_forward = 1</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="九、本阶段小结"><a href="#九、本阶段小结" class="headerlink" title="九、本阶段小结"></a>九、本阶段小结</h2><p>本节完成内容：</p>
+<ul>
+<li>关闭 swap</li>
+<li>加载关键内核模块</li>
+<li>关闭防火墙（实验环境）</li>
+<li>统一时区</li>
+<li>配置主机名</li>
+<li>设置 hosts 互相解析</li>
+<li>开启 IP 转发</li>
+</ul>
+<p>这些属于 Kubernetes 部署前的基础系统准备工作。</p>
+<p>下一步将进入容器运行时安装与 Kubernetes 组件安装。</p>
+<h1 id="Kubernetes-1-23-6-部署记录（二）——组件安装与镜像问题排查"><a href="#Kubernetes-1-23-6-部署记录（二）——组件安装与镜像问题排查" class="headerlink" title="Kubernetes 1.23.6 部署记录（二）——组件安装与镜像问题排查"></a>Kubernetes 1.23.6 部署记录（二）——组件安装与镜像问题排查</h1><p>系统环境：</p>
+<ul>
+<li>Ubuntu 22.04.5 LTS</li>
+<li>内核版本：6.8.0-94-generic</li>
+<li>主机名：k8s-master</li>
+<li>Kubernetes 版本：1.23.6</li>
+</ul>
+<hr>
+<h2 id="一、配置-Docker"><a href="#一、配置-Docker" class="headerlink" title="一、配置 Docker"></a>一、配置 Docker</h2><p>kubelet的 cgroup driver 默认为 systemd，为了保证 Kubernetes 正常运行，需要将 Docker 的 cgroup driver 设置为 systemd。</p>
+<p>创建或修改 <code>/etc/docker/daemon.json</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &lt;&lt;<span class="string">EOF | sudo tee /etc/docker/daemon.json</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">  &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;],</span></span><br><span class="line"><span class="string">  &quot;log-driver&quot;: &quot;json-file&quot;,</span></span><br><span class="line"><span class="string">  &quot;log-opts&quot;: &#123;</span></span><br><span class="line"><span class="string">    &quot;max-size&quot;: &quot;10m&quot;</span></span><br><span class="line"><span class="string">  &#125;,</span></span><br><span class="line"><span class="string">  &quot;storage-driver&quot;: &quot;overlay2&quot;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+
+<p>重启并设置开机自启：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart docker</span><br><span class="line">systemctl <span class="built_in">enable</span> docker</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="二、配置-Kubernetes-阿里云软件源"><a href="#二、配置-Kubernetes-阿里云软件源" class="headerlink" title="二、配置 Kubernetes 阿里云软件源"></a>二、配置 Kubernetes 阿里云软件源</h2><p>添加 apt key（虽然提示 deprecated，但当前仍可使用）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add -</span><br></pre></td></tr></table></figure>
+
+<p>添加软件源：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb https://mirrors.aliyun.com/kubernetes/apt kubernetes-xenial main&quot;</span> &gt;&gt; /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+
+<p>更新索引：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+
+<p>会看到 legacy trusted.gpg 的警告，目前不影响安装。</p>
+<hr>
+<h2 id="三、安装指定版本-Kubernetes-组件"><a href="#三、安装指定版本-Kubernetes-组件" class="headerlink" title="三、安装指定版本 Kubernetes 组件"></a>三、安装指定版本 Kubernetes 组件</h2><p>必须指定版本号，否则会安装最新版本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install -y kubelet=1.23.6-00 kubeadm=1.23.6-00 kubectl=1.23.6-00</span><br></pre></td></tr></table></figure>
+
+<p>安装过程中会自动安装：</p>
+<ul>
+<li>cri-tools</li>
+<li>kubernetes-cni</li>
+<li>conntrack</li>
+<li>ebtables</li>
+<li>socat</li>
+</ul>
+<p>安装完成后锁定版本，防止自动升级：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-mark hold kubelet kubeadm kubectl</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、提前拉取控制面镜像"><a href="#四、提前拉取控制面镜像" class="headerlink" title="四、提前拉取控制面镜像"></a>四、提前拉取控制面镜像</h2><p>使用阿里云镜像仓库拉取 Kubernetes 所需镜像：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubeadm config images pull \</span><br><span class="line">--image-repository registry.cn-hangzhou.aliyuncs.com/google_containers</span><br></pre></td></tr></table></figure>
+
+<p>输出显示：</p>
+<ul>
+<li>kube-apiserver</li>
+<li>kube-controller-manager</li>
+<li>kube-scheduler</li>
+<li>kube-proxy</li>
+<li>pause</li>
+<li>etcd</li>
+<li>coredns</li>
+</ul>
+<p>提示远程版本较新，但自动回退到 stable-1.23，是正常现象。</p>
+<hr>
+<h2 id="五、Docker-拉取镜像失败问题"><a href="#五、Docker-拉取镜像失败问题" class="headerlink" title="五、Docker 拉取镜像失败问题"></a>五、Docker 拉取镜像失败问题</h2><p>测试拉取：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx</span><br></pre></td></tr></table></figure>
+
+<p>报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">context deadline exceeded</span><br></pre></td></tr></table></figure>
+
+<p>说明当前环境无法直接访问 Docker Hub。</p>
+<hr>
+<h2 id="六、配置-Docker-镜像加速"><a href="#六、配置-Docker-镜像加速" class="headerlink" title="六、配置 Docker 镜像加速"></a>六、配置 Docker 镜像加速</h2><p>编辑 <code>/etc/docker/daemon.json</code>，增加 registry-mirrors 字段：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;exec-opts&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;native.cgroupdriver=systemd&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;log-driver&quot;</span><span class="punctuation">:</span> <span class="string">&quot;json-file&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;log-opts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;max-size&quot;</span><span class="punctuation">:</span> <span class="string">&quot;10m&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;storage-driver&quot;</span><span class="punctuation">:</span> <span class="string">&quot;overlay2&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;registry-mirrors&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;https://docker.xuanyuan.me&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;https://hub-mirror.c.163.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;https://mirror.baidubce.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;https://docker.1ms.run&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;https://hub.rat.dev&quot;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>重新加载并重启：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br><span class="line"><span class="built_in">sudo</span> systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<p>验证配置是否生效：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker info</span><br></pre></td></tr></table></figure>
+
+<p>确认：</p>
+<ul>
+<li>Cgroup Driver: systemd</li>
+<li>Storage Driver: overlay2</li>
+<li>Registry Mirrors 已加载</li>
+</ul>
+<hr>
+<h2 id="七、问题现象"><a href="#七、问题现象" class="headerlink" title="七、问题现象"></a>七、问题现象</h2><p>再次执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx</span><br></pre></td></tr></table></figure>
+
+<p>仍然出现：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get &quot;https://registry-1.docker.io/v2/&quot;: context deadline exceeded</span><br></pre></td></tr></table></figure>
+
+<p>即使配置了镜像加速器，仍可能出现 <code>docker pull nginx</code> 超时（如 <code>context deadline exceeded</code>）。这通常由以下原因导致：</p>
+<ul>
+<li>加速器地址失效或网络不通</li>
+<li>节点网络出口受限（如防火墙、代理限制）</li>
+<li>DNS 解析问题</li>
+</ul>
+<p><strong>解决方法</strong>：</p>
+<ul>
+<li>尝试更换其他可用的加速器地址</li>
+<li>或者采用离线镜像分发方案（见部署记录（四））</li>
+</ul>
+<h1 id="Kubernetes-1-23-6-部署记录（三）——初始化集群与安装-Cilium"><a href="#Kubernetes-1-23-6-部署记录（三）——初始化集群与安装-Cilium" class="headerlink" title="Kubernetes 1.23.6 部署记录（三）——初始化集群与安装 Cilium"></a>Kubernetes 1.23.6 部署记录（三）——初始化集群与安装 Cilium</h1><h2 id="一、初始化-Kubernetes-集群（跳过-kube-proxy）"><a href="#一、初始化-Kubernetes-集群（跳过-kube-proxy）" class="headerlink" title="一、初始化 Kubernetes 集群（跳过 kube-proxy）"></a>一、初始化 Kubernetes 集群（跳过 kube-proxy）</h2><p>由于后续使用 Cilium 并启用 kubeProxyReplacement，因此在初始化阶段跳过 kube-proxy 的安装。</p>
+<p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init \</span><br><span class="line">  --apiserver-advertise-address=192.168.126.160 \</span><br><span class="line">  --pod-network-cidr=10.244.0.0/16 \</span><br><span class="line">  --skip-phases=addon/kube-proxy \</span><br><span class="line">  --image-repository registry.cn-hangzhou.aliyuncs.com/google_containers</span><br></pre></td></tr></table></figure>
+
+<p>关键说明：</p>
+<ul>
+<li><code>--apiserver-advertise-address</code>：指定 apiserver 对外通信地址</li>
+<li><code>--pod-network-cidr</code>：指定 Pod 网段</li>
+<li><code>--skip-phases=addon/kube-proxy</code>：跳过 kube-proxy</li>
+<li><code>--image-repository</code>：使用阿里云镜像仓库</li>
+</ul>
+<p>初始化成功后会提示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Your Kubernetes control-plane has initialized successfully!</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="二、配置-kubectl-访问权限"><a href="#二、配置-kubectl-访问权限" class="headerlink" title="二、配置 kubectl 访问权限"></a>二、配置 kubectl 访问权限</h2><p>根据提示执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p <span class="variable">$HOME</span>/.kube</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> -i /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chown</span> $(<span class="built_in">id</span> -u):$(<span class="built_in">id</span> -g) <span class="variable">$HOME</span>/.kube/config</span><br></pre></td></tr></table></figure>
+
+<p>验证节点状态：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get nodes</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">k8s-master   NotReady   control-plane,master   v1.23.6</span><br></pre></td></tr></table></figure>
+
+<p>此时 <code>NotReady</code> 是正常现象，因为尚未安装 CNI 网络插件。</p>
+<p>查看系统 Pod：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods -n kube-system</span><br></pre></td></tr></table></figure>
+
+<p>可以看到：</p>
+<ul>
+<li>apiserver、controller-manager、scheduler、etcd 均 Running</li>
+<li>coredns 为 Pending</li>
+</ul>
+<p>原因：尚未安装网络插件。</p>
+<hr>
+<h2 id="三、安装-Helm"><a href="#三、安装-Helm" class="headerlink" title="三、安装 Helm"></a>三、安装 Helm</h2><p>使用官方脚本安装 Helm：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash</span><br></pre></td></tr></table></figure>
+
+<p>验证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helm version</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、使用-Helm-安装-Cilium"><a href="#四、使用-Helm-安装-Cilium" class="headerlink" title="四、使用 Helm 安装 Cilium"></a>四、使用 Helm 安装 Cilium</h2><p>添加仓库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">helm repo add cilium https://helm.cilium.io/</span><br><span class="line">helm repo update</span><br></pre></td></tr></table></figure>
+
+<p>安装 Cilium（版本 1.12.6）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">helm install cilium cilium/cilium --version 1.12.6 \</span><br><span class="line">  --namespace kube-system \</span><br><span class="line">  --<span class="built_in">set</span> k8sServiceHost=192.168.126.160 \</span><br><span class="line">  --<span class="built_in">set</span> k8sServicePort=6443 \</span><br><span class="line">  --<span class="built_in">set</span> kubeProxyReplacement=strict \</span><br><span class="line">  --<span class="built_in">set</span> ipam.mode=kubernetes</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li><code>k8sServiceHost</code>：API Server 地址</li>
+<li><code>k8sServicePort</code>：API Server 端口</li>
+<li><code>kubeProxyReplacement=strict</code>：完全替代 kube-proxy</li>
+<li><code>ipam.mode=kubernetes</code>：使用 Kubernetes IPAM</li>
+</ul>
+<p>安装成功后提示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">STATUS: deployed</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、验证集群状态"><a href="#五、验证集群状态" class="headerlink" title="五、验证集群状态"></a>五、验证集群状态</h2><p>查看所有 Pod：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get po -A</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<ul>
+<li>cilium Pod Running</li>
+<li>coredns 由 Pending 变为 Running</li>
+<li>control-plane 组件正常</li>
+</ul>
+<p>当前有一个 Pod 未就绪：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cilium-operator-xxxx   0/1   Pending</span><br></pre></td></tr></table></figure>
+
+<p>原因分析：</p>
+<p>本实验环境为一主二从集群，目前仅有一个主节点。<br>Cilium Operator 默认存在 Pod 反亲和性规则，不允许调度到同一节点。<br>因此在只有一个节点时，会有一个副本 Pending。</p>
+<p>当工作节点加入后，该 Pod 会自动调度并恢复正常。</p>
+<hr>
+<h2 id="六、加入工作节点"><a href="#六、加入工作节点" class="headerlink" title="六、加入工作节点"></a>六、加入工作节点</h2><p>在从节点上执行初始化阶段输出的 join 命令，注意：token 默认有效期为 24 小时，如果之后需要添加新节点，请重新生成 token（<code>kubeadm token create --print-join-command</code>）。：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubeadm <span class="built_in">join</span> 192.168.126.160:6443 --token 5bhnb8.b0f6uopwwqb0t2xg \</span><br><span class="line">  --discovery-token-ca-cert-hash sha256:287c9c4ab79974eebecc5ddd1c36c033ac52c7c718cf3ab1f36365bb25db673c</span><br></pre></td></tr></table></figure>
+
+<p>加入成功后，在主节点查看：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get nodes</span><br></pre></td></tr></table></figure>
+
+<p>待节点 Ready 后，再查看：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods -n kube-system</span><br></pre></td></tr></table></figure>
+
+<p>此前 Pending 的 cilium-operator 将恢复为 Running。</p>
+<hr>
+<h2 id="当前阶段状态"><a href="#当前阶段状态" class="headerlink" title="当前阶段状态"></a>当前阶段状态</h2><ul>
+<li>control-plane 初始化完成</li>
+<li>kube-proxy 已跳过</li>
+<li>Cilium 已部署</li>
+<li>CoreDNS 正常运行</li>
+<li>等待工作节点加入完成集群规模扩展</li>
+</ul>
+<h1 id="Kubernetes-1-23-6-部署记录（四）——Cilium-镜像离线分发处理"><a href="#Kubernetes-1-23-6-部署记录（四）——Cilium-镜像离线分发处理" class="headerlink" title="Kubernetes 1.23.6 部署记录（四）——Cilium 镜像离线分发处理"></a>Kubernetes 1.23.6 部署记录（四）——Cilium 镜像离线分发处理</h1><h2 id="一、问题背景"><a href="#一、问题背景" class="headerlink" title="一、问题背景"></a>一、问题背景</h2><p>在安装 Cilium 后，发现从节点拉取 <code>quay.io/cilium/cilium</code> 镜像速度极慢，导致：</p>
+<ul>
+<li>Pod 长时间处于 Init 状态</li>
+<li>Cilium 启动时间过久</li>
+<li>集群整体 Ready 时间被拖慢</li>
+</ul>
+<p>因此采用离线镜像分发方式处理。</p>
+<hr>
+<h2 id="二、主节点导出-Cilium-镜像"><a href="#二、主节点导出-Cilium-镜像" class="headerlink" title="二、主节点导出 Cilium 镜像"></a>二、主节点导出 Cilium 镜像</h2><p>在主节点确认镜像存在后，将镜像导出为 tar 包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker save quay.io/cilium/cilium:v1.12.6@sha256:454134506b0448c756398d3e8df68d474acde2a622ab58d0c7e8b272b5867d0d -o cilium.tar</span><br></pre></td></tr></table></figure>
+
+<p>查看文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、通过-scp-传输到从节点"><a href="#三、通过-scp-传输到从节点" class="headerlink" title="三、通过 scp 传输到从节点"></a>三、通过 scp 传输到从节点</h2><p>首次执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp *.tar root@192.168.126.161:/root/</span><br></pre></td></tr></table></figure>
+
+<p>报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh: connect to host 192.168.126.161 port 22: Connection refused</span><br></pre></td></tr></table></figure>
+
+<p>原因：从节点未安装或未启动 SSH 服务。</p>
+<hr>
+<h2 id="四、安装并启动-SSH-服务"><a href="#四、安装并启动-SSH-服务" class="headerlink" title="四、安装并启动 SSH 服务"></a>四、安装并启动 SSH 服务</h2><p>在节点上执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install -y openssh-server</span><br></pre></td></tr></table></figure>
+
+<p>启动并设置开机自启：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl start ssh</span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> ssh</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、测试-SSH-连接"><a href="#五、测试-SSH-连接" class="headerlink" title="五、测试 SSH 连接"></a>五、测试 SSH 连接</h2><p>测试 root 登录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@192.168.126.161</span><br></pre></td></tr></table></figure>
+
+<p>出现：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Permission denied (publickey,password)</span><br></pre></td></tr></table></figure>
+
+<p>说明 root 登录被禁用（默认安全策略）。</p>
+<p>改用普通用户：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh user@192.168.126.161 <span class="string">&quot;echo &#x27;SSH connection successful&#x27;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>成功输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SSH connection successful</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、分发镜像文件"><a href="#六、分发镜像文件" class="headerlink" title="六、分发镜像文件"></a>六、分发镜像文件</h2><p>传输到两个从节点：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp *.tar user@192.168.126.161:~</span><br><span class="line">scp *.tar user@192.168.126.162:~</span><br></pre></td></tr></table></figure>
+
+<p>传输完成后，在对应从节点用户目录可以看到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cilium.tar</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="七、从节点加载镜像"><a href="#七、从节点加载镜像" class="headerlink" title="七、从节点加载镜像"></a>七、从节点加载镜像</h2><p>在每个从节点执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker load -i cilium.tar</span><br></pre></td></tr></table></figure>
+
+<p>验证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images | grep cilium</span><br></pre></td></tr></table></figure>
+
+<p>确认镜像已成功导入。</p>
+<hr>
+<h2 id="八、效果"><a href="#八、效果" class="headerlink" title="八、效果"></a>八、效果</h2><p>加载完成后：</p>
+<ul>
+<li>Cilium Pod 不再从公网拉取镜像</li>
+<li>Init 时间明显缩短</li>
+<li>网络组件更快进入 Running 状态</li>
+<li>集群整体 Ready 时间提升</li>
+</ul>
+<hr>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>当网络环境不稳定或镜像仓库访问缓慢时，可以采用：</p>
+<ol>
+<li>主节点提前拉取镜像</li>
+<li>使用 <code>docker save</code> 导出</li>
+<li>使用 <code>scp</code> 分发</li>
+<li>从节点 <code>docker load</code> 导入</li>
+</ol>
+<p>这种方式适用于：</p>
+<ul>
+<li>内网环境</li>
+<li>无公网环境</li>
+<li>大规模节点初始化场景</li>
+<li>镜像拉取频繁超时场景</li>
+</ul>
+<h1 id="Kubernetes-集群部署验证与优雅关闭实践"><a href="#Kubernetes-集群部署验证与优雅关闭实践" class="headerlink" title="Kubernetes 集群部署验证与优雅关闭实践"></a>Kubernetes 集群部署验证与优雅关闭实践</h1><h2 id="一、集群功能验证"><a href="#一、集群功能验证" class="headerlink" title="一、集群功能验证"></a>一、集群功能验证</h2><p>集群部署完成后，使用 nginx 进行功能验证。</p>
+<p>创建 Deployment：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create deployment nginx --image=nginx</span><br></pre></td></tr></table></figure>
+
+<p>暴露为 NodePort 服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl expose deployment nginx --port=80 --<span class="built_in">type</span>=NodePort</span><br></pre></td></tr></table></figure>
+
+<p>查看资源状态：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pod,svc</span><br></pre></td></tr></table></figure>
+
+<p>初始状态：</p>
+<ul>
+<li>Pod 处于 <code>ContainerCreating</code></li>
+<li>Service 分配 NodePort 端口（例如 30795）</li>
+</ul>
+<p>查看调度情况：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods -o wide</span><br></pre></td></tr></table></figure>
+
+<p>可以看到：</p>
+<ul>
+<li>Pod 被调度到某个工作节点（如 k8s-node2）</li>
+<li>分配到 Pod 网段 IP（如 10.244.x.x）</li>
+<li>状态 Running</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li>Cilium 网络正常</li>
+<li>Pod 调度正常</li>
+<li>Service 正常创建</li>
+</ul>
+<hr>
+<h2 id="二、优雅关闭集群脚本设计"><a href="#二、优雅关闭集群脚本设计" class="headerlink" title="二、优雅关闭集群脚本设计"></a>二、优雅关闭集群脚本设计</h2><p>目标：</p>
+<ul>
+<li>依次排空节点</li>
+<li>停止 kubelet 与 Docker</li>
+<li>最终安全关机</li>
+</ul>
+<p>脚本依赖条件：</p>
+<ul>
+<li>已配置 SSH 免密登录</li>
+<li>已配置 sudo 免密码</li>
+</ul>
+<p>脚本内容如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># 优雅关闭 Kubernetes 集群脚本（使用 SSH 密钥认证）</span></span><br><span class="line"></span><br><span class="line">SSH_USER=<span class="string">&quot;user&quot;</span></span><br><span class="line">MASTER_NODE=<span class="string">&quot;k8s-master&quot;</span></span><br><span class="line">WORKER_NODES=(<span class="string">&quot;k8s-node1&quot;</span> <span class="string">&quot;k8s-node2&quot;</span>)</span><br><span class="line">ALL_NODES=(<span class="string">&quot;k8s-master&quot;</span> <span class="string">&quot;k8s-node1&quot;</span> <span class="string">&quot;k8s-node2&quot;</span>)</span><br><span class="line">SSH_OPTS=<span class="string">&quot;-o ConnectTimeout=10 -o ServerAliveInterval=5 -o StrictHostKeyChecking=no&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">check_ssh</span></span>() &#123;</span><br><span class="line">    <span class="built_in">local</span> node=<span class="variable">$1</span></span><br><span class="line">    ssh -o BatchMode=<span class="built_in">yes</span> -o ConnectTimeout=5 <span class="variable">$SSH_USER</span>@<span class="variable">$node</span> <span class="string">&quot;exit&quot;</span> 2&gt;/dev/null</span><br><span class="line">    <span class="keyword">if</span> [ $? -ne 0 ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;错误：无法免密登录到 <span class="variable">$node</span>&quot;</span></span><br><span class="line">        <span class="built_in">exit</span> 1</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;开始优雅关闭集群&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> node <span class="keyword">in</span> <span class="string">&quot;<span class="variable">$&#123;ALL_NODES[@]&#125;</span>&quot;</span>; <span class="keyword">do</span></span><br><span class="line">    check_ssh <span class="string">&quot;<span class="variable">$node</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> node <span class="keyword">in</span> <span class="string">&quot;<span class="variable">$&#123;WORKER_NODES[@]&#125;</span>&quot;</span>; <span class="keyword">do</span></span><br><span class="line">    kubectl drain <span class="string">&quot;<span class="variable">$node</span>&quot;</span> --ignore-daemonsets --delete-emptydir-data</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">kubectl drain <span class="string">&quot;<span class="variable">$MASTER_NODE</span>&quot;</span> --ignore-daemonsets --delete-emptydir-data</span><br><span class="line"></span><br><span class="line">SERVICES=<span class="string">&quot;kubelet docker.socket docker&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> node <span class="keyword">in</span> <span class="string">&quot;<span class="variable">$&#123;ALL_NODES[@]&#125;</span>&quot;</span>; <span class="keyword">do</span></span><br><span class="line">    ssh <span class="variable">$SSH_OPTS</span> <span class="variable">$SSH_USER</span>@<span class="variable">$node</span> <span class="string">&quot;sudo systemctl stop <span class="variable">$SERVICES</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;集群服务已停止&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、SSH-免密配置"><a href="#三、SSH-免密配置" class="headerlink" title="三、SSH 免密配置"></a>三、SSH 免密配置</h2><p>主节点生成密钥：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -N <span class="string">&quot;&quot;</span> -f ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+
+<p>分发公钥：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id user@k8s-master</span><br><span class="line">ssh-copy-id user@k8s-node1</span><br><span class="line">ssh-copy-id user@k8s-node2</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、配置-sudo-免密码"><a href="#四、配置-sudo-免密码" class="headerlink" title="四、配置 sudo 免密码"></a>四、配置 sudo 免密码</h2><p>在每个节点执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;user ALL=(ALL) NOPASSWD: ALL&quot;</span> | <span class="built_in">sudo</span> <span class="built_in">tee</span> /etc/sudoers.d/user-nopasswd</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chmod</span> 440 /etc/sudoers.d/user-nopasswd</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、Terminating-状态处理"><a href="#五、Terminating-状态处理" class="headerlink" title="五、Terminating 状态处理"></a>五、Terminating 状态处理</h2><p>如果存在 Pod 卡在 <code>Terminating</code> 状态，<code>kubectl drain</code> 可能会阻塞。</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cilium-operator-xxxxx   Terminating</span><br></pre></td></tr></table></figure>
+
+<p>可以强制删除：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n kube-system delete pod &lt;pod-name&gt; --force --grace-period=0</span><br></pre></td></tr></table></figure>
+
+<p>注意：</p>
+<ul>
+<li>这是立即删除</li>
+<li>可能存在残留资源</li>
+<li>仅在必要时使用</li>
+</ul>
+<hr>
+<h2 id="六、脚本执行效果"><a href="#六、脚本执行效果" class="headerlink" title="六、脚本执行效果"></a>六、脚本执行效果</h2><p>执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./close-claster.sh</span><br></pre></td></tr></table></figure>
+
+<p>执行过程：</p>
+<ol>
+<li>校验 SSH 连接</li>
+<li>依次 cordon + drain 工作节点</li>
+<li>排空主节点</li>
+<li>停止 kubelet 和 docker</li>
+<li>输出关闭完成提示</li>
+</ol>
+<p>验证服务状态：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl status kubelet</span><br><span class="line">systemctl status docker</span><br></pre></td></tr></table></figure>
+
+<p>状态应为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Active: inactive (dead)</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li>kubelet 已停止</li>
+<li>docker 已停止</li>
+<li>容器已清理</li>
+<li>卷已卸载</li>
+</ul>
+<hr>
+<h2 id="七、最终关机"><a href="#七、最终关机" class="headerlink" title="七、最终关机"></a>七、最终关机</h2><p>确认所有节点服务停止后：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shutdown -h now</span><br></pre></td></tr></table></figure>
+
+<p>至此集群已安全关闭。</p>
+<hr>
+<h2 id="本阶段总结"><a href="#本阶段总结" class="headerlink" title="本阶段总结"></a>本阶段总结</h2><p>本阶段完成：</p>
+<ul>
+<li>集群功能验证</li>
+<li>NodePort 服务验证</li>
+<li>优雅关闭流程设计</li>
+<li>SSH 免密与 sudo 免密配置</li>
+<li>Terminating Pod 异常处理</li>
+</ul>
+<p>整体流程验证无误，可作为日常实验环境启停的标准操作流程。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/linux-k8s/" rel="tag"># linux, k8s</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/02/10/linux-ubuntu22-04%E9%85%8D%E7%BD%AE%E9%9D%99%E6%80%81ip/" rel="prev" title="ubuntu22.04配置静态ip">
+      <i class="fa fa-chevron-left"></i> ubuntu22.04配置静态ip
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ubuntu22-04%E9%83%A8%E7%BD%B2k8s1-23-6"><span class="nav-number">1.</span> <span class="nav-text">ubuntu22.04部署k8s1.23.6</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kubernetes-%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">2.</span> <span class="nav-text">Kubernetes 集群部署学习笔记（一）：基础环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%88%87%E6%8D%A2-root-%E7%94%A8%E6%88%B7"><span class="nav-number">2.1.</span> <span class="nav-text">一、切换 root 用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%85%B3%E9%97%AD-Swap%EF%BC%88%E5%BF%85%E9%A1%BB%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">二、关闭 Swap（必须）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%B8%B4%E6%97%B6%E5%85%B3%E9%97%AD"><span class="nav-number">2.2.1.</span> <span class="nav-text">1. 临时关闭</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%B0%B8%E4%B9%85%E5%85%B3%E9%97%AD"><span class="nav-number">2.2.2.</span> <span class="nav-text">2. 永久关闭</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%8A%A0%E8%BD%BD%E5%86%85%E6%A0%B8%E6%A8%A1%E5%9D%97"><span class="nav-number">2.3.</span> <span class="nav-text">三、加载内核模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%85%B3%E9%97%AD%E9%98%B2%E7%81%AB%E5%A2%99%EF%BC%88%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%EF%BC%89"><span class="nav-number">2.4.</span> <span class="nav-text">四、关闭防火墙（实验环境）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%AE%BE%E7%BD%AE%E6%97%B6%E5%8C%BA%E4%B8%8E%E6%97%B6%E9%97%B4%E5%90%8C%E6%AD%A5"><span class="nav-number">2.5.</span> <span class="nav-text">五、设置时区与时间同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%90%8D"><span class="nav-number">2.6.</span> <span class="nav-text">六、修改主机名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E9%85%8D%E7%BD%AE-etc-hosts"><span class="nav-number">2.7.</span> <span class="nav-text">七、配置 &#x2F;etc&#x2F;hosts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E9%85%8D%E7%BD%AE%E5%86%85%E6%A0%B8%E8%BD%AC%E5%8F%91%E5%8F%82%E6%95%B0"><span class="nav-number">2.8.</span> <span class="nav-text">八、配置内核转发参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E6%9C%AC%E9%98%B6%E6%AE%B5%E5%B0%8F%E7%BB%93"><span class="nav-number">2.9.</span> <span class="nav-text">九、本阶段小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kubernetes-1-23-6-%E9%83%A8%E7%BD%B2%E8%AE%B0%E5%BD%95%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E7%BB%84%E4%BB%B6%E5%AE%89%E8%A3%85%E4%B8%8E%E9%95%9C%E5%83%8F%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5"><span class="nav-number">3.</span> <span class="nav-text">Kubernetes 1.23.6 部署记录（二）——组件安装与镜像问题排查</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E9%85%8D%E7%BD%AE-Docker"><span class="nav-number">3.1.</span> <span class="nav-text">一、配置 Docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%85%8D%E7%BD%AE-Kubernetes-%E9%98%BF%E9%87%8C%E4%BA%91%E8%BD%AF%E4%BB%B6%E6%BA%90"><span class="nav-number">3.2.</span> <span class="nav-text">二、配置 Kubernetes 阿里云软件源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%89%E8%A3%85%E6%8C%87%E5%AE%9A%E7%89%88%E6%9C%AC-Kubernetes-%E7%BB%84%E4%BB%B6"><span class="nav-number">3.3.</span> <span class="nav-text">三、安装指定版本 Kubernetes 组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%8F%90%E5%89%8D%E6%8B%89%E5%8F%96%E6%8E%A7%E5%88%B6%E9%9D%A2%E9%95%9C%E5%83%8F"><span class="nav-number">3.4.</span> <span class="nav-text">四、提前拉取控制面镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81Docker-%E6%8B%89%E5%8F%96%E9%95%9C%E5%83%8F%E5%A4%B1%E8%B4%A5%E9%97%AE%E9%A2%98"><span class="nav-number">3.5.</span> <span class="nav-text">五、Docker 拉取镜像失败问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E9%85%8D%E7%BD%AE-Docker-%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F"><span class="nav-number">3.6.</span> <span class="nav-text">六、配置 Docker 镜像加速</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E9%97%AE%E9%A2%98%E7%8E%B0%E8%B1%A1"><span class="nav-number">3.7.</span> <span class="nav-text">七、问题现象</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kubernetes-1-23-6-%E9%83%A8%E7%BD%B2%E8%AE%B0%E5%BD%95%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94%E5%88%9D%E5%A7%8B%E5%8C%96%E9%9B%86%E7%BE%A4%E4%B8%8E%E5%AE%89%E8%A3%85-Cilium"><span class="nav-number">4.</span> <span class="nav-text">Kubernetes 1.23.6 部署记录（三）——初始化集群与安装 Cilium</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%88%9D%E5%A7%8B%E5%8C%96-Kubernetes-%E9%9B%86%E7%BE%A4%EF%BC%88%E8%B7%B3%E8%BF%87-kube-proxy%EF%BC%89"><span class="nav-number">4.1.</span> <span class="nav-text">一、初始化 Kubernetes 集群（跳过 kube-proxy）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%85%8D%E7%BD%AE-kubectl-%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90"><span class="nav-number">4.2.</span> <span class="nav-text">二、配置 kubectl 访问权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%89%E8%A3%85-Helm"><span class="nav-number">4.3.</span> <span class="nav-text">三、安装 Helm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%BD%BF%E7%94%A8-Helm-%E5%AE%89%E8%A3%85-Cilium"><span class="nav-number">4.4.</span> <span class="nav-text">四、使用 Helm 安装 Cilium</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E9%AA%8C%E8%AF%81%E9%9B%86%E7%BE%A4%E7%8A%B6%E6%80%81"><span class="nav-number">4.5.</span> <span class="nav-text">五、验证集群状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%8A%A0%E5%85%A5%E5%B7%A5%E4%BD%9C%E8%8A%82%E7%82%B9"><span class="nav-number">4.6.</span> <span class="nav-text">六、加入工作节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%93%E5%89%8D%E9%98%B6%E6%AE%B5%E7%8A%B6%E6%80%81"><span class="nav-number">4.7.</span> <span class="nav-text">当前阶段状态</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kubernetes-1-23-6-%E9%83%A8%E7%BD%B2%E8%AE%B0%E5%BD%95%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94Cilium-%E9%95%9C%E5%83%8F%E7%A6%BB%E7%BA%BF%E5%88%86%E5%8F%91%E5%A4%84%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">Kubernetes 1.23.6 部署记录（四）——Cilium 镜像离线分发处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E9%97%AE%E9%A2%98%E8%83%8C%E6%99%AF"><span class="nav-number">5.1.</span> <span class="nav-text">一、问题背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BB%E8%8A%82%E7%82%B9%E5%AF%BC%E5%87%BA-Cilium-%E9%95%9C%E5%83%8F"><span class="nav-number">5.2.</span> <span class="nav-text">二、主节点导出 Cilium 镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E9%80%9A%E8%BF%87-scp-%E4%BC%A0%E8%BE%93%E5%88%B0%E4%BB%8E%E8%8A%82%E7%82%B9"><span class="nav-number">5.3.</span> <span class="nav-text">三、通过 scp 传输到从节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%AE%89%E8%A3%85%E5%B9%B6%E5%90%AF%E5%8A%A8-SSH-%E6%9C%8D%E5%8A%A1"><span class="nav-number">5.4.</span> <span class="nav-text">四、安装并启动 SSH 服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%B5%8B%E8%AF%95-SSH-%E8%BF%9E%E6%8E%A5"><span class="nav-number">5.5.</span> <span class="nav-text">五、测试 SSH 连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%88%86%E5%8F%91%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6"><span class="nav-number">5.6.</span> <span class="nav-text">六、分发镜像文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E4%BB%8E%E8%8A%82%E7%82%B9%E5%8A%A0%E8%BD%BD%E9%95%9C%E5%83%8F"><span class="nav-number">5.7.</span> <span class="nav-text">七、从节点加载镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E6%95%88%E6%9E%9C"><span class="nav-number">5.8.</span> <span class="nav-text">八、效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">5.9.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kubernetes-%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2%E9%AA%8C%E8%AF%81%E4%B8%8E%E4%BC%98%E9%9B%85%E5%85%B3%E9%97%AD%E5%AE%9E%E8%B7%B5"><span class="nav-number">6.</span> <span class="nav-text">Kubernetes 集群部署验证与优雅关闭实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E9%9B%86%E7%BE%A4%E5%8A%9F%E8%83%BD%E9%AA%8C%E8%AF%81"><span class="nav-number">6.1.</span> <span class="nav-text">一、集群功能验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BC%98%E9%9B%85%E5%85%B3%E9%97%AD%E9%9B%86%E7%BE%A4%E8%84%9A%E6%9C%AC%E8%AE%BE%E8%AE%A1"><span class="nav-number">6.2.</span> <span class="nav-text">二、优雅关闭集群脚本设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81SSH-%E5%85%8D%E5%AF%86%E9%85%8D%E7%BD%AE"><span class="nav-number">6.3.</span> <span class="nav-text">三、SSH 免密配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E9%85%8D%E7%BD%AE-sudo-%E5%85%8D%E5%AF%86%E7%A0%81"><span class="nav-number">6.4.</span> <span class="nav-text">四、配置 sudo 免密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81Terminating-%E7%8A%B6%E6%80%81%E5%A4%84%E7%90%86"><span class="nav-number">6.5.</span> <span class="nav-text">五、Terminating 状态处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%84%9A%E6%9C%AC%E6%89%A7%E8%A1%8C%E6%95%88%E6%9E%9C"><span class="nav-number">6.6.</span> <span class="nav-text">六、脚本执行效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%9C%80%E7%BB%88%E5%85%B3%E6%9C%BA"><span class="nav-number">6.7.</span> <span class="nav-text">七、最终关机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93"><span class="nav-number">6.8.</span> <span class="nav-text">本阶段总结</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">FlareBall</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FlareBall</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
