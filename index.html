@@ -170,7 +170,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2026-02-28 17:03:00 / Modified: 19:51:47" itemprop="dateCreated datePublished" datetime="2026-02-28T17:03:00+08:00">2026-02-28</time>
+              <time title="Created: 2026-02-28 17:03:00 / Modified: 19:52:27" itemprop="dateCreated datePublished" datetime="2026-02-28T17:03:00+08:00">2026-02-28</time>
             </span>
 
           
@@ -203,7 +203,7 @@
 <p>然后编辑 <code>/etc/exports</code> 文件，添加共享目录的配置：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-master:/opt# vim /etc/exports</span><br></pre></td></tr></table></figure>
 
-<p>在文件末尾添加共享目录位置，我设置如下以下行：</p>
+<p>在文件末尾添加共享目录位置，我设置了以下行：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/k8s_store  *(rw,sync,no_root_squash,no_subtree_check)</span><br></pre></td></tr></table></figure>
 
 <p>应用配置：</p>
