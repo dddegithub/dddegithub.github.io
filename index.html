@@ -170,7 +170,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2026-02-28 17:03:00 / Modified: 19:50:13" itemprop="dateCreated datePublished" datetime="2026-02-28T17:03:00+08:00">2026-02-28</time>
+              <time title="Created: 2026-02-28 17:03:00 / Modified: 19:51:47" itemprop="dateCreated datePublished" datetime="2026-02-28T17:03:00+08:00">2026-02-28</time>
             </span>
 
           
@@ -223,14 +223,7 @@
 <p>安装完成后，创建挂载点并挂载 NFS 共享目录：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-node1:~# <span class="built_in">sudo</span> <span class="built_in">mkdir</span> -p /opt/k8s_store</span><br><span class="line">root@k8s-node1:~# mount -t nfs 192.168.126.160:/opt/k8s_store /opt/k8s_store</span><br></pre></td></tr></table></figure>
 
-
-
-<h2 id="5-验证挂载"><a href="#5-验证挂载" class="headerlink" title="5. 验证挂载"></a>5. 验证挂载</h2><p>挂载完成后，进入挂载目录查看内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-node1:/opt/k8s_store# <span class="built_in">ls</span></span><br><span class="line">text.txt</span><br></pre></td></tr></table></figure>
-
-<p>查看文件内容，显示则配置成功：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-node1:/opt/k8s_store# <span class="built_in">cat</span> text.txt</span><br><span class="line">from k8s-master</span><br></pre></td></tr></table></figure>
-
+<p>完成</p>
 
       
     </div>
