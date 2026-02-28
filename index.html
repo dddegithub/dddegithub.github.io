@@ -145,6 +145,111 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://flareball.top/2026/02/28/linux-ubuntu22-04%E4%B8%BAk8s%E9%85%8D%E7%BD%AEnfs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="FlareBall">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlareBall's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2026/02/28/linux-ubuntu22-04%E4%B8%BAk8s%E9%85%8D%E7%BD%AEnfs/" class="post-title-link" itemprop="url">部署nfs</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2026-02-28 17:03:00 / Modified: 19:44:03" itemprop="dateCreated datePublished" datetime="2026-02-28T17:03:00+08:00">2026-02-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="部署NFS"><a href="#部署NFS" class="headerlink" title="部署NFS"></a>部署NFS</h1><p>在本篇博客中，我将介绍如何在 Ubuntu 系统中部署 NFS 服务，并在 Kubernetes 节点之间共享存储。</p>
+<h2 id="1-安装-NFS-服务"><a href="#1-安装-NFS-服务" class="headerlink" title="1. 安装 NFS 服务"></a>1. 安装 NFS 服务</h2><p>在 <code>k8s-master</code> 节点上，我们需要先安装 <code>nfs-kernel-server</code>。可以通过以下命令安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-master:~# <span class="built_in">cd</span> /opt</span><br><span class="line">root@k8s-master:/opt# <span class="built_in">sudo</span> apt install -y nfs-kernel-server</span><br></pre></td></tr></table></figure>
+
+<p>安装过程中，系统会提示安装一些必要的依赖包，例如 <code>keyutils</code>、<code>nfs-common</code>、<code>rpcbind</code> 等。</p>
+<p>安装完成后，使用以下命令检查 NFS 服务是否已启动：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-master:/opt# <span class="built_in">sudo</span> systemctl start nfs-kernel-server</span><br><span class="line">root@k8s-master:/opt# <span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> nfs-kernel-server</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-配置共享目录"><a href="#2-配置共享目录" class="headerlink" title="2. 配置共享目录"></a>2. 配置共享目录</h2><p>这个根据实际配置，我这里在 <code>k8s-master</code> 上创建共享目录 <code>k8s_store</code>，并修改权限：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-master:/opt# <span class="built_in">mkdir</span> k8s_store</span><br><span class="line">root@k8s-master:/opt# <span class="built_in">chmod</span> 777 k8s_store/</span><br></pre></td></tr></table></figure>
+
+<p>查看目录内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-master:/opt# ll -a</span><br></pre></td></tr></table></figure>
+
+<p>然后编辑 <code>/etc/exports</code> 文件，添加共享目录的配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-master:/opt# vim /etc/exports</span><br></pre></td></tr></table></figure>
+
+<p>在文件末尾添加共享目录位置，我设置如下以下行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/k8s_store  *(rw,sync,no_root_squash,no_subtree_check)</span><br></pre></td></tr></table></figure>
+
+<p>应用配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-master:/opt# <span class="built_in">sudo</span> exportfs -a</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-启动-NFS-服务"><a href="#3-启动-NFS-服务" class="headerlink" title="3. 启动 NFS 服务"></a>3. 启动 NFS 服务</h2><p>启动并使 NFS 服务在系统启动时自动启动：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-master:/opt# <span class="built_in">sudo</span> systemctl start nfs-kernel-server</span><br><span class="line">root@k8s-master:/opt# <span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> nfs-kernel-server</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-在客户端安装-NFS"><a href="#4-在客户端安装-NFS" class="headerlink" title="4. 在客户端安装 NFS"></a>4. 在客户端安装 NFS</h2><p>接下来，在 <code>k8s-node1</code> 节点上安装 NFS 客户端：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-node1:~# <span class="built_in">sudo</span> apt install -y nfs-common</span><br></pre></td></tr></table></figure>
+
+<p>安装过程中，系统会提示安装一些依赖包，例如 <code>rpcbind</code> 等。</p>
+<p>安装完成后，创建挂载点并挂载 NFS 共享目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-node1:~# <span class="built_in">sudo</span> <span class="built_in">mkdir</span> -p /opt/k8s_store</span><br><span class="line">root@k8s-node1:~# mount -t nfs 192.168.126.160:/opt/k8s_store /opt/k8s_store</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-验证挂载"><a href="#5-验证挂载" class="headerlink" title="5. 验证挂载"></a>5. 验证挂载</h2><p>挂载完成后，进入挂载目录查看内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-node1:/opt/k8s_store# <span class="built_in">ls</span></span><br><span class="line">text.txt</span><br></pre></td></tr></table></figure>
+
+<p>查看文件内容，显示则配置成功：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-node1:/opt/k8s_store# <span class="built_in">cat</span> text.txt</span><br><span class="line">from k8s-master</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://flareball.top/2026/02/23/linux-ubuntu22-04%E9%83%A8%E7%BD%B2k8s1-23-6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -168,10 +273,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2026-02-23 11:03:00 / Modified: 11:25:24" itemprop="dateCreated datePublished" datetime="2026-02-23T11:03:00+08:00">2026-02-23</time>
+              <time title="Created: 2026-02-23 11:03:00" itemprop="dateCreated datePublished" datetime="2026-02-23T11:03:00+08:00">2026-02-23</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-02-28 18:47:40" itemprop="dateModified" datetime="2026-02-28T18:47:40+08:00">2026-02-28</time>
+              </span>
 
           
 
@@ -248,9 +359,8 @@
 <p>内容示例：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1   localhost</span><br><span class="line">127.0.1.1   k8s-node2</span><br><span class="line"></span><br><span class="line">192.168.126.160   k8s-master</span><br><span class="line">192.168.126.161   k8s-node1</span><br><span class="line">192.168.126.162   k8s-node2</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>建议所有节点 hosts 内容保持一致。</p>
-</blockquote>
+
+
 <hr>
 <h2 id="八、配置内核转发参数"><a href="#八、配置内核转发参数" class="headerlink" title="八、配置内核转发参数"></a>八、配置内核转发参数</h2><p>Kubernetes 网络需要开启 IP 转发。</p>
 <p>创建配置文件：</p>
@@ -348,8 +458,8 @@
 
 <p>说明当前环境无法直接访问 Docker Hub。</p>
 <hr>
-<h2 id="六、配置-Docker-镜像加速"><a href="#六、配置-Docker-镜像加速" class="headerlink" title="六、配置 Docker 镜像加速"></a>六、配置 Docker 镜像加速</h2><p>编辑 <code>/etc/docker/daemon.json</code>，增加 registry-mirrors 字段：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;exec-opts&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;native.cgroupdriver=systemd&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;log-driver&quot;</span><span class="punctuation">:</span> <span class="string">&quot;json-file&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;log-opts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;max-size&quot;</span><span class="punctuation">:</span> <span class="string">&quot;10m&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;storage-driver&quot;</span><span class="punctuation">:</span> <span class="string">&quot;overlay2&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;registry-mirrors&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;https://docker.xuanyuan.me&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;https://hub-mirror.c.163.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;https://mirror.baidubce.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;https://docker.1ms.run&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;https://hub.rat.dev&quot;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="六、配置-Docker-镜像加速-代理"><a href="#六、配置-Docker-镜像加速-代理" class="headerlink" title="六、配置 Docker 镜像加速&#x2F;代理"></a>六、配置 Docker 镜像加速&#x2F;代理</h2><p>编辑 <code>/etc/docker/daemon.json</code>，增加 registry-mirrors 字段：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;exec-opts&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;native.cgroupdriver=systemd&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;log-driver&quot;</span><span class="punctuation">:</span> <span class="string">&quot;json-file&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;log-opts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;max-size&quot;</span><span class="punctuation">:</span> <span class="string">&quot;10m&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;storage-driver&quot;</span><span class="punctuation">:</span> <span class="string">&quot;overlay2&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;registry-mirrors&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;https://dockerproxy.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;https://docker.m.daocloud.io&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;https://hub.rat.dev&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;https://docker.xuanyuan.me&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;https://docker.1ms.run&quot;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>重新加载并重启：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br><span class="line"><span class="built_in">sudo</span> systemctl restart docker</span><br></pre></td></tr></table></figure>
@@ -363,8 +473,7 @@
 <li>Storage Driver: overlay2</li>
 <li>Registry Mirrors 已加载</li>
 </ul>
-<hr>
-<h2 id="七、问题现象"><a href="#七、问题现象" class="headerlink" title="七、问题现象"></a>七、问题现象</h2><p>再次执行：</p>
+<p>再次执行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx</span><br></pre></td></tr></table></figure>
 
 <p>仍然出现：</p>
@@ -381,6 +490,37 @@
 <li>尝试更换其他可用的加速器地址</li>
 <li>或者采用离线镜像分发方案（见部署记录（四））</li>
 </ul>
+<p>如果加速器无效可以给docker配置代理：</p>
+<p>① 创建 systemd 目录（如已存在可忽略）</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /etc/systemd/system/docker.service.d</span><br></pre></td></tr></table></figure>
+
+<p>② 创建 Docker 代理配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/systemd/system/docker.service.d/proxy.conf</span><br></pre></td></tr></table></figure>
+
+<p>写入以下内容（代理服务器地址需要允许局域访问）：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Environment</span>=<span class="string">&quot;HTTP_PROXY=http://192.168.1.100:7890&quot;</span></span><br><span class="line"><span class="attr">Environment</span>=<span class="string">&quot;HTTPS_PROXY=http://192.168.1.100:7890&quot;</span></span><br><span class="line"><span class="attr">Environment</span>=<span class="string">&quot;NO_PROXY=localhost,127.0.0.1,192.168.0.0/16,10.0.0.0/8,10.244.0.0/16,10.96.0.0/12,.cluster.local&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>NO_PROXY</code> 配置非常关键，用于避免集群内部流量被错误地转发到代理。</p>
+<p>如果未正确配置 <code>NO_PROXY</code>，可能导致以下问题：</p>
+<ul>
+<li>Pod 内部访问异常</li>
+<li>Kubernetes API Server 访问异常</li>
+<li>Cilium 等 CNI 组件通信异常</li>
+</ul>
+<p>上述问题通常表现为网络不可达或组件反复重启，严重时会导致集群不可用。</p>
+<p>③ 重载 systemd 并重启 Docker 服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl daemon-reload</span><br><span class="line"><span class="built_in">sudo</span> systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<p>④ 验证 Docker 是否已加载代理环境变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl show --property=Environment docker</span><br></pre></td></tr></table></figure>
+
+<p>期望看到类似输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HTTP_PROXY=http://192.168.1.100:7890</span><br><span class="line">HTTPS_PROXY=http://192.168.1.100:7890</span><br></pre></td></tr></table></figure>
+
+<p>⑤ 拉取镜像进行验证</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull cr.fluentbit.io/fluent/fluent-bit:4.2.2</span><br></pre></td></tr></table></figure>
+
+<p>镜像能够成功拉取，说明 Docker 代理配置生效。</p>
 <h1 id="Kubernetes-1-23-6-部署记录（三）——初始化集群与安装-Cilium"><a href="#Kubernetes-1-23-6-部署记录（三）——初始化集群与安装-Cilium" class="headerlink" title="Kubernetes 1.23.6 部署记录（三）——初始化集群与安装 Cilium"></a>Kubernetes 1.23.6 部署记录（三）——初始化集群与安装 Cilium</h1><h2 id="一、初始化-Kubernetes-集群（跳过-kube-proxy）"><a href="#一、初始化-Kubernetes-集群（跳过-kube-proxy）" class="headerlink" title="一、初始化 Kubernetes 集群（跳过 kube-proxy）"></a>一、初始化 Kubernetes 集群（跳过 kube-proxy）</h2><p>由于后续使用 Cilium 并启用 kubeProxyReplacement，因此在初始化阶段跳过 kube-proxy 的安装。</p>
 <p>执行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init \</span><br><span class="line">  --apiserver-advertise-address=192.168.126.160 \</span><br><span class="line">  --pod-network-cidr=10.244.0.0/16 \</span><br><span class="line">  --skip-phases=addon/kube-proxy \</span><br><span class="line">  --image-repository registry.cn-hangzhou.aliyuncs.com/google_containers</span><br></pre></td></tr></table></figure>
@@ -1416,87 +1556,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flareball.top/2025/11/07/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-122-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%E2%85%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="FlareBall's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/11/07/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-122-%E4%B9%B0%E5%8D%96%E8%82%A1%E7%A5%A8%E7%9A%84%E6%9C%80%E4%BD%B3%E6%97%B6%E6%9C%BA%E2%85%A1/" class="post-title-link" itemprop="url">122.买卖股票的最佳时机Ⅱ</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2025-11-07 14:00:00" itemprop="dateCreated datePublished" datetime="2025-11-07T14:00:00+08:00">2025-11-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-11-09 11:39:31" itemprop="dateModified" datetime="2025-11-09T11:39:31+08:00">2025-11-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="贪心"><a href="#贪心" class="headerlink" title="贪心"></a>贪心</h1><p>时间复杂度$O(n)$</p>
-<p>空间复杂度$O(1)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">maxProfit</span><span class="params">(<span class="type">int</span>[] prices)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>, pre = prices[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt; prices.length; ++i) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">cur</span> <span class="operator">=</span> prices[i];</span><br><span class="line">            <span class="keyword">if</span> (cur &gt; pre) &#123;</span><br><span class="line">                ans += cur - pre;</span><br><span class="line">            &#125;</span><br><span class="line">            pre = cur;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1566,7 +1625,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1575,7 +1634,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
