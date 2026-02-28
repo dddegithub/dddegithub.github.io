@@ -159,7 +159,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2026/02/28/linux-ubuntu22-04%E4%B8%BAk8s%E9%85%8D%E7%BD%AEnfs/" class="post-title-link" itemprop="url">部署nfs</a>
+            <a href="/2026/02/28/linux-ubuntu22-04%E4%B8%BAk8s%E9%85%8D%E7%BD%AEnfs/" class="post-title-link" itemprop="url">ubuntu22.04为k8s部署NFS</a>
         </h2>
 
         <div class="post-meta">
@@ -170,7 +170,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2026-02-28 17:03:00 / Modified: 19:44:03" itemprop="dateCreated datePublished" datetime="2026-02-28T17:03:00+08:00">2026-02-28</time>
+              <time title="Created: 2026-02-28 17:03:00 / Modified: 19:50:13" itemprop="dateCreated datePublished" datetime="2026-02-28T17:03:00+08:00">2026-02-28</time>
             </span>
 
           
@@ -184,7 +184,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="部署NFS"><a href="#部署NFS" class="headerlink" title="部署NFS"></a>部署NFS</h1><p>在本篇博客中，我将介绍如何在 Ubuntu 系统中部署 NFS 服务，并在 Kubernetes 节点之间共享存储。</p>
+          <h1 id="ubuntu22-04为k8s部署NFS"><a href="#ubuntu22-04为k8s部署NFS" class="headerlink" title="ubuntu22.04为k8s部署NFS"></a>ubuntu22.04为k8s部署NFS</h1><p>在本篇博客中，我将介绍如何在 Ubuntu 系统中部署 NFS 服务，并在 Kubernetes 节点之间共享存储。</p>
 <h2 id="1-安装-NFS-服务"><a href="#1-安装-NFS-服务" class="headerlink" title="1. 安装 NFS 服务"></a>1. 安装 NFS 服务</h2><p>在 <code>k8s-master</code> 节点上，我们需要先安装 <code>nfs-kernel-server</code>。可以通过以下命令安装：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@k8s-master:~# <span class="built_in">cd</span> /opt</span><br><span class="line">root@k8s-master:/opt# <span class="built_in">sudo</span> apt install -y nfs-kernel-server</span><br></pre></td></tr></table></figure>
 
