@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"flareball.top","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="PowerShell 7.6.6 在简体中文环境下启动即崩溃，根因是更新提醒代码对中文文案计算出负的 PadRight 宽度。记录从调用栈定位到临时修复的完整过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PowerShell 7.6.6 中文环境启动崩溃：一行中文文案引发的 FailFast">
+<meta property="og:url" content="https://flareball.top/2026/10/20/PowerShell-7-6-6-%E4%B8%AD%E6%96%87%E7%8E%AF%E5%A2%83%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%E6%8E%92%E6%9F%A5/index.html">
+<meta property="og:site_name" content="FlareBall&#39;s Blog">
+<meta property="og:description" content="PowerShell 7.6.6 在简体中文环境下启动即崩溃，根因是更新提醒代码对中文文案计算出负的 PadRight 宽度。记录从调用栈定位到临时修复的完整过程。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-10-20T01:30:00.000Z">
+<meta property="article:modified_time" content="2026-10-20T14:20:35.559Z">
+<meta property="article:author" content="FlareBall">
+<meta property="article:tag" content="PowerShell">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="排错">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://flareball.top/2026/10/20/PowerShell-7-6-6-%E4%B8%AD%E6%96%87%E7%8E%AF%E5%A2%83%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%E6%8E%92%E6%9F%A5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>PowerShell 7.6.6 中文环境启动崩溃：一行中文文案引发的 FailFast | FlareBall's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">FlareBall's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Linux · 云原生 · 算法笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-算法题解">
+
+    <a href="/categories/algorithms/" rel="section"><i class="fa fa-code fa-fw"></i>算法题解</a>
+
+  </li>
+        <li class="menu-item menu-item-技术笔记">
+
+    <a href="/categories/tech/" rel="section"><i class="fa fa-server fa-fw"></i>技术笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://flareball.top/2026/10/20/PowerShell-7-6-6-%E4%B8%AD%E6%96%87%E7%8E%AF%E5%A2%83%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%E6%8E%92%E6%9F%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.svg">
+      <meta itemprop="name" content="FlareBall">
+      <meta itemprop="description" content="FlareBall 的技术笔记：Linux 运维、Kubernetes 云原生、Prometheus 监控与 LeetCode 题解。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FlareBall's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PowerShell 7.6.6 中文环境启动崩溃：一行中文文案引发的 FailFast
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2026-10-20 09:30:00 / 修改时间：22:20:35" itemprop="dateCreated datePublished" datetime="2026-10-20T09:30:00+08:00">2026-10-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tech/" itemprop="url" rel="index"><span itemprop="name">技术笔记</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tech/windows/" itemprop="url" rel="index"><span itemprop="name">Windows</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">PowerShell 7.6.6 在简体中文环境下启动即崩溃，根因是更新提醒代码对中文文案计算出负的 PadRight 宽度。记录从调用栈定位到临时修复的完整过程。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="PowerShell-7-6-6-中文环境启动崩溃：一行中文文案引发的-FailFast"><a href="#PowerShell-7-6-6-中文环境启动崩溃：一行中文文案引发的-FailFast" class="headerlink" title="PowerShell 7.6.6 中文环境启动崩溃：一行中文文案引发的 FailFast"></a>PowerShell 7.6.6 中文环境启动崩溃：一行中文文案引发的 FailFast</h2><blockquote>
+<p><strong>TL;DR</strong>：这不是 Windows 更新，也不是配置损坏。是 PowerShell 自带的”有新版本”提醒在简体中文（zh-Hans）下的格式化 bug：代码假设提醒文案第一行最长，中文文案第三行反而最长，算出 <code>PadRight(-17)</code>，.NET 直接抛异常，进程在启动阶段 <code>FailFast</code>。7.6.7 发布满 7 天后提醒到期，所以某天早上突然开始崩。</p>
+<p>临时修复：设置用户环境变量 <code>POWERSHELL_UPDATECHECK=Off</code>，关闭更新提醒。升级到 7.6.7 <strong>不能</strong>解决。</p>
+</blockquote>
+<h3 id="一、现象"><a href="#一、现象" class="headerlink" title="一、现象"></a>一、现象</h3><p>环境：Windows 11 + PowerShell 7.6.6（系统 UI 语言为简体中文）。</p>
+<p>某天开始，打开 PowerShell 7 直接进程终止，窗口只剩一段报错：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">PowerShell 7.6.6</span><br><span class="line">Process terminated.</span><br><span class="line">totalWidth ('-17') must be a non-negative value. (Parameter 'totalWidth')</span><br><span class="line">Actual value was -17.</span><br><span class="line"></span><br><span class="line">   at System.Environment.FailFast(System.String, System.Exception)</span><br><span class="line">   at Microsoft.PowerShell.UnmanagedPSEntry.Start(System.String[], Int32)</span><br><span class="line">   at Microsoft.PowerShell.ManagedPSEntry.Main(System.String[])</span><br><span class="line"></span><br><span class="line">System.ArgumentOutOfRangeException: totalWidth ('-17') must be a non-negative value. (Parameter 'totalWidth')</span><br><span class="line">Actual value was -17.</span><br><span class="line">   at System.ArgumentOutOfRangeException.ThrowNegative[T](T value, String paramName)</span><br><span class="line">   at System.String.PadRight(Int32 totalWidth, Char paddingChar)</span><br><span class="line">   at Microsoft.PowerShell.UpdatesNotification.ShowUpdateNotification(PSHostUserInterface hostUI)</span><br><span class="line">   at Microsoft.PowerShell.ConsoleHost.Start(String bannerText, String helpText, Boolean issProvidedExternally)</span><br><span class="line"></span><br><span class="line">[已退出进程，代码为 2148734499 (0x80131623)]</span><br></pre></td></tr></table></figure>
+
+<p>特征：</p>
+<ul>
+<li>每次启动都崩，根本进不了交互界面</li>
+<li><code>-NoProfile</code> 无效</li>
+<li>换个窗口宽度、最大化、改字体都无效</li>
+<li>用脚本方式调用（输出重定向、非交互）反而不崩</li>
+</ul>
+<h3 id="二、先排除-Windows-更新"><a href="#二、先排除-Windows-更新" class="headerlink" title="二、先排除 Windows 更新"></a>二、先排除 Windows 更新</h3><p>一开始最容易怀疑的是 Windows Update 动了 PowerShell，但可以很快排除：</p>
+<table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>C:\Program Files\PowerShell\7\</code> 文件日期</td>
+<td>9 月 2 日（构建时间），未变</td>
+</tr>
+<tr>
+<td>注册表 <code>HKLM\SOFTWARE\Microsoft\PowerShellCore\InstalledVersions</code></td>
+<td>7.6.6</td>
+</tr>
+<tr>
+<td>Windows Update 是否分发 PowerShell 7</td>
+<td>否，PowerShell 7 是独立 MSI 安装</td>
+</tr>
+</tbody></table>
+<p>也就是说，安装本身没被动过。问题出在”运行时的某个条件”上。</p>
+<h3 id="三、定位：崩溃发生在更新提醒的格式化代码里"><a href="#三、定位：崩溃发生在更新提醒的格式化代码里" class="headerlink" title="三、定位：崩溃发生在更新提醒的格式化代码里"></a>三、定位：崩溃发生在更新提醒的格式化代码里</h3><p>调用栈已经点名了函数：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Microsoft.PowerShell.UpdatesNotification.ShowUpdateNotification</span><br></pre></td></tr></table></figure>
+
+<p>对应源码（v7.6.6）：</p>
+<p><code>src/Microsoft.PowerShell.ConsoleHost/host/msh/UpdatesNotification.cs</code></p>
+<p>关键片段：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The first line is longest, if the message changes, this needs to be updated</span></span><br><span class="line"><span class="built_in">int</span> line1Length = notificationMsgTemplate.IndexOf(<span class="string">'\n'</span>);</span><br><span class="line"><span class="built_in">int</span> line2Length = notificationMsgTemplate.IndexOf(<span class="string">'\n'</span>, line1Length + <span class="number">1</span>);</span><br><span class="line"><span class="built_in">int</span> line3Length = notificationMsgTemplate.IndexOf(<span class="string">'\n'</span>, line2Length + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">line3Length -= line2Length + <span class="number">1</span>;</span><br><span class="line">line2Length -= line1Length + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">line2Padding = line2Padding.PadRight(</span><br><span class="line">    line1Length - line2Length + releaseTag.Length</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3 represents the extra placeholder in the template</span></span><br><span class="line">line3Padding = line3Padding.PadRight(</span><br><span class="line">    line1Length - line3Length + <span class="number">3</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>注释写得很清楚：**”第一行是最长的”**。这段代码靠这个假设来计算后两行要补多少空格，让三行对齐。</p>
+<p>问题是，这个假设在简体中文资源里不成立。</p>
+<p>zh-Hans 的稳定版提醒文案：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{1} 有新的 PowerShell 稳定版本可用: v{0} {2}</span><br><span class="line">{1} 立即升级，或访问发布页:{3}{2}</span><br><span class="line">{1}   https://aka.ms/PowerShell-Release?tag=v{0} {4}{2}</span><br></pre></td></tr></table></figure>
+
+<p>三行长度：</p>
+<table>
+<thead>
+<tr>
+<th>行</th>
+<th>内容</th>
+<th>长度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>第 1 行</td>
+<td><code>  {1} 有新的 PowerShell 稳定版本可用: v{0} {2}</code></td>
+<td>37</td>
+</tr>
+<tr>
+<td>第 2 行</td>
+<td><code>  {1} 立即升级，或访问发布页:{3}{2}</code></td>
+<td>24</td>
+</tr>
+<tr>
+<td>第 3 行</td>
+<td><code>  {1}   https://aka.ms/PowerShell-Release?tag=v{0} {4}{2}</code></td>
+<td>57</td>
+</tr>
+</tbody></table>
+<p>代进代码：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">line1Length - line3Length + 3</span><br><span class="line">= 37 - 57 + 3</span><br><span class="line">= -17</span><br></pre></td></tr></table></figure>
+
+<p>于是执行了等价于 <code>"".PadRight(-17)</code> 的操作。<code>String.PadRight</code> 不接受负数，抛出 <code>ArgumentOutOfRangeException</code>。由于这发生在控制台宿主启动阶段、没有上层可以接住，进程直接 <code>FailFast</code> 退出。</p>
+<p>预览版和 LTS 文案同样有问题：</p>
+<table>
+<thead>
+<tr>
+<th>提醒类型</th>
+<th>第 1 行长度</th>
+<th>第 3 行长度</th>
+<th>计算结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>稳定版</td>
+<td>37</td>
+<td>57</td>
+<td>-17</td>
+</tr>
+<tr>
+<td>预览版</td>
+<td>37</td>
+<td>57</td>
+<td>-17</td>
+</tr>
+<tr>
+<td>LTS</td>
+<td>39</td>
+<td>57</td>
+<td>-15</td>
+</tr>
+</tbody></table>
+<p>所以这不是某个版本独有的，而是中文翻译文案与代码假设共同导致的。</p>
+<h3 id="四、为什么是”今天”突然开始崩"><a href="#四、为什么是”今天”突然开始崩" class="headerlink" title="四、为什么是”今天”突然开始崩"></a>四、为什么是”今天”突然开始崩</h3><p>更新提醒不是发现新版本立刻弹，而是<strong>延迟 7 天</strong>。源码里写死了：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">const</span> <span class="built_in">int</span> NotificationDelayDays = <span class="number">7</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">const</span> <span class="built_in">int</span> UpdateCheckBackoffDays = <span class="number">7</span>;</span><br></pre></td></tr></table></figure>
+
+<p>延迟的理由也写在注释里：新版本刚发布时镜像可能还在滚动，等一周再提醒，降低”看到了却装不上”的概率。</p>
+<p>时间线完全对得上：</p>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>事件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2026-09-08</td>
+<td>PowerShell 7.6.6 发布（安装文件构建于 9 月 2 日）</td>
+</tr>
+<tr>
+<td>2026-10-13</td>
+<td>PowerShell 7.6.7 发布</td>
+</tr>
+<tr>
+<td>2026-10-14 22:52</td>
+<td>本机更新检查发现 7.6.7，写入缓存文件</td>
+</tr>
+<tr>
+<td>2026-10-20</td>
+<td>距 10-13 满 7 天，提醒开始显示</td>
+</tr>
+<tr>
+<td>2026-10-20 早上</td>
+<td>打开 PowerShell，首次触发提醒，启动即崩</td>
+</tr>
+</tbody></table>
+<p>本机缓存文件可以直接看到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%LOCALAPPDATA%\Microsoft\PowerShell\7.6.6\update1_v7.6.7_2026-10-13</span><br></pre></td></tr></table></figure>
+
+<p>文件名里的日期就是新版本的发布日期，<code>ShowUpdateNotification</code> 正是拿它和当前时间比较来决定是否显示。</p>
+<p>这也解释了两个现象：</p>
+<ol>
+<li><strong>为什么之前一直好好的</strong>：提醒还没到期。</li>
+<li><strong>为什么脚本里复现不了</strong>：崩溃只在 <code>hostUI.SupportsVirtualTerminal</code> 为真时才走补空格那段代码。真实交互式终端支持 VT，重定向/非交互环境通常不支持，于是绕过了崩溃点。</li>
+</ol>
+<h3 id="五、修复"><a href="#五、修复" class="headerlink" title="五、修复"></a>五、修复</h3><h4 id="5-1-关闭更新检查（推荐，立竿见影）"><a href="#5-1-关闭更新检查（推荐，立竿见影）" class="headerlink" title="5.1 关闭更新检查（推荐，立竿见影）"></a>5.1 关闭更新检查（推荐，立竿见影）</h4><p>设置用户级环境变量：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">Environment</span>]::SetEnvironmentVariable(<span class="string">'POWERSHELL_UPDATECHECK'</span>, <span class="string">'Off'</span>, <span class="string">'User'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>或者用传统方式：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setx POWERSHELL_UPDATECHECK Off</span><br></pre></td></tr></table></figure>
+
+<p>这个变量会让 <code>UpdatesNotification.CanNotifyUpdates</code> 变成 <code>false</code>。而 <code>ConsoleHost.Start</code> 只在它为真时才调用显示逻辑：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (UpdatesNotification.CanNotifyUpdates)</span><br><span class="line">{</span><br><span class="line">    UpdatesNotification.ShowUpdateNotification(hostUI);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>所以提醒路径根本不会执行，也就不会崩。</p>
+<h4 id="5-2-验证是否生效"><a href="#5-2-验证是否生效" class="headerlink" title="5.2 验证是否生效"></a>5.2 验证是否生效</h4><p>不设变量时（默认）：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$t</span> = [<span class="type">AppDomain</span>]::CurrentDomain.GetAssemblies() |</span><br><span class="line">     <span class="built_in">ForEach-Object</span> { <span class="variable">$_</span>.GetType(<span class="string">'Microsoft.PowerShell.UpdatesNotification'</span>) } |</span><br><span class="line">     <span class="built_in">Where-Object</span> { <span class="variable">$_</span> }</span><br><span class="line"></span><br><span class="line"><span class="variable">$t</span>.GetField(<span class="string">'CanNotifyUpdates'</span>, <span class="string">'NonPublic,Static'</span>).GetValue(<span class="variable">$null</span>)</span><br><span class="line"><span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+
+<p>设置 <code>POWERSHELL_UPDATECHECK=Off</code> 后：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># False</span></span><br></pre></td></tr></table></figure>
+
+<p>本机实测：不设变量为 <code>True</code>，设为 <code>Off</code> 后为 <code>False</code>。</p>
+<h4 id="5-3-让变量生效"><a href="#5-3-让变量生效" class="headerlink" title="5.3 让变量生效"></a>5.3 让变量生效</h4><p>环境变量只对<strong>新启动的进程</strong>生效，而已打开的终端会缓存旧环境：</p>
+<ol>
+<li>关闭所有 PowerShell 窗口</li>
+<li>如果用的是 Windows Terminal，退出整个应用（不是只关标签页）</li>
+<li>重新打开 PowerShell 7</li>
+</ol>
+<p>如果还不行，注销再登录，或重启资源管理器；最稳妥的是重启系统。</p>
+<p>想在当前会话里立刻验证，可以：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$env:POWERSHELL_UPDATECHECK</span> = <span class="string">'Off'</span></span><br><span class="line">pwsh</span><br></pre></td></tr></table></figure>
+
+<p>子进程会继承这个变量。</p>
+<h4 id="5-4-代价"><a href="#5-4-代价" class="headerlink" title="5.4 代价"></a>5.4 代价</h4><ul>
+<li>以后<strong>不会再收到 PowerShell 更新提醒</strong>，需要自己偶尔看一眼 <a target="_blank" rel="noopener" href="https://github.com/PowerShell/PowerShell/releases">Releases</a>。</li>
+<li>这是临时规避，不是根治。等上游修复并发布新版本后，可以升级，再把变量改回 <code>Default</code> 或删除。</li>
+</ul>
+<p>恢复提醒：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">Environment</span>]::SetEnvironmentVariable(<span class="string">'POWERSHELL_UPDATECHECK'</span>, <span class="variable">$null</span>, <span class="string">'User'</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-5-为什么升级到-7-6-7-没用"><a href="#5-5-为什么升级到-7-6-7-没用" class="headerlink" title="5.5 为什么升级到 7.6.7 没用"></a>5.5 为什么升级到 7.6.7 没用</h4><p>我核对了 v7.6.7 的源码和 zh-Hans 资源文件：</p>
+<ul>
+<li><code>UpdatesNotification.cs</code> 里 <code>PadRight(line1Length - line3Length + 3)</code> 的逻辑原样保留</li>
+<li><code>ManagedEntranceStrings.zh-Hans.resx</code> 里三行文案的长度仍然是 37 / 24 / 57</li>
+</ul>
+<p>也就是说，升级只是把”下一次崩溃”推迟到 7.6.8 发布后的第 7 天。必须等官方修复这个格式化逻辑。</p>
+<h4 id="5-6-其他方案为什么不行"><a href="#5-6-其他方案为什么不行" class="headerlink" title="5.6 其他方案为什么不行"></a>5.6 其他方案为什么不行</h4><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>把窗口拉宽 / 最大化</td>
+<td>无效。<code>-17</code> 来自字符串长度，和窗口宽度无关</td>
+</tr>
+<tr>
+<td><code>pwsh -NoProfile</code></td>
+<td>无效。崩溃发生在加载 profile 之前</td>
+</tr>
+<tr>
+<td>切到 LTS 更新通道</td>
+<td>无效。LTS 的 zh-Hans 文案同样算出负数（-15）</td>
+</tr>
+<tr>
+<td>删除 <code>update1_*</code> 缓存文件</td>
+<td>无效。下次启动会重新检查并写回，提醒条件依然成立</td>
+</tr>
+<tr>
+<td>把系统语言改成英文</td>
+<td>能绕过，但代价过大，不推荐</td>
+</tr>
+<tr>
+<td>修改安装目录里的资源 DLL</td>
+<td>不推荐。MSI 修复/升级会覆盖，且破坏签名完整性</td>
+</tr>
+</tbody></table>
+<h3 id="六、上游状态"><a href="#六、上游状态" class="headerlink" title="六、上游状态"></a>六、上游状态</h3><ul>
+<li>Issue：<a target="_blank" rel="noopener" href="https://github.com/PowerShell/PowerShell/issues/28131">PowerShell/PowerShell#28131</a></li>
+<li>标题：<em>PowerShell can crash on startup when displaying the update notification under zh-Hans due to negative PadRight width</em></li>
+<li>状态：open，<code>Needs-Triage</code></li>
+<li>报告者在 7.7.0-preview.4 上首次遇到，并确认 7.7.0-preview.5 仍有同样代码和文案</li>
+<li>2026-10-20 仍有用户回复 “same”，说明影响面在扩大</li>
+</ul>
+<p>修复思路本身不复杂：取三行中的最大长度，或者对负值做兜底（<code>Math.Max(0, ...)</code>）。但在官方发版前，本地只能先关掉提醒。</p>
+<h3 id="七、可复用的排查经验"><a href="#七、可复用的排查经验" class="headerlink" title="七、可复用的排查经验"></a>七、可复用的排查经验</h3><ol>
+<li><strong>先看调用栈，别猜</strong>。<code>ShowUpdateNotification</code> 已经把范围缩到一个函数，比盲目重装快得多。</li>
+<li>**区分”安装被改了”和”运行时条件触发了”**。文件日期 + 注册表版本就能排除 Windows Update。</li>
+<li><strong>注意时间相关的功能</strong>。更新提醒有”延迟 N 天”的设计，这类 bug 往往在发布后第 N 天才出现，看起来像是”今天突然坏了”。</li>
+<li><strong>负宽度、负数索引这类异常，优先怀疑本地化文案</strong>。代码按英文文案的长度关系写死假设，翻译一变就翻车。</li>
+<li><strong>交互式才崩、脚本不崩，说明和终端能力有关</strong>。本例是 <code>SupportsVirtualTerminal</code> 分支。</li>
+</ol>
+<h3 id="八、参考"><a href="#八、参考" class="headerlink" title="八、参考"></a>八、参考</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/PowerShell/PowerShell/issues/28131">PowerShell/PowerShell issue #28131</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/PowerShell/PowerShell/releases/tag/v7.6.7">PowerShell v7.6.7 Release</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/PowerShell/PowerShell/blob/v7.6.6/src/Microsoft.PowerShell.ConsoleHost/host/msh/UpdatesNotification.cs">v7.6.6 UpdatesNotification.cs 源码</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/PowerShell/PowerShell/blob/v7.6.6/src/Microsoft.PowerShell.ConsoleHost/resources/zh-Hans/ManagedEntranceStrings.zh-Hans.resx">v7.6.6 zh-Hans 资源文件</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PowerShell/" rel="tag"># PowerShell</a>
+              <a href="/tags/Windows/" rel="tag"># Windows</a>
+              <a href="/tags/%E6%8E%92%E9%94%99/" rel="tag"># 排错</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/02/28/linux-ubuntu22-04%E4%B8%BAk8s%E9%85%8D%E7%BD%AEnfs/" rel="prev" title="Ubuntu 22.04 为 Kubernetes 配置 NFS">
+      <i class="fa fa-chevron-left"></i> Ubuntu 22.04 为 Kubernetes 配置 NFS
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PowerShell-7-6-6-%E4%B8%AD%E6%96%87%E7%8E%AF%E5%A2%83%E5%90%AF%E5%8A%A8%E5%B4%A9%E6%BA%83%EF%BC%9A%E4%B8%80%E8%A1%8C%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%88%E5%BC%95%E5%8F%91%E7%9A%84-FailFast"><span class="nav-number">1.</span> <span class="nav-text">PowerShell 7.6.6 中文环境启动崩溃：一行中文文案引发的 FailFast</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E7%8E%B0%E8%B1%A1"><span class="nav-number">1.1.</span> <span class="nav-text">一、现象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%85%88%E6%8E%92%E9%99%A4-Windows-%E6%9B%B4%E6%96%B0"><span class="nav-number">1.2.</span> <span class="nav-text">二、先排除 Windows 更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%AE%9A%E4%BD%8D%EF%BC%9A%E5%B4%A9%E6%BA%83%E5%8F%91%E7%94%9F%E5%9C%A8%E6%9B%B4%E6%96%B0%E6%8F%90%E9%86%92%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%BB%A3%E7%A0%81%E9%87%8C"><span class="nav-number">1.3.</span> <span class="nav-text">三、定位：崩溃发生在更新提醒的格式化代码里</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E2%80%9D%E4%BB%8A%E5%A4%A9%E2%80%9D%E7%AA%81%E7%84%B6%E5%BC%80%E5%A7%8B%E5%B4%A9"><span class="nav-number">1.4.</span> <span class="nav-text">四、为什么是”今天”突然开始崩</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E4%BF%AE%E5%A4%8D"><span class="nav-number">1.5.</span> <span class="nav-text">五、修复</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-%E5%85%B3%E9%97%AD%E6%9B%B4%E6%96%B0%E6%A3%80%E6%9F%A5%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%8C%E7%AB%8B%E7%AB%BF%E8%A7%81%E5%BD%B1%EF%BC%89"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 关闭更新检查（推荐，立竿见影）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-%E9%AA%8C%E8%AF%81%E6%98%AF%E5%90%A6%E7%94%9F%E6%95%88"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2 验证是否生效</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-%E8%AE%A9%E5%8F%98%E9%87%8F%E7%94%9F%E6%95%88"><span class="nav-number">1.5.3.</span> <span class="nav-text">5.3 让变量生效</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-4-%E4%BB%A3%E4%BB%B7"><span class="nav-number">1.5.4.</span> <span class="nav-text">5.4 代价</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-5-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8D%87%E7%BA%A7%E5%88%B0-7-6-7-%E6%B2%A1%E7%94%A8"><span class="nav-number">1.5.5.</span> <span class="nav-text">5.5 为什么升级到 7.6.7 没用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-6-%E5%85%B6%E4%BB%96%E6%96%B9%E6%A1%88%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%A1%8C"><span class="nav-number">1.5.6.</span> <span class="nav-text">5.6 其他方案为什么不行</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E4%B8%8A%E6%B8%B8%E7%8A%B6%E6%80%81"><span class="nav-number">1.6.</span> <span class="nav-text">六、上游状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E5%8F%AF%E5%A4%8D%E7%94%A8%E7%9A%84%E6%8E%92%E6%9F%A5%E7%BB%8F%E9%AA%8C"><span class="nav-number">1.7.</span> <span class="nav-text">七、可复用的排查经验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E5%8F%82%E8%80%83"><span class="nav-number">1.8.</span> <span class="nav-text">八、参考</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FlareBall"
+      src="/images/avatar.svg">
+  <p class="site-author-name" itemprop="name">FlareBall</p>
+  <div class="site-description" itemprop="description">FlareBall 的技术笔记：Linux 运维、Kubernetes 云原生、Prometheus 监控与 LeetCode 题解。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dddegithub" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dddegithub" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2024 – 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">FlareBall</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
