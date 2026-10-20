@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -17,18 +17,21 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"flareball.top","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"flareball.top","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
+  <meta name="description" content="FlareBall 的技术笔记：Linux 运维、Kubernetes 云原生、Prometheus 监控与 LeetCode 题解。">
+<meta property="og:type" content="website">
 <meta property="og:title" content="FlareBall&#39;s Blog">
-<meta property="og:url" content="http://flareball.top/page/2/index.html">
+<meta property="og:url" content="https://flareball.top/page/2/index.html">
 <meta property="og:site_name" content="FlareBall&#39;s Blog">
-<meta property="og:locale" content="en_US">
+<meta property="og:description" content="FlareBall 的技术笔记：Linux 运维、Kubernetes 云原生、Prometheus 监控与 LeetCode 题解。">
+<meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="FlareBall">
+<meta property="article:tag" content="Linux,Kubernetes,k8s,Prometheus,LeetCode,题解,FlareBall">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://flareball.top/page/2/">
+<link rel="canonical" href="https://flareball.top/page/2/">
 
 
 <script id="page-configurations">
@@ -37,11 +40,11 @@
     sidebar: "",
     isHome : true,
     isPost : false,
-    lang   : 'en'
+    lang   : 'zh-CN'
   };
 </script>
 
-  <title>FlareBall's Blog</title>
+  <title>FlareBall's Blog - Linux · 云原生 · 算法笔记</title>
   
 
 
@@ -72,7 +75,119 @@
   </style>
 </noscript>
 
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -81,7 +196,7 @@
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
+    <div class="toggle" aria-label="切换导航栏">
       <span class="toggle-line toggle-line-first"></span>
       <span class="toggle-line toggle-line-middle"></span>
       <span class="toggle-line toggle-line-last"></span>
@@ -95,10 +210,12 @@
       <h1 class="site-title">FlareBall's Blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
+      <p class="site-subtitle" itemprop="description">Linux · 云原生 · 算法笔记</p>
   </div>
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -110,19 +227,66 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
 
   </li>
+        <li class="menu-item menu-item-算法题解">
+
+    <a href="/categories/algorithms/" rel="section"><i class="fa fa-code fa-fw"></i>算法题解</a>
+
+  </li>
+        <li class="menu-item menu-item-技术笔记">
+
+    <a href="/categories/tech/" rel="section"><i class="fa fa-server fa-fw"></i>技术笔记</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -132,6 +296,7 @@
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
+  <div class="reading-progress-bar"></div>
 
 
     <main class="main">
@@ -144,13 +309,13 @@
       
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flareball.top/2025/11/26/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-11-%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://flareball.top/2025/11/26/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-11-%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.svg">
       <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="FlareBall 的技术笔记：Linux 运维、Kubernetes 云原生、Prometheus 监控与 LeetCode 题解。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -159,7 +324,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/11/26/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-11-%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/" class="post-title-link" itemprop="url">11.盛最多水的容器</a>
+            <a href="/2025/11/26/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-11-%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/" class="post-title-link" itemprop="url">11. 盛最多水的容器</a>
         </h2>
 
         <div class="post-meta">
@@ -167,28 +332,28 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
-              <time title="Created: 2025-11-26 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-26T11:00:00+08:00">2025-11-26</time>
+              <time title="创建时间：2025-11-26 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-26T11:00:00+08:00">2025-11-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-03-26 20:09:27" itemprop="dateModified" datetime="2026-03-26T20:09:27+08:00">2026-03-26</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-10-20 21:59:49" itemprop="dateModified" datetime="2026-10-20T21:59:49+08:00">2026-10-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                  <a href="/categories/algorithms/" itemprop="url" rel="index"><span itemprop="name">算法题解</span></a>
                 </span>
-                  , 
+                  ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
+                  <a href="/categories/algorithms/leetcode-150/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
                 </span>
             </span>
 
@@ -203,11 +368,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h1><p>容器的面积由两部分决定，一部分是两条线之间的宽度，另一部分是两条线中较短的那一条，因为水位只能由短板决定。</p>
-<p>因此可以让两个指针分别指向数组两端，先计算当前容器面积。之后为了尝试得到更大的答案，应当移动较短的那一侧。因为如果移动较高的一侧，宽度一定变小，而短板仍然可能还是原来那根较短的线，这样面积不可能变得更大；只有移动短板，才有机会找到更高的边，从而弥补宽度缩小带来的损失。</p>
-<p>时间复杂度 $O(n)$</p>
-<p>空间复杂度 $O(1)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">maxArea</span><span class="params">(<span class="type">int</span>[] height)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>, right = height.length - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">high</span> <span class="operator">=</span> Math.min(height[left], height[right]);</span><br><span class="line">            ans = Math.max(ans, (right - left) * high);</span><br><span class="line">            <span class="keyword">if</span> (height[left] &lt; height[right]) &#123;</span><br><span class="line">                left++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                right--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h2 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h2><p>容器的面积由两部分决定，一部分是两条线之间的宽度，另一部分是两条线中较短的那一条，因为水位只能由短板决定。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/11/26/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-11-%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -225,13 +394,13 @@
       
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flareball.top/2025/11/25/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-167-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8CII-%E8%BE%93%E5%85%A5%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://flareball.top/2025/11/25/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-167-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8CII-%E8%BE%93%E5%85%A5%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.svg">
       <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="FlareBall 的技术笔记：Linux 运维、Kubernetes 云原生、Prometheus 监控与 LeetCode 题解。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -240,7 +409,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/11/25/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-167-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8CII-%E8%BE%93%E5%85%A5%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84/" class="post-title-link" itemprop="url">167.两数之和II-输入有序数组</a>
+            <a href="/2025/11/25/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-167-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8CII-%E8%BE%93%E5%85%A5%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84/" class="post-title-link" itemprop="url">167. 两数之和II-输入有序数组</a>
         </h2>
 
         <div class="post-meta">
@@ -248,28 +417,28 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
-              <time title="Created: 2025-11-25 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-25T11:00:00+08:00">2025-11-25</time>
+              <time title="创建时间：2025-11-25 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-25T11:00:00+08:00">2025-11-25</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-03-26 20:08:29" itemprop="dateModified" datetime="2026-03-26T20:08:29+08:00">2026-03-26</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-10-20 21:59:49" itemprop="dateModified" datetime="2026-10-20T21:59:49+08:00">2026-10-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                  <a href="/categories/algorithms/" itemprop="url" rel="index"><span itemprop="name">算法题解</span></a>
                 </span>
-                  , 
+                  ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
+                  <a href="/categories/algorithms/leetcode-150/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
                 </span>
             </span>
 
@@ -284,12 +453,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h1><p>数组已经按非递减顺序排列，这个有序性质正好可以利用起来。</p>
-<p>设左指针 $left$ 指向最小值，右指针 $right$ 指向最大值。若两数之和小于 $target$，说明当前和偏小，需要让左指针右移来增大和；若两数之和大于 $target$，说明当前和偏大，需要让右指针左移来减小和。这样每次都能排除一部分不可能的情况。</p>
-<p>由于题目保证恰好存在一个答案，因此当两数之和等于 $target$ 时，直接返回对应下标即可。注意题目下标从 $1$ 开始，所以最终答案需要加一。</p>
-<p>时间复杂度 $O(n)$</p>
-<p>空间复杂度 $O(1)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] twoSum(<span class="type">int</span>[] numbers, <span class="type">int</span> target) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>, right = numbers.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> numbers[left] + numbers[right];</span><br><span class="line">            <span class="keyword">if</span> (sum == target) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (sum &lt; target) &#123;</span><br><span class="line">                left++;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                right--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;left + <span class="number">1</span>, right + <span class="number">1</span>&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h2 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h2><p>数组已经按非递减顺序排列，这个有序性质正好可以利用起来。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/11/25/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-167-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8CII-%E8%BE%93%E5%85%A5%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -307,13 +479,13 @@
       
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flareball.top/2025/11/24/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-392-%E5%88%A4%E6%96%AD%E5%AD%90%E5%BA%8F%E5%88%97/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://flareball.top/2025/11/24/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-392-%E5%88%A4%E6%96%AD%E5%AD%90%E5%BA%8F%E5%88%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.svg">
       <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="FlareBall 的技术笔记：Linux 运维、Kubernetes 云原生、Prometheus 监控与 LeetCode 题解。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -322,7 +494,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/11/24/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-392-%E5%88%A4%E6%96%AD%E5%AD%90%E5%BA%8F%E5%88%97/" class="post-title-link" itemprop="url">392.判断子序列</a>
+            <a href="/2025/11/24/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-392-%E5%88%A4%E6%96%AD%E5%AD%90%E5%BA%8F%E5%88%97/" class="post-title-link" itemprop="url">392. 判断子序列</a>
         </h2>
 
         <div class="post-meta">
@@ -330,28 +502,28 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
-              <time title="Created: 2025-11-24 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-24T11:00:00+08:00">2025-11-24</time>
+              <time title="创建时间：2025-11-24 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-24T11:00:00+08:00">2025-11-24</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-03-26 20:07:42" itemprop="dateModified" datetime="2026-03-26T20:07:42+08:00">2026-03-26</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-10-20 21:59:49" itemprop="dateModified" datetime="2026-10-20T21:59:49+08:00">2026-10-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                  <a href="/categories/algorithms/" itemprop="url" rel="index"><span itemprop="name">算法题解</span></a>
                 </span>
-                  , 
+                  ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
+                  <a href="/categories/algorithms/leetcode-150/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
                 </span>
             </span>
 
@@ -366,12 +538,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h1><p>判断子序列的关键在于，<code>s</code> 中的字符只需要按顺序出现在 <code>t</code> 中即可，不要求连续。</p>
-<p>因此可以用两个指针，<code>i</code> 指向 <code>s</code>，<code>j</code> 指向 <code>t</code>。固定 <code>i</code>，不断向右移动 <code>j</code>，直到在 <code>t</code> 中找到和 <code>s[i]</code> 相同的字符。如果一直找到 <code>t</code> 末尾都没找到，说明 <code>s</code> 不是 <code>t</code> 的子序列；否则继续匹配 <code>s</code> 的下一个字符。</p>
-<p>如果最终 <code>s</code> 的所有字符都能依次找到，那么它就是 <code>t</code> 的子序列。</p>
-<p>时间复杂度 $O(m + n)$</p>
-<p>空间复杂度 $O(1)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isSubsequence</span><span class="params">(String s, String t)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> s.length();</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> t.length();</span><br><span class="line">        <span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">            <span class="keyword">while</span> (j &lt; n &amp;&amp; t.charAt(j) != s.charAt(i)) &#123;</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (j == n) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h2 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h2><p>判断子序列的关键在于，<code>s</code> 中的字符只需要按顺序出现在 <code>t</code> 中即可，不要求连续。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/11/24/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-392-%E5%88%A4%E6%96%AD%E5%AD%90%E5%BA%8F%E5%88%97/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -389,13 +564,13 @@
       
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flareball.top/2025/11/23/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-125-%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E4%B8%B2/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://flareball.top/2025/11/23/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-125-%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E4%B8%B2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.svg">
       <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="FlareBall 的技术笔记：Linux 运维、Kubernetes 云原生、Prometheus 监控与 LeetCode 题解。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -404,7 +579,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/11/23/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-125-%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E4%B8%B2/" class="post-title-link" itemprop="url">125.验证回文串</a>
+            <a href="/2025/11/23/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-125-%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E4%B8%B2/" class="post-title-link" itemprop="url">125. 验证回文串</a>
         </h2>
 
         <div class="post-meta">
@@ -412,28 +587,28 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
-              <time title="Created: 2025-11-23 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-23T11:00:00+08:00">2025-11-23</time>
+              <time title="创建时间：2025-11-23 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-23T11:00:00+08:00">2025-11-23</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-03-26 20:06:50" itemprop="dateModified" datetime="2026-03-26T20:06:50+08:00">2026-03-26</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-10-20 21:59:49" itemprop="dateModified" datetime="2026-10-20T21:59:49+08:00">2026-10-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                  <a href="/categories/algorithms/" itemprop="url" rel="index"><span itemprop="name">算法题解</span></a>
                 </span>
-                  , 
+                  ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
+                  <a href="/categories/algorithms/leetcode-150/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
                 </span>
             </span>
 
@@ -448,19 +623,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h1><p>题目要求忽略非字母数字字符，并且字母忽略大小写，因此可以使用双指针分别从字符串两端向中间扫描。</p>
-<p>如果当前字符不是字母或数字，就直接跳过；当左右两侧都停在有效字符后，再判断它们是否相同。数字必须完全相同，字母则只需忽略大小写后相同即可。只要有一组字符不匹配，就不是回文串。</p>
-<p>时间复杂度 $O(n)$</p>
-<p>空间复杂度 $O(1)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isPalindrome</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> s.length();</span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">right</span> <span class="operator">=</span> n - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">            <span class="keyword">while</span> (left &lt; right &amp;&amp; !isLetter(s.charAt(left)) &amp;&amp; !isNumber(s.charAt(left))) &#123;</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> (left &lt; right &amp;&amp; !isLetter(s.charAt(right)) &amp;&amp; !isNumber(s.charAt(right))) &#123;</span><br><span class="line">                right--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (left &gt;= right) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!isSameChar(s.charAt(left), s.charAt(right))) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            left++;</span><br><span class="line">            right--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">isLetter</span><span class="params">(<span class="type">char</span> c)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (c &gt;= <span class="string">&#x27;A&#x27;</span> &amp;&amp; c &lt;= <span class="string">&#x27;Z&#x27;</span> || c &gt;= <span class="string">&#x27;a&#x27;</span> &amp;&amp; c &lt;= <span class="string">&#x27;z&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">isNumber</span><span class="params">(<span class="type">char</span> c)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (c &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; c &lt;= <span class="string">&#x27;9&#x27;</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">isSameChar</span><span class="params">(<span class="type">char</span> c1, <span class="type">char</span> c2)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (isNumber(c1) &amp;&amp; isNumber(c2)) &#123;</span><br><span class="line">            <span class="keyword">return</span> c1 == c2;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (isLetter(c1) &amp;&amp; isLetter(c2) &amp;&amp; (c1 - c2 == <span class="number">0</span> || c1 - c2 == <span class="string">&#x27;a&#x27;</span> - <span class="string">&#x27;A&#x27;</span> || c1 - c2 == <span class="string">&#x27;A&#x27;</span> - <span class="string">&#x27;a&#x27;</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="双指针-1"><a href="#双指针-1" class="headerlink" title="双指针"></a>双指针</h1><p>也可以直接调用语言自带的字符判断函数，使写法更简洁。</p>
-<p>同样用左右指针从两端向中间移动，先跳过所有非字母数字字符，再把当前位置字符统一转成小写后比较。这样就把“过滤无效字符”和“忽略大小写”都统一处理掉了。</p>
-<p>时间复杂度 $O(n)$</p>
-<p>空间复杂度 $O(1)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isPalindrome</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> s.length();</span><br><span class="line">        <span class="type">int</span> <span class="variable">left</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">right</span> <span class="operator">=</span> n - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">            <span class="keyword">while</span> (left &lt; right &amp;&amp; !Character.isLetterOrDigit(s.charAt(left))) &#123;</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">while</span> (left &lt; right &amp;&amp; !Character.isLetterOrDigit(s.charAt(right))) &#123;</span><br><span class="line">                right--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right))) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            left++;</span><br><span class="line">            right--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <h2 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h2><p>题目要求忽略非字母数字字符，并且字母忽略大小写，因此可以使用双指针分别从字符串两端向中间扫描。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/11/23/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-125-%E9%AA%8C%E8%AF%81%E5%9B%9E%E6%96%87%E4%B8%B2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -478,13 +649,13 @@
       
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flareball.top/2025/11/22/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-28-%E6%89%BE%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%B9%E9%85%8D%E9%A1%B9%E7%9A%84%E4%B8%8B%E6%A0%87/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://flareball.top/2025/11/22/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-28-%E6%89%BE%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%B9%E9%85%8D%E9%A1%B9%E7%9A%84%E4%B8%8B%E6%A0%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.svg">
       <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="FlareBall 的技术笔记：Linux 运维、Kubernetes 云原生、Prometheus 监控与 LeetCode 题解。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -493,7 +664,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/11/22/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-28-%E6%89%BE%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%B9%E9%85%8D%E9%A1%B9%E7%9A%84%E4%B8%8B%E6%A0%87/" class="post-title-link" itemprop="url">28.找出字符串中第一个匹配项的下标</a>
+            <a href="/2025/11/22/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-28-%E6%89%BE%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%B9%E9%85%8D%E9%A1%B9%E7%9A%84%E4%B8%8B%E6%A0%87/" class="post-title-link" itemprop="url">28. 找出字符串中第一个匹配项的下标</a>
         </h2>
 
         <div class="post-meta">
@@ -501,28 +672,28 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
-              <time title="Created: 2025-11-22 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-22T11:00:00+08:00">2025-11-22</time>
+              <time title="创建时间：2025-11-22 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-22T11:00:00+08:00">2025-11-22</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-03-26 20:05:28" itemprop="dateModified" datetime="2026-03-26T20:05:28+08:00">2026-03-26</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-10-20 21:59:49" itemprop="dateModified" datetime="2026-10-20T21:59:49+08:00">2026-10-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                  <a href="/categories/algorithms/" itemprop="url" rel="index"><span itemprop="name">算法题解</span></a>
                 </span>
-                  , 
+                  ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
+                  <a href="/categories/algorithms/leetcode-150/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
                 </span>
             </span>
 
@@ -537,17 +708,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="模拟"><a href="#模拟" class="headerlink" title="模拟"></a>模拟</h1><p>最直接的做法就是枚举主串中每一个可能作为起点的位置，然后判断从这里开始能否完整匹配 <code>needle</code>。</p>
-<p>如果当前位置开始的每个字符都和 <code>needle</code> 对应位置相同，那么就返回这个起点下标；否则继续尝试下一个位置即可。</p>
-<p>时间复杂度 $O(nm)$</p>
-<p>空间复杂度 $O(1)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">strStr</span><span class="params">(String haystack, String needle)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (haystack.length() &lt; needle.length()) &#123;</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; haystack.length() - needle.length() + <span class="number">1</span>; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (check(haystack, i, needle)) &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">check</span><span class="params">(String haystack, <span class="type">int</span> start, String needle)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (haystack.length() - start + <span class="number">1</span> &lt; needle.length()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; needle.length(); ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (haystack.charAt(start + i) != needle.charAt(i)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="KMP"><a href="#KMP" class="headerlink" title="KMP"></a>KMP</h1><p>朴素匹配在失配时会回退主串指针，很多比较其实是重复的。KMP 的核心就在于，失配后不回退主串，而是利用模式串自身的信息，直接把模式串滑到一个合适位置继续匹配。</p>
-<p>具体来说，先为模式串预处理出 <code>next</code> 数组，表示当某个位置失配时，模式串指针下一步应跳到哪里。这样在匹配过程中，一旦字符不同，就可以快速跳过不可能匹配的部分，从而把总时间复杂度优化到 $O(n + m)$。</p>
-<p>时间复杂度 $O(n + m)$</p>
-<p>空间复杂度 $O(m)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">strStr</span><span class="params">(String haystack, String needle)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> kmp(haystack, needle);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">kmp</span><span class="params">(String target, String pattern)</span> &#123;  <span class="comment">// 时间复杂度：O(n + m)</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> target.length();      <span class="comment">// 主串长度</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> pattern.length();     <span class="comment">// 模式串长度</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 边界情况处理</span></span><br><span class="line">        <span class="keyword">if</span> (m == <span class="number">0</span>) &#123;                 <span class="comment">// 空模式串</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (n &lt; m) &#123;                  <span class="comment">// 主串比模式串短，不可能匹配</span></span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 1. 计算模式串的next数组（部分匹配表）</span></span><br><span class="line">        <span class="type">int</span>[] next = getNext(pattern);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 2. 进行KMP匹配</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;  <span class="comment">// 主串指针</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>;  <span class="comment">// 模式串指针</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> (i &lt; n &amp;&amp; j &lt; m) &#123;</span><br><span class="line">            <span class="comment">// 情况1：模式串第一个字符就匹配失败（j=-1），或者当前字符匹配成功</span></span><br><span class="line">            <span class="keyword">if</span> (j == -<span class="number">1</span> || target.charAt(i) == pattern.charAt(j)) &#123;</span><br><span class="line">                i++;  <span class="comment">// 主串指针后移</span></span><br><span class="line">                j++;  <span class="comment">// 模式串指针后移</span></span><br><span class="line">            &#125; </span><br><span class="line">            <span class="comment">// 情况2：字符不匹配，根据next数组跳转模式串指针</span></span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                j = next[j];  <span class="comment">// 模式串指针回退到next[j]位置</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 匹配结果判断</span></span><br><span class="line">        <span class="keyword">if</span> (j == m) &#123;          <span class="comment">// 模式串完全匹配成功</span></span><br><span class="line">            <span class="keyword">return</span> i - j;      <span class="comment">// 返回匹配的起始索引</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;               <span class="comment">// 匹配失败</span></span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span>[] getNext(String pattern) &#123;  <span class="comment">// 时间复杂度：O(m)</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> pattern.length();      <span class="comment">// 模式串长度</span></span><br><span class="line">        <span class="type">int</span>[] next = <span class="keyword">new</span> <span class="title class_">int</span>[n];       <span class="comment">// 创建next数组</span></span><br><span class="line">        next[<span class="number">0</span>] = -<span class="number">1</span>;                  <span class="comment">// 初始值，表示模式串第一个字符匹配失败时需要特殊处理</span></span><br><span class="line">        </span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;  <span class="comment">// 后缀末尾指针</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> -<span class="number">1</span>; <span class="comment">// 前缀末尾指针（初始为-1，表示无前缀）</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 构建next数组，注意循环条件是 i &lt; n-1</span></span><br><span class="line">        <span class="keyword">while</span> (i &lt; n - <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (j == -<span class="number">1</span> || pattern.charAt(i) == pattern.charAt(j)) &#123;</span><br><span class="line">                i++;  <span class="comment">// 模式串指针后移</span></span><br><span class="line">                j++;  <span class="comment">// 已匹配的前缀长度增加</span></span><br><span class="line">                next[i] = j;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;<span class="comment">// j 回退，但回退次数小于等于前进次数即i增加量（if分支中二者同步增加i意味着j增加了多少次）</span></span><br><span class="line">                j = next[j];  <span class="comment">// 利用已计算的next值进行回退</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h2 id="模拟"><a href="#模拟" class="headerlink" title="模拟"></a>模拟</h2><p>最直接的做法就是枚举主串中每一个可能作为起点的位置，然后判断从这里开始能否完整匹配 <code>needle</code>。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/11/22/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-28-%E6%89%BE%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%B9%E9%85%8D%E9%A1%B9%E7%9A%84%E4%B8%8B%E6%A0%87/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -565,13 +734,13 @@
       
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flareball.top/2025/11/21/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-6-Z%E5%AD%97%E5%BD%A2%E5%8F%98%E6%8D%A2/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://flareball.top/2025/11/21/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-6-Z%E5%AD%97%E5%BD%A2%E5%8F%98%E6%8D%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.svg">
       <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="FlareBall 的技术笔记：Linux 运维、Kubernetes 云原生、Prometheus 监控与 LeetCode 题解。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -580,7 +749,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/11/21/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-6-Z%E5%AD%97%E5%BD%A2%E5%8F%98%E6%8D%A2/" class="post-title-link" itemprop="url">6.Z字形变换</a>
+            <a href="/2025/11/21/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-6-Z%E5%AD%97%E5%BD%A2%E5%8F%98%E6%8D%A2/" class="post-title-link" itemprop="url">6. Z字形变换</a>
         </h2>
 
         <div class="post-meta">
@@ -588,28 +757,28 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
-              <time title="Created: 2025-11-21 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-21T11:00:00+08:00">2025-11-21</time>
+              <time title="创建时间：2025-11-21 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-21T11:00:00+08:00">2025-11-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-03-26 20:03:05" itemprop="dateModified" datetime="2026-03-26T20:03:05+08:00">2026-03-26</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-10-20 21:59:49" itemprop="dateModified" datetime="2026-10-20T21:59:49+08:00">2026-10-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                  <a href="/categories/algorithms/" itemprop="url" rel="index"><span itemprop="name">算法题解</span></a>
                 </span>
-                  , 
+                  ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
+                  <a href="/categories/algorithms/leetcode-150/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
                 </span>
             </span>
 
@@ -624,21 +793,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="按行访问"><a href="#按行访问" class="headerlink" title="按行访问"></a>按行访问</h1><p>观察 $Z$ 字形排列可以发现，字符的分布具有周期性。</p>
-<p>当行数为 $numRows$ 时，一个完整周期长度为 $2 \times numRows - 2$。对于第 $row$ 行而言，每个周期中一定会出现一个位置 $i + row$ 的字符；如果这一行既不是第一行也不是最后一行，那么同一周期内还会额外出现一个斜着走的位置 $i + cycle - row$。</p>
-<p>因此可以直接按行枚举，每一行把属于它的字符按顺序加入答案即可。</p>
-<p>时间复杂度 $O(n)$</p>
-<p>空间复杂度 $O(1)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">convert</span><span class="params">(String s, <span class="type">int</span> numRows)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (numRows == <span class="number">1</span>) <span class="keyword">return</span> s;</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> s.length();</span><br><span class="line">        <span class="type">int</span> <span class="variable">cycle</span> <span class="operator">=</span> <span class="number">2</span> * numRows - <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">row</span> <span class="operator">=</span> <span class="number">0</span>; row &lt; numRows; ++row) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i + row &lt; n; i += cycle) &#123;</span><br><span class="line">                ans.append(s.charAt(i + row));</span><br><span class="line">                <span class="keyword">if</span> (row != <span class="number">0</span> &amp;&amp; row != numRows - <span class="number">1</span> &amp;&amp; i + cycle - row &lt; n) &#123;</span><br><span class="line">                    ans.append(s.charAt(i + cycle - row));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="模拟走位"><a href="#模拟走位" class="headerlink" title="模拟走位"></a>模拟走位</h1><p>也可以直接模拟字符在各行之间来回移动的过程。</p>
-<p>准备 $numRows$ 个字符串，依次把字符放入当前行中。当走到第一行或最后一行时，就改变移动方向，于是在各行之间上下折返。最终再把所有行拼接起来，就是按题目要求逐行读取后的结果。</p>
-<p>这种写法更符合题意描述，按实际书写过程完成模拟。</p>
-<p>时间复杂度 $O(n)$</p>
-<p>空间复杂度 $O(n)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">convert</span><span class="params">(String s, <span class="type">int</span> numRows)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (numRows == <span class="number">1</span>) <span class="keyword">return</span> s;</span><br><span class="line">        List&lt;StringBuilder&gt; rows = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;StringBuilder&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; numRows; ++i) &#123;</span><br><span class="line">            rows.add(<span class="keyword">new</span> <span class="title class_">StringBuilder</span>());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>, flag = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">char</span> c : s.toCharArray()) &#123;</span><br><span class="line">            rows.get(i).append(c);</span><br><span class="line">            <span class="keyword">if</span> (i == <span class="number">0</span> || i == numRows - <span class="number">1</span>) flag = -flag;</span><br><span class="line">            i += flag;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="keyword">for</span> (StringBuilder row : rows) &#123;</span><br><span class="line">            ans.append(row);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <h2 id="按行访问"><a href="#按行访问" class="headerlink" title="按行访问"></a>按行访问</h2><p>观察 <mjx-container class="MathJax" jax="SVG" overflow="overflow"><svg style="vertical-align: 0;" xmlns="http://www.w3.org/2000/svg" width="1.636ex" height="1.545ex" role="img" focusable="false" viewBox="0 -683 723 683"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math" data-latex="Z"><g data-mml-node="mi" data-latex="Z"><path data-c="1D44D" d="M720 653C722 662 723 668 723 670C723 679 718 683 707 683L277 683C252 683 249 680 243 660L189 483C187 478 186 472 185 467C188 459 190 453 201 453C206 453 212 457 218 465C239 530 267 577 302 604C337 631 389 644 457 644L609 644L62 33L58 13C58 4 64 0 75 0L516 0C542 0 545 2 551 23L621 242C622 246 625 253 625 257C625 267 619 272 608 272C601 272 594 263 588 244C566 176 539 126 506 94C471 59 413 42 333 42L173 42Z"></path></g></g></g></svg></mjx-container> 字形排列可以发现，字符的分布具有周期性。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/11/21/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-6-Z%E5%AD%97%E5%BD%A2%E5%8F%98%E6%8D%A2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -656,13 +819,13 @@
       
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flareball.top/2025/11/20/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-151-%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%8D%95%E8%AF%8D/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://flareball.top/2025/11/20/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-151-%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%8D%95%E8%AF%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.svg">
       <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="FlareBall 的技术笔记：Linux 运维、Kubernetes 云原生、Prometheus 监控与 LeetCode 题解。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -671,7 +834,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/11/20/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-151-%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%8D%95%E8%AF%8D/" class="post-title-link" itemprop="url">151.反转字符串中的单词</a>
+            <a href="/2025/11/20/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-151-%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%8D%95%E8%AF%8D/" class="post-title-link" itemprop="url">151. 反转字符串中的单词</a>
         </h2>
 
         <div class="post-meta">
@@ -679,28 +842,28 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
-              <time title="Created: 2025-11-20 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-20T11:00:00+08:00">2025-11-20</time>
+              <time title="创建时间：2025-11-20 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-20T11:00:00+08:00">2025-11-20</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-03-26 20:00:45" itemprop="dateModified" datetime="2026-03-26T20:00:45+08:00">2026-03-26</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-10-20 21:59:49" itemprop="dateModified" datetime="2026-10-20T21:59:49+08:00">2026-10-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                  <a href="/categories/algorithms/" itemprop="url" rel="index"><span itemprop="name">算法题解</span></a>
                 </span>
-                  , 
+                  ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
+                  <a href="/categories/algorithms/leetcode-150/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
                 </span>
             </span>
 
@@ -715,18 +878,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="倒序遍历"><a href="#倒序遍历" class="headerlink" title="倒序遍历"></a>倒序遍历</h1><p>题目要求反转单词顺序，同时去掉多余空格，因此可以直接从后往前遍历字符串，每次提取一个完整单词加入答案。</p>
-<p>做法是从字符串末尾开始，先跳过空格，再找到当前单词的左右边界，将该单词加入结果。之后继续向前重复这一过程。由于是按从后往前提取，所以最终拼接出的字符串天然就是单词逆序，同时只在单词之间手动加一个空格即可避免多余空格。</p>
-<p>时间复杂度 $O(n)$</p>
-<p>空间复杂度 $O(n)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">reverseWords</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="type">int</span> <span class="variable">end</span> <span class="operator">=</span> s.length() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">            <span class="type">int</span>[] cur = getWord(s, end);</span><br><span class="line">            end = cur[<span class="number">0</span>] - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span> (cur[<span class="number">0</span>] == -<span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            sb.append(s, cur[<span class="number">0</span>], cur[<span class="number">1</span>]);</span><br><span class="line">            sb.append(<span class="string">&#x27; &#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (sb.length() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            sb.setLength(sb.length() - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span>[] getWord(String s, <span class="type">int</span> i) &#123;</span><br><span class="line">        <span class="type">int</span>[] ans = <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;-<span class="number">1</span>, -<span class="number">1</span>&#125;;</span><br><span class="line">        <span class="keyword">while</span> (i &gt;= <span class="number">0</span> &amp;&amp; s.charAt(i) == <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">            i--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (i &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            ans[<span class="number">1</span>] = i + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (i &gt;= <span class="number">0</span> &amp;&amp; s.charAt(i) != <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">                i--;</span><br><span class="line">            &#125;</span><br><span class="line">            ans[<span class="number">0</span>] = i + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h1><p>也可以先去掉首尾空格，然后用双指针在字符串中从右往左扫描。</p>
-<p>设 $r$ 和 $l$ 都指向当前待处理单词的末尾，先让 $l$ 左移找到这个单词的起点，再把这一段加入答案。随后继续跳过前面的空格，并更新下一轮单词的右边界。这样同样能够按逆序提取所有单词。</p>
-<p>这种写法更紧凑，本质上仍然是从后往前逐个找单词。</p>
-<p>时间复杂度 $O(n)$</p>
-<p>空间复杂度 $O(n)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">reverseWords</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        s = s.trim();</span><br><span class="line">        <span class="type">int</span> <span class="variable">r</span> <span class="operator">=</span> s.length() - <span class="number">1</span>, l = r;</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="keyword">while</span> (l &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span> (l &gt;= <span class="number">0</span> &amp;&amp; s.charAt(l) != <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">                l--;</span><br><span class="line">            &#125;</span><br><span class="line">            ans.append(s, l + <span class="number">1</span>, r + <span class="number">1</span>).append(<span class="string">&#x27; &#x27;</span>);</span><br><span class="line">            <span class="keyword">while</span> (l &gt;= <span class="number">0</span> &amp;&amp; s.charAt(l) == <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">                l--;</span><br><span class="line">            &#125;</span><br><span class="line">            r = l;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans.toString().trim();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <h2 id="倒序遍历"><a href="#倒序遍历" class="headerlink" title="倒序遍历"></a>倒序遍历</h2><p>题目要求反转单词顺序，同时去掉多余空格，因此可以直接从后往前遍历字符串，每次提取一个完整单词加入答案。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/11/20/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-151-%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%8D%95%E8%AF%8D/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -744,13 +904,13 @@
       
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flareball.top/2025/11/19/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-14-%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%89%8D%E7%BC%80/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://flareball.top/2025/11/19/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-14-%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%89%8D%E7%BC%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.svg">
       <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="FlareBall 的技术笔记：Linux 运维、Kubernetes 云原生、Prometheus 监控与 LeetCode 题解。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -759,7 +919,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/11/19/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-14-%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%89%8D%E7%BC%80/" class="post-title-link" itemprop="url">14.最长公共前缀</a>
+            <a href="/2025/11/19/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-14-%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%89%8D%E7%BC%80/" class="post-title-link" itemprop="url">14. 最长公共前缀</a>
         </h2>
 
         <div class="post-meta">
@@ -767,28 +927,28 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
-              <time title="Created: 2025-11-19 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-19T11:00:00+08:00">2025-11-19</time>
+              <time title="创建时间：2025-11-19 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-19T11:00:00+08:00">2025-11-19</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-03-26 21:20:15" itemprop="dateModified" datetime="2026-03-26T21:20:15+08:00">2026-03-26</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-10-20 21:59:49" itemprop="dateModified" datetime="2026-10-20T21:59:49+08:00">2026-10-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                  <a href="/categories/algorithms/" itemprop="url" rel="index"><span itemprop="name">算法题解</span></a>
                 </span>
-                  , 
+                  ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
+                  <a href="/categories/algorithms/leetcode-150/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
                 </span>
             </span>
 
@@ -803,20 +963,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="纵向扫描"><a href="#纵向扫描" class="headerlink" title="纵向扫描"></a>纵向扫描</h1><p>最长公共前缀的含义，就是所有字符串在前若干个位置上的字符都相同，因此可以按列来检查。</p>
-<p>先求出所有字符串中的最短长度，因为公共前缀长度不可能超过它。随后从第 $0$ 列开始依次判断，取第一个字符串当前位置的字符作为基准，再和其余字符串同一位置的字符比较。如果某一列出现不同字符，说明公共前缀到此为止；否则就把该字符加入答案。</p>
-<p>时间复杂度 $O(nm)$</p>
-<p>空间复杂度 $O(1)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">longestCommonPrefix</span><span class="params">(String[] strs)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">minLen</span> <span class="operator">=</span> Integer.MAX_VALUE;</span><br><span class="line">        <span class="keyword">for</span> (String s : strs) &#123;</span><br><span class="line">            minLen = Math.min(minLen, s.length());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> strs.length;</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; minLen; ++i) &#123;</span><br><span class="line">            <span class="type">char</span> <span class="variable">cur</span> <span class="operator">=</span> strs[<span class="number">0</span>].charAt(i);</span><br><span class="line">            <span class="type">boolean</span> <span class="variable">flag</span> <span class="operator">=</span> <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">1</span>; j &lt; n; ++j) &#123;</span><br><span class="line">                <span class="keyword">if</span> (strs[j].charAt(i) != cur) &#123;</span><br><span class="line">                    flag = <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!flag) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            sb.append(cur);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="以第一个字符串为基准"><a href="#以第一个字符串为基准" class="headerlink" title="以第一个字符串为基准"></a>以第一个字符串为基准</h1><p>也可以直接把第一个字符串当作候选答案。</p>
-<p>遍历第一个字符串的每一个位置，检查其余所有字符串在该位置是否也存在且字符相同。只要某个字符串已经到头，或者当前位置字符不同，就说明公共前缀只能到当前位置之前，直接返回第一个字符串的前缀即可。</p>
-<p>这种写法本质上也是纵向扫描，只是省去了额外统计最短长度的过程。</p>
-<p>时间复杂度 $O(nm)$</p>
-<p>空间复杂度 $O(1)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">longestCommonPrefix</span><span class="params">(String[] strs)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> strs.length;</span><br><span class="line">        <span class="type">String</span> <span class="variable">first</span> <span class="operator">=</span> strs[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; first.length(); ++i) &#123;</span><br><span class="line">            <span class="type">char</span> <span class="variable">cur</span> <span class="operator">=</span> first.charAt(i);</span><br><span class="line">            <span class="keyword">for</span> (String s : strs) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i == s.length() || s.charAt(i) != cur) &#123;</span><br><span class="line">                    <span class="keyword">return</span> first.substring(<span class="number">0</span>, i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> first;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <h2 id="纵向扫描"><a href="#纵向扫描" class="headerlink" title="纵向扫描"></a>纵向扫描</h2><p>最长公共前缀的含义，就是所有字符串在前若干个位置上的字符都相同，因此可以按列来检查。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/11/19/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-14-%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%89%8D%E7%BC%80/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -834,13 +989,13 @@
       
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flareball.top/2025/11/18/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-58-%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%8D%95%E8%AF%8D%E7%9A%84%E9%95%BF%E5%BA%A6/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://flareball.top/2025/11/18/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-58-%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%8D%95%E8%AF%8D%E7%9A%84%E9%95%BF%E5%BA%A6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.svg">
       <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="FlareBall 的技术笔记：Linux 运维、Kubernetes 云原生、Prometheus 监控与 LeetCode 题解。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -849,7 +1004,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/11/18/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-58-%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%8D%95%E8%AF%8D%E7%9A%84%E9%95%BF%E5%BA%A6/" class="post-title-link" itemprop="url">58.最后一个单词的长度</a>
+            <a href="/2025/11/18/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-58-%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%8D%95%E8%AF%8D%E7%9A%84%E9%95%BF%E5%BA%A6/" class="post-title-link" itemprop="url">58. 最后一个单词的长度</a>
         </h2>
 
         <div class="post-meta">
@@ -857,28 +1012,28 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
-              <time title="Created: 2025-11-18 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-18T11:00:00+08:00">2025-11-18</time>
+              <time title="创建时间：2025-11-18 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-18T11:00:00+08:00">2025-11-18</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-03-26 19:56:06" itemprop="dateModified" datetime="2026-03-26T19:56:06+08:00">2026-03-26</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-10-20 21:59:49" itemprop="dateModified" datetime="2026-10-20T21:59:49+08:00">2026-10-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                  <a href="/categories/algorithms/" itemprop="url" rel="index"><span itemprop="name">算法题解</span></a>
                 </span>
-                  , 
+                  ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
+                  <a href="/categories/algorithms/leetcode-150/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
                 </span>
             </span>
 
@@ -893,11 +1048,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="倒序遍历"><a href="#倒序遍历" class="headerlink" title="倒序遍历"></a>倒序遍历</h1><p>最后一个单词前面可能有若干单词，后面也可能有空格，因此直接从前往后找不如从后往前找更直接。</p>
-<p>先从字符串末尾开始跳过所有空格，找到最后一个单词的结尾位置；再继续向左遍历，直到遇到空格或到达字符串开头，此时这段区间的长度就是最后一个单词的长度。</p>
-<p>时间复杂度 $O(n)$</p>
-<p>空间复杂度 $O(1)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">lengthOfLastWord</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> s.length() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (s.charAt(i) == <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">            i--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> <span class="variable">last</span> <span class="operator">=</span> i;</span><br><span class="line">        <span class="keyword">while</span> (i &gt;= <span class="number">0</span> &amp;&amp; s.charAt(i) != <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">            i--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> last - i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h2 id="倒序遍历"><a href="#倒序遍历" class="headerlink" title="倒序遍历"></a>倒序遍历</h2><p>最后一个单词前面可能有若干单词，后面也可能有空格，因此直接从前往后找不如从后往前找更直接。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/11/18/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-58-%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%8D%95%E8%AF%8D%E7%9A%84%E9%95%BF%E5%BA%A6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -915,13 +1074,13 @@
       
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://flareball.top/2025/11/17/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-12-%E6%95%B4%E6%95%B0%E8%BD%AC%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://flareball.top/2025/11/17/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-12-%E6%95%B4%E6%95%B0%E8%BD%AC%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.svg">
       <meta itemprop="name" content="FlareBall">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="FlareBall 的技术笔记：Linux 运维、Kubernetes 云原生、Prometheus 监控与 LeetCode 题解。">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -930,7 +1089,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/11/17/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-12-%E6%95%B4%E6%95%B0%E8%BD%AC%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97/" class="post-title-link" itemprop="url">12.整数转罗马数字</a>
+            <a href="/2025/11/17/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-12-%E6%95%B4%E6%95%B0%E8%BD%AC%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97/" class="post-title-link" itemprop="url">12. 整数转罗马数字</a>
         </h2>
 
         <div class="post-meta">
@@ -938,28 +1097,28 @@
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
-              <time title="Created: 2025-11-17 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-17T11:00:00+08:00">2025-11-17</time>
+              <time title="创建时间：2025-11-17 11:00:00" itemprop="dateCreated datePublished" datetime="2025-11-17T11:00:00+08:00">2025-11-17</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-03-26 19:54:33" itemprop="dateModified" datetime="2026-03-26T19:54:33+08:00">2026-03-26</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-10-20 21:59:49" itemprop="dateModified" datetime="2026-10-20T21:59:49+08:00">2026-10-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index"><span itemprop="name">leetcode</span></a>
+                  <a href="/categories/algorithms/" itemprop="url" rel="index"><span itemprop="name">算法题解</span></a>
                 </span>
-                  , 
+                  ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
+                  <a href="/categories/algorithms/leetcode-150/" itemprop="url" rel="index"><span itemprop="name">面试经典150题</span></a>
                 </span>
             </span>
 
@@ -974,18 +1133,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="贪心"><a href="#贪心" class="headerlink" title="贪心"></a>贪心</h1><p>罗马数字的构造规则本质上就是每次优先使用当前能表示的最大数值符号，因此可以直接按照从大到小的顺序不断选取。</p>
-<p>例如遇到 $1994$ 时，先取 $1000$ 对应的 $M$，剩余 $994$；再取 $900$ 对应的 $CM$，剩余 $94$；再取 $90$ 对应的 $XC$，最后取 $4$ 对应的 $IV$。这样依次拼接即可得到答案。</p>
-<p>由于题目中所有可能用到的数值组合都是固定的，因此只需要把这些值按从大到小列出来，遍历时不断减去并拼接对应符号即可。</p>
-<p>时间复杂度 $O(1)$</p>
-<p>空间复杂度 $O(1)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Map&lt;Integer, String&gt; map = <span class="keyword">new</span> <span class="title class_">TreeMap</span>&lt;&gt;(Collections.reverseOrder());</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        map.put(<span class="number">1000</span>, <span class="string">&quot;M&quot;</span>);</span><br><span class="line">        map.put(<span class="number">900</span>, <span class="string">&quot;CM&quot;</span>);</span><br><span class="line">        map.put(<span class="number">500</span>, <span class="string">&quot;D&quot;</span>);</span><br><span class="line">        map.put(<span class="number">400</span>, <span class="string">&quot;CD&quot;</span>);</span><br><span class="line">        map.put(<span class="number">100</span>, <span class="string">&quot;C&quot;</span>);</span><br><span class="line">        map.put(<span class="number">90</span>, <span class="string">&quot;XC&quot;</span>);</span><br><span class="line">        map.put(<span class="number">50</span>, <span class="string">&quot;L&quot;</span>);</span><br><span class="line">        map.put(<span class="number">40</span>, <span class="string">&quot;XL&quot;</span>);</span><br><span class="line">        map.put(<span class="number">10</span>, <span class="string">&quot;X&quot;</span>);</span><br><span class="line">        map.put(<span class="number">9</span>, <span class="string">&quot;IX&quot;</span>);</span><br><span class="line">        map.put(<span class="number">5</span>, <span class="string">&quot;V&quot;</span>);</span><br><span class="line">        map.put(<span class="number">4</span>, <span class="string">&quot;IV&quot;</span>);</span><br><span class="line">        map.put(<span class="number">1</span>, <span class="string">&quot;I&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">intToRoman</span><span class="params">(<span class="type">int</span> num)</span> &#123;</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;Integer, String&gt; entry : map.entrySet()) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">value</span> <span class="operator">=</span> entry.getKey();</span><br><span class="line">            <span class="type">String</span> <span class="variable">symbol</span> <span class="operator">=</span> entry.getValue();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> (num &gt;= value) &#123;</span><br><span class="line">                sb.append(symbol);</span><br><span class="line">                num -= value;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="数组模拟"><a href="#数组模拟" class="headerlink" title="数组模拟"></a>数组模拟</h1><p>上面的写法思路很直接，不过这里其实并不需要真的使用 <code>Map</code>，因为所有数值和符号都是固定顺序的，直接用两个数组一一对应即可。</p>
-<p>遍历 <code>values</code> 数组时，如果当前数值还能从 <code>num</code> 中减去，就把对应的罗马字符加入答案，并继续减去，直到不能再减为止。由于可选项只有固定的 $13$ 个，所以整体仍然是常数时间。</p>
-<p>时间复杂度 $O(1)$</p>
-<p>空间复杂度 $O(1)$</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">intToRoman</span><span class="params">(<span class="type">int</span> num)</span> &#123;</span><br><span class="line">        <span class="type">int</span>[] values = &#123;<span class="number">1000</span>, <span class="number">900</span>, <span class="number">500</span>, <span class="number">400</span>, <span class="number">100</span>, <span class="number">90</span>, <span class="number">50</span>, <span class="number">40</span>, <span class="number">10</span>, <span class="number">9</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">1</span>&#125;;</span><br><span class="line">        String[] symbols = &#123;<span class="string">&quot;M&quot;</span>, <span class="string">&quot;CM&quot;</span>, <span class="string">&quot;D&quot;</span>, <span class="string">&quot;CD&quot;</span>, <span class="string">&quot;C&quot;</span>, <span class="string">&quot;XC&quot;</span>, <span class="string">&quot;L&quot;</span>, <span class="string">&quot;XL&quot;</span>, <span class="string">&quot;X&quot;</span>, <span class="string">&quot;IX&quot;</span>, <span class="string">&quot;V&quot;</span>, <span class="string">&quot;IV&quot;</span>, <span class="string">&quot;I&quot;</span>&#125;;</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; values.length; ++i) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">value</span> <span class="operator">=</span> values[i];</span><br><span class="line">            <span class="type">String</span> <span class="variable">symbol</span> <span class="operator">=</span> symbols[i];</span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> (num &gt;= value) &#123;</span><br><span class="line">                sb.append(symbol);</span><br><span class="line">                num -= value;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <h2 id="贪心"><a href="#贪心" class="headerlink" title="贪心"></a>贪心</h2><p>罗马数字的构造规则本质上就是每次优先使用当前能表示的最大数值符号，因此可以直接按照从大到小的顺序不断选取。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/11/17/leetcode-%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8150%E9%A2%98-12-%E6%95%B4%E6%95%B0%E8%BD%AC%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1003,7 +1159,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1047,10 +1203,10 @@
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          Table of Contents
+          文章目录
         </li>
         <li class="sidebar-nav-overview">
-          Overview
+          站点概览
         </li>
       </ul>
 
@@ -1061,28 +1217,37 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FlareBall"
+      src="/images/avatar.svg">
   <p class="site-author-name" itemprop="name">FlareBall</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">FlareBall 的技术笔记：Linux 运维、Kubernetes 云原生、Prometheus 监控与 LeetCode 题解。</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">2</span>
-        <span class="site-state-item-name">categories</span>
+            <a href="/categories/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">24</span>
-        <span class="site-state-item-name">tags</span>
+            <a href="/tags/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dddegithub" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dddegithub" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
 
 
 
@@ -1104,15 +1269,13 @@
 
 <div class="copyright">
   
-  &copy; 
+  &copy; 2024 – 
   <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">FlareBall</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
-  </div>
 
         
 
@@ -1148,6 +1311,10 @@
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 
